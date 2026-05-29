@@ -30,15 +30,16 @@ This document outlines the step-by-step process for building the macOS-themed Re
 
 ---
 
-## Step 3: Settings Panel (Dark Mode & Wallpaper)
+## ✅ Step 3: Settings Panel (Dark Mode & Wallpaper) (DONE)
 **Goal:** Build the Settings panel accessible from the Dock gear icon.
-- **Tasks:**
-  - [ ] Create a `SettingsPanel` component that opens as a macOS-style window or slide-over panel.
-  - [ ] **Dark/Light mode toggle:** Implement a CSS theme switcher using CSS variables. Store preference in `localStorage`.
-  - [ ] **Wallpaper selector:** Provide 4-5 preset macOS-style gradient wallpapers. Clicking one changes the `body` background. Store choice in `localStorage`.
-  - [ ] Close via the red traffic light button.
+- **What was built:**
+  - `src/components/SettingsPanel/` — A draggable/absolute macOS-style window component.
+  - Implemented Dark/Light mode theme toggle using CSS variables on the `body` tag.
+  - Implemented Wallpaper selector with 4 preset gradients (Sequoia Dark, Sequoia Light, Monterey, Midnight).
+  - Wired up state in `App.jsx` and added `localStorage` persistence so preferences remain after reload.
+  - Wired the Dock Settings gear icon to open/close the panel.
 
-**Checkpoint:** Clicking the Settings gear in the dock opens a panel. Toggling dark/light mode changes all colors. Selecting a wallpaper changes the desktop background. Preferences persist on reload.
+**Checkpoint:** Clicking the Settings gear in the dock opens a panel. Toggling dark/light mode changes widget colors. Selecting a wallpaper changes the desktop background. Preferences persist on reload.
 
 ---
 
