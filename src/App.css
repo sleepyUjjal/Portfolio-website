@@ -1,1 +1,213 @@
-/* Empty for now, keeping it clean */
+/* ===========================
+   Desktop
+   =========================== */
+.desktop {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ===========================
+   macOS Menu Bar
+   =========================== */
+.menu-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 25px;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(50px) saturate(180%);
+  -webkit-backdrop-filter: blur(50px) saturate(180%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  z-index: 500;
+}
+
+.menu-bar__left {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.menu-bar__apple {
+  font-size: 14px;
+  opacity: 0.9;
+  cursor: default;
+  line-height: 1;
+}
+
+.menu-bar__app-name {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.menu-bar__item {
+  font-size: 13.5px;
+  font-weight: 400;
+  color: var(--text-primary);
+  cursor: default;
+  opacity: 0.9;
+  letter-spacing: -0.01em;
+}
+
+.menu-bar__right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.menu-bar__status-icon {
+  opacity: 0.85;
+  cursor: default;
+}
+
+.menu-bar__time {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+/* ===========================
+   Widgets Area (LEFT)
+   =========================== */
+.widgets-area {
+  position: absolute;
+  top: 38px;
+  left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 10;
+  animation: fadeIn 0.5s ease-out 0.2s both;
+}
+
+/* ===========================
+   Desktop Icons (RIGHT)
+   macOS: columns from right, items flow top-to-bottom
+   =========================== */
+.desktop-icons-grid {
+  position: absolute;
+  top: 40px;
+  right: 15px;
+  bottom: 80px;
+  display: grid;
+  grid-template-rows: repeat(auto-fill, 95px);
+  grid-auto-flow: column dense;
+  grid-auto-columns: 100px;
+  gap: 10px 15px;
+  z-index: 10;
+  direction: rtl; /* makes columns fill from right to left */
+  justify-content: start;
+}
+
+.desktop-icons-grid > * {
+  direction: ltr; /* reset text direction inside icons */
+}
+
+.menu-bar__status-icon {
+  opacity: 0.9;
+  cursor: default;
+  display: flex;
+  align-items: center;
+}
+
+/* ===========================
+   Dock
+   =========================== */
+.dock {
+  position: fixed;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px 8px;
+  background: rgba(50, 50, 52, 0.45);
+  backdrop-filter: blur(50px) saturate(170%);
+  -webkit-backdrop-filter: blur(50px) saturate(170%);
+  border: 0.5px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  z-index: 500;
+}
+
+.dock__item {
+  width: 48px;
+  height: 48px;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+  transition: transform 0.18s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+}
+
+.dock__item:hover {
+  transform: scale(1.4) translateY(-10px);
+}
+
+.dock__item svg {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+}
+
+.dock__separator {
+  width: 1px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.15);
+  margin: 0 4px;
+}
+
+/* Tooltip */
+.dock__item::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 3px 10px;
+  background: rgba(30, 30, 30, 0.9);
+  border: 0.5px solid rgba(255, 255, 255, 0.15);
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-primary);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.1s ease;
+}
+
+.dock__item:hover::after {
+  opacity: 1;
+}
+
+/* Active dot */
+.dock__item--active::before {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+/* ===========================
+   Animations
+   =========================== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
