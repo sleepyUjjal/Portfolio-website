@@ -1,0 +1,54 @@
+:root {
+  /* macOS Theme Variables */
+  --sys-blue: #007aff;
+  --sys-blue-active: #0062cc;
+  --sys-gray: #8e8e93;
+  --sys-gray-light: #e5e5ea;
+  --sys-red: #ff3b30;
+  --sys-orange: #ff9500;
+  --sys-yellow: #ffcc00;
+  --sys-green: #34c759;
+
+  /* Glassmorphism / UI Variables */
+  --glass-bg: rgba(255, 255, 255, 0.5);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-blur: blur(20px);
+  --window-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+
+  /* Typography */
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --glass-bg: rgba(30, 30, 30, 0.5);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --window-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  }
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body, html {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  /* macOS Desktop Wallpaper - Using a premium gradient for now */
+  background: linear-gradient(135deg, #1f4037 0%, #99f2c8 100%);
+  background-size: cover;
+  background-position: center;
+}
+
+/* Base App Container */
+#root {
+  width: 100%;
+  height: 100%;
+}
