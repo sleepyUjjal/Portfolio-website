@@ -1,6 +1,11 @@
 context.md
 implementation.md
 *.png
+*.jpg
+*.jpeg
+*.webp
+*.pdf
+
 /readmes
 # Dependencies
 /node_modules

@@ -17,7 +17,7 @@ const PROJECT_FILES = [
   { id: 'idea', label: 'idea.txt', type: 'file-text' }
 ];
 
-function FinderWindow({ onClose, initialProject = 'nullpass' }) {
+function FinderWindow({ onClose, onOpenFile, initialProject = 'nullpass' }) {
   const [selectedProject, setSelectedProject] = useState(initialProject);
   const [selectedFile, setSelectedFile] = useState(null);
 
@@ -77,7 +77,7 @@ function FinderWindow({ onClose, initialProject = 'nullpass' }) {
                 type={file.type}
                 selected={selectedFile === file.id}
                 onClick={() => setSelectedFile(file.id)}
-                onDoubleClick={() => console.log(`Open file: ${file.label} from project ${selectedProject}`)}
+                onDoubleClick={() => onOpenFile({ ...file, project: selectedProject })}
               />
             ))}
           </div>

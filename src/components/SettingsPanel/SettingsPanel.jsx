@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import MacWindow from '../MacWindow/MacWindow';
 import './SettingsPanel.css';
 
 function SettingsPanel({ onClose, theme, setTheme, wallpaper, setWallpaper }) {
@@ -40,62 +41,58 @@ function SettingsPanel({ onClose, theme, setTheme, wallpaper, setWallpaper }) {
   ];
 
   return (
-    <div className="mac-window settings-panel">
-      {/* Window Header */}
-      <div className="mac-window__header">
-        <div className="mac-window__traffic-lights">
-          <div className="mac-window__btn mac-window__btn--close" onClick={onClose}></div>
-          <div className="mac-window__btn mac-window__btn--minimize"></div>
-          <div className="mac-window__btn mac-window__btn--maximize"></div>
-        </div>
-        <div className="mac-window__title">System Settings</div>
-      </div>
-
-      {/* Content */}
-      <div className="settings-panel__content">
-        
-        {/* Appearance Section */}
-        <div className="settings-panel__section">
-          <h3 className="settings-panel__section-title">Appearance</h3>
-          <div className="settings-panel__theme-toggle">
-            <button 
-              className={`theme-btn ${theme === 'light' ? 'theme-btn--active' : ''}`}
-              onClick={() => setTheme('light')}
-            >
-              <div className="theme-preview theme-preview--light"></div>
-              <span>Light</span>
-            </button>
-            <button 
-              className={`theme-btn ${theme === 'dark' ? 'theme-btn--active' : ''}`}
-              onClick={() => setTheme('dark')}
-            >
-              <div className="theme-preview theme-preview--dark"></div>
-              <span>Dark</span>
-            </button>
-          </div>
-        </div>
-
-        <div className="settings-panel__divider"></div>
-
-        {/* Wallpaper Section */}
-        <div className="settings-panel__section">
-          <h3 className="settings-panel__section-title">Wallpaper</h3>
-          <div className="settings-panel__wallpaper-grid">
-            {wallpapers.map((wp) => (
-              <div 
-                key={wp.id}
-                className={`wallpaper-item ${wallpaper.id === wp.id ? 'wallpaper-item--active' : ''}`}
-                onClick={() => setWallpaper(wp)}
+    <MacWindow 
+      title="System Settings" 
+      onClose={onClose}
+      initialWidth={550}
+      initialHeight={450}
+    >
+      <div className="settings-panel">
+        <div className="settings-panel__content">
+          
+          {/* Appearance Section */}
+          <div className="settings-panel__section">
+            <h3 className="settings-panel__section-title">Appearance</h3>
+            <div className="settings-panel__theme-toggle">
+              <button 
+                className={`theme-btn ${theme === 'light' ? 'theme-btn--active' : ''}`}
+                onClick={() => setTheme('light')}
               >
-                <div className="wallpaper-item__preview" style={wp.style}></div>
-                <span className="wallpaper-item__name">{wp.name}</span>
-              </div>
-            ))}
+                <div className="theme-preview theme-preview--light"></div>
+                <span>Light</span>
+              </button>
+              <button 
+                className={`theme-btn ${theme === 'dark' ? 'theme-btn--active' : ''}`}
+                onClick={() => setTheme('dark')}
+              >
+                <div className="theme-preview theme-preview--dark"></div>
+                <span>Dark</span>
+              </button>
+            </div>
           </div>
-        </div>
 
+          <div className="settings-panel__divider"></div>
+
+          {/* Wallpaper Section */}
+          <div className="settings-panel__section">
+            <h3 className="settings-panel__section-title">Wallpaper</h3>
+            <div className="settings-panel__wallpaper-grid">
+              {wallpapers.map((wp) => (
+                <div 
+                  key={wp.id}
+                  className={`wallpaper-item ${wallpaper.id === wp.id ? 'wallpaper-item--active' : ''}`}
+                  onClick={() => setWallpaper(wp)}
+                >
+                  <div className="wallpaper-item__preview" style={wp.style}></div>
+                  <span className="wallpaper-item__name">{wp.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+        </div>
       </div>
-    </div>
+    </MacWindow>
   );
 }
 

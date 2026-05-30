@@ -1,18 +1,18 @@
 import { useState, useRef, useEffect } from 'react';
 import './MacWindow.css';
 
-function MacWindow({ 
-  title, 
-  onClose, 
-  children, 
+function MacWindow({
+  title,
+  onClose,
+  children,
   actionButton = null,
   initialWidth = 800,
   initialHeight = 500,
   sidebar = false
 }) {
-  const [position, setPosition] = useState({ 
-    x: window.innerWidth / 2 - initialWidth / 2, 
-    y: window.innerHeight / 2 - initialHeight / 2 
+  const [position, setPosition] = useState({
+    x: window.innerWidth / 2 - initialWidth / 2,
+    y: window.innerHeight / 2 - initialHeight / 2
   });
   const [isDragging, setIsDragging] = useState(false);
   const dragRef = useRef({ startX: 0, startY: 0, startPosX: 0, startPosY: 0 });
@@ -20,7 +20,7 @@ function MacWindow({
   const handleMouseDown = (e) => {
     // Only allow drag from the header area, not buttons
     if (e.target.closest('.mac-window__btn') || e.target.closest('.mac-window__action')) return;
-    
+
     setIsDragging(true);
     dragRef.current = {
       startX: e.clientX,
@@ -49,7 +49,7 @@ function MacWindow({
       document.addEventListener('mousemove', handleMouseMove);
       document.addEventListener('mouseup', handleMouseUp);
     }
-    
+
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
@@ -57,7 +57,7 @@ function MacWindow({
   }, [isDragging]);
 
   return (
-    <div 
+    <div
       className={`mac-window-wrapper ${isDragging ? 'mac-window-wrapper--dragging' : ''} ${sidebar ? 'mac-window-wrapper--has-sidebar' : ''}`}
       style={{
         width: `${initialWidth}px`,
@@ -74,9 +74,9 @@ function MacWindow({
           <div className="mac-window__btn mac-window__btn--minimize"></div>
           <div className="mac-window__btn mac-window__btn--maximize"></div>
         </div>
-        
+
         <div className="mac-window__title">{title}</div>
-        
+
         {actionButton && (
           <div className="mac-window__action">
             {actionButton}

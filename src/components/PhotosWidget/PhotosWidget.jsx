@@ -1,6 +1,6 @@
 import './PhotosWidget.css';
 
-function PhotosWidget({ name, photoUrl }) {
+function PhotosWidget({ name, photoUrl, imagePosition = "center center" }) {
   return (
     <div className="photos-widget">
       {/* Widget Header */}
@@ -24,7 +24,12 @@ function PhotosWidget({ name, photoUrl }) {
       {/* Photo Area */}
       <div className="photos-widget__photo-area">
         {photoUrl ? (
-          <img src={photoUrl} alt={name} className="photos-widget__photo" />
+          <img 
+            src={photoUrl} 
+            alt={name} 
+            className="photos-widget__photo" 
+            style={{ objectPosition: imagePosition }} 
+          />
         ) : (
           <div className="photos-widget__photo-placeholder">
             <span>{name ? name.charAt(0).toUpperCase() : '?'}</span>
