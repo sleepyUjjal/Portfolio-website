@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
 :root {
   /* macOS System Colors */
   --sys-blue: #007aff;
@@ -31,7 +29,7 @@
   --window-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
 
   /* Typography */
-  --font-system: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+  --font-system: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 body.light-mode {
@@ -54,7 +52,8 @@ body.light-mode {
   padding: 0;
 }
 
-body, html {
+body,
+html {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
@@ -65,7 +64,7 @@ body, html {
   user-select: none;
 
   /* macOS Sequoia dark wallpaper */
-  background: 
+  background:
     radial-gradient(ellipse at 25% 75%, rgba(30, 60, 100, 0.6) 0%, transparent 55%),
     radial-gradient(ellipse at 75% 25%, rgba(80, 40, 100, 0.5) 0%, transparent 55%),
     radial-gradient(ellipse at 50% 100%, rgba(20, 40, 80, 0.4) 0%, transparent 50%),

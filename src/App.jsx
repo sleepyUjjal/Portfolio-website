@@ -3,6 +3,7 @@ import DesktopIcon from './components/DesktopIcon/DesktopIcon';
 import PhotosWidget from './components/PhotosWidget/PhotosWidget';
 import NotesWidget from './components/NotesWidget/NotesWidget';
 import SettingsPanel from './components/SettingsPanel/SettingsPanel';
+import FinderWindow from './components/FinderWindow/FinderWindow';
 import Dock from './components/Dock/Dock';
 import './App.css';
 
@@ -23,6 +24,7 @@ function App() {
   const [currentTime, setCurrentTime] = useState('');
   const [currentDate, setCurrentDate] = useState('');
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [openFolder, setOpenFolder] = useState(null);
   const [theme, setTheme] = useState('dark');
   const [wallpaper, setWallpaper] = useState(DEFAULT_WALLPAPERS['sequoia-dark']);
 
@@ -55,6 +57,7 @@ function App() {
        localStorage.setItem('mac-wallpaper', JSON.stringify(wallpaper));
     }
   }, [wallpaper]);
+
   // Clock logic
   useEffect(() => {
     const update = () => {
@@ -81,7 +84,9 @@ function App() {
 
   const handleIconDoubleClick = (id) => {
     console.log('Open:', id);
-    // Step 4 will implement Finder window opening here
+    if (['nullpass', 'nuancenode', 'finprocessor', 'tradingcli'].includes(id)) {
+      setOpenFolder(id);
+    }
   };
 
   return (
@@ -168,7 +173,13 @@ function App() {
       </div>
 
       {/* ── Dock ── */}
-      <Dock isSettingsOpen={isSettingsOpen} setIsSettingsOpen={setIsSettingsOpen} />
+      <Dock 
+        isSettingsOpen={isSettingsOpen} 
+        setIsSettingsOpen={setIsSettingsOpen} 
+        onFinderClick={() => {
+          if (!openFolder) setOpenFolder('nullpass');
+        }}
+      />
 
       {/* ── Overlays ── */}
       {isSettingsOpen && (
@@ -178,6 +189,13 @@ function App() {
           setTheme={setTheme}
           wallpaper={wallpaper}
           setWallpaper={setWallpaper}
+        />
+      )}
+
+      {openFolder && (
+        <FinderWindow 
+          initialProject={openFolder} 
+          onClose={() => setOpenFolder(null)} 
         />
       )}
     </div>

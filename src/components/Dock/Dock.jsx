@@ -1,6 +1,6 @@
 import './Dock.css';
 
-function Dock({ isSettingsOpen, setIsSettingsOpen }) {
+function Dock({ isSettingsOpen, setIsSettingsOpen, onFinderClick }) {
   // Use Vite environment variables
   const githubUrl = import.meta.env.GITHUB || 'https://github.com/sleepyUjjal';
   const linkedinUrl = import.meta.env.LINKEDIN || 'https://linkedin.com';
@@ -9,7 +9,7 @@ function Dock({ isSettingsOpen, setIsSettingsOpen }) {
   return (
     <div className="dock">
       {/* Finder */}
-      <div className="dock__item dock__item--active" data-tooltip="Finder">
+      <div className="dock__item dock__item--active" data-tooltip="Finder" onClick={onFinderClick}>
         <svg viewBox="0 0 120 120">
           <rect width="120" height="120" rx="26" fill="url(#finderGrad)" />
           <defs>
