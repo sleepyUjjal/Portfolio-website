@@ -5,7 +5,7 @@ implementation.md
 *.jpeg
 *.webp
 *.pdf
-
+*.pem 
 /readmes
 # Dependencies
 /node_modules
