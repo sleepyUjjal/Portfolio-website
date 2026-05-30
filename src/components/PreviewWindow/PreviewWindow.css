@@ -20,12 +20,35 @@ body.light-mode .preview-app__toolbar {
   background: rgba(255, 255, 255, 0.4);
 }
 
+.preview-app__tool-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.preview-app__zoom-text {
+  font-size: 12px;
+  color: var(--text-secondary);
+  min-width: 48px;
+  text-align: center;
+  font-weight: 500;
+}
+
 .preview-app__tool {
   font-size: 12px;
   color: var(--text-secondary);
   cursor: pointer;
-  padding: 4px 8px;
-  border-radius: 4px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.preview-app__tool svg {
+  width: 16px;
+  height: 16px;
 }
 
 .preview-app__tool:hover {

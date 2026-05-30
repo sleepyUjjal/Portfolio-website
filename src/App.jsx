@@ -8,6 +8,7 @@ import PreviewWindow from './components/PreviewWindow/PreviewWindow';
 import TextEditWindow from './components/TextEditWindow/TextEditWindow';
 import ResumeViewer from './components/ResumeViewer/ResumeViewer';
 import Dock from './components/Dock/Dock';
+import { projectData } from './data/projects';
 import './App.css';
 
 const DEFAULT_WALLPAPERS = {
@@ -88,7 +89,7 @@ function App() {
 
   const handleIconDoubleClick = (id) => {
     console.log('Open from Desktop:', id);
-    if (['nullpass', 'nuancenode', 'finprocessor', 'trading-cli'].includes(id)) {
+    if (['nullpass', 'nuancenode', 'finprocessor', 'trading-cli', 'veridian'].includes(id)) {
       setOpenFolder(id);
     } else if (id === 'resume') {
       setOpenApp({ type: 'resume', file: { label: 'resume.pdf' } });
@@ -100,13 +101,34 @@ function App() {
   const handleFinderFileOpen = (file) => {
     console.log('Open from Finder:', file);
     if (file.type === 'file-image') {
-      setOpenApp({ type: 'image', file });
+      // Map project system designs to actual images in the public folder
+      let url = 'https://via.placeholder.com/800x600.png?text=System+Design';
+      if (file.id === 'system_design') {
+        if (file.project === 'nullpass') {
+          url = '/nullpass_lld.png';
+        } else if (file.project === 'nuancenode') {
+          url = '/nuancenode_lld.png';
+        } else if (file.project === 'finprocessor') {
+          url = '/finprocessor_lld.png';
+        } else if (file.project === 'trading-cli') {
+          url = '/tradingcli_lld.png';
+        } else if (file.project === 'veridian') {
+          url = '/veridian_lld.png';
+        }
+      }
+      setOpenApp({ type: 'image', file: { ...file, url } });
     } else if (file.type === 'file-text') {
-      setOpenApp({ type: 'text', file });
+      const projectInfo = projectData[file.project];
+      const content = projectInfo ? projectInfo.idea : 'No content available.';
+      setOpenApp({ type: 'text', file: { ...file, content } });
     } else if (file.type === 'folder' && file.id === 'code') {
-      window.open('https://github.com/sleepyUjjal', '_blank');
+      const projectInfo = projectData[file.project];
+      const githubUrl = projectInfo ? projectInfo.github : 'https://github.com/sleepyUjjal';
+      window.open(githubUrl, '_blank');
     } else if (file.type === 'folder' && file.id === 'livedemo') {
-      window.open('https://github.com/sleepyUjjal', '_blank'); // Mock live demo url
+      const projectInfo = projectData[file.project];
+      const demoUrl = projectInfo ? projectInfo.demo : 'https://github.com/sleepyUjjal';
+      window.open(demoUrl, '_blank');
     }
   };
 
@@ -176,6 +198,11 @@ function App() {
           label="Trading CLI"
           type="folder"
           onDoubleClick={() => handleIconDoubleClick('trading-cli')}
+        />
+        <DesktopIcon
+          label="Veridian"
+          type="folder"
+          onDoubleClick={() => handleIconDoubleClick('veridian')}
         />
 
         {/* Mock Files directly on Desktop */}

@@ -7,7 +7,8 @@ const PROJECTS = [
   { id: 'nullpass', name: 'NullPass' },
   { id: 'nuancenode', name: 'NuanceNode' },
   { id: 'finprocessor', name: 'FinProcessor' },
-  { id: 'tradingcli', name: 'Trading CLI' }
+  { id: 'trading-cli', name: 'Trading CLI' },
+  { id: 'veridian', name: 'Veridian' }
 ];
 
 const PROJECT_FILES = [
