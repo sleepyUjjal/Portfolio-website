@@ -8,6 +8,7 @@ import PreviewWindow from './components/PreviewWindow/PreviewWindow';
 import TextEditWindow from './components/TextEditWindow/TextEditWindow';
 import ResumeViewer from './components/ResumeViewer/ResumeViewer';
 import Dock from './components/Dock/Dock';
+import Terminal from './components/Terminal/Terminal';
 import { projectData } from './data/projects';
 import './App.css';
 
@@ -28,6 +29,7 @@ function App() {
   const [currentTime, setCurrentTime] = useState('');
   const [currentDate, setCurrentDate] = useState('');
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isTerminalOpen, setIsTerminalOpen] = useState(false);
   const [openFolder, setOpenFolder] = useState(null);
   const [openApp, setOpenApp] = useState(null); // { type, file }
   const [theme, setTheme] = useState('dark');
@@ -230,6 +232,7 @@ function App() {
         onFinderClick={() => {
           if (!openFolder) setOpenFolder('nullpass');
         }}
+        onTerminalClick={() => setIsTerminalOpen(true)}
       />
 
       {/* ── Overlays ── */}
@@ -269,6 +272,14 @@ function App() {
         <ResumeViewer
           file={openApp.file}
           onClose={() => setOpenApp(null)}
+        />
+      )}
+
+      {isTerminalOpen && (
+        <Terminal
+          onClose={() => setIsTerminalOpen(false)}
+          onOpenFolder={setOpenFolder}
+          onOpenApp={setOpenApp}
         />
       )}
     </div>

@@ -71,7 +71,7 @@ function MacWindow({
       <div className="mac-window__header" onMouseDown={handleMouseDown}>
         <div className="mac-window__traffic-lights">
           <div className="mac-window__btn mac-window__btn--close" onClick={onClose}></div>
-          <div className="mac-window__btn mac-window__btn--minimize"></div>
+          <div className="mac-window__btn mac-window__btn--minimize" onClick={onClose}></div>
           <div className="mac-window__btn mac-window__btn--maximize"></div>
         </div>
 

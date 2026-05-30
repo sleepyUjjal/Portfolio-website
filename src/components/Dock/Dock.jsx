@@ -1,6 +1,6 @@
 import './Dock.css';
 
-function Dock({ isSettingsOpen, setIsSettingsOpen, onFinderClick }) {
+function Dock({ isSettingsOpen, setIsSettingsOpen, onFinderClick, onTerminalClick }) {
   // Use Vite environment variables
   const githubUrl = import.meta.env.GITHUB || 'https://github.com/sleepyUjjal';
   const linkedinUrl = import.meta.env.LINKEDIN || 'https://linkedin.com';
@@ -23,6 +23,15 @@ function Dock({ isSettingsOpen, setIsSettingsOpen, onFinderClick }) {
           <circle cx="44" cy="52" r="3" fill="white" />
           <circle cx="76" cy="52" r="3" fill="white" />
           <path d="M42 68 Q50 76 58 68" stroke="white" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+        </svg>
+      </div>
+
+      {/* Terminal */}
+      <div className="dock__item" data-tooltip="Terminal" onClick={onTerminalClick}>
+        <svg viewBox="0 0 120 120">
+          <rect width="120" height="120" rx="26" fill="#1e1e1e" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
+          <path d="M32 42 L52 60 L32 78" stroke="#78dce8" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+          <line x1="58" y1="78" x2="88" y2="78" stroke="#78dce8" strokeWidth="5" strokeLinecap="round" />
         </svg>
       </div>
 
