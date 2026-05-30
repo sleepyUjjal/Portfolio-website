@@ -1,10 +1,6 @@
 context.md
 implementation.md
-*.png
-*.jpg
-*.jpeg
-*.webp
-*.pdf
+
 *.pem 
 /readmes
 # Dependencies
