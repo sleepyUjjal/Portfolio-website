@@ -95,8 +95,9 @@ function App() {
       setOpenFolder(id);
     } else if (id === 'resume') {
       setOpenApp({ type: 'resume', file: { label: 'resume.pdf' } });
-    } else if (['about', 'contact'].includes(id)) {
-      setOpenApp({ type: 'text', file: { label: id + '.txt', content: `This is the ${id} file from the Desktop.` } });
+    } else if (id === 'about') {
+      const aboutContent = `Hi everyone! I’m Ujjaldeep, an aspiring backend developer who’s curious about how things actually work behind what we see on the internet.\n\nI enjoy solving real-world problems using logic and programming, and I’m always trying to build things that are not only functional but also meaningful.\n\nI keep exploring new technologies to stay engaged and keep learning. My tech stack includes React.js for frontend and Python with Django, FastAPI, and Flask for backend development.\n\nI believe in learning from anyone and everyone, constantly improving myself every day. I’m always open to collaborating, learning, and building something impactful.`;
+      setOpenApp({ type: 'text', file: { label: 'about_me.txt', content: aboutContent } });
     }
   };
 
@@ -173,9 +174,9 @@ function App() {
           imagePosition="center 20%"
         />
         <NotesWidget
-          name="Ujjal"
+          name="Ujjaldeep Singh"
           title="Full-Stack Developer"
-          bio="Building robust systems with clean architectures. Passionate about security, AI, and elegant user experiences."
+          bio="Hi, people generally call me Ujjal. I'm a Backend developer with a keen interest in System Design. I enjoy building robust systems with clean architectures. Passionate about security, AI, and elegant user experiences."
         />
       </div>
 
@@ -217,11 +218,6 @@ function App() {
           label="about_me.txt"
           type="file-text"
           onDoubleClick={() => handleIconDoubleClick('about')}
-        />
-        <DesktopIcon
-          label="contact.txt"
-          type="file-text"
-          onDoubleClick={() => handleIconDoubleClick('contact')}
         />
       </div>
 

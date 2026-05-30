@@ -34,10 +34,12 @@
   transform: scale(1.4) translateY(-10px);
 }
 
-.dock__item svg {
-  width: 36px;
-  height: 36px;
+.dock__item svg,
+.dock__item img {
+  width: 40px;
+  height: 40px;
   border-radius: 8px;
+  object-fit: contain;
 }
 
 .dock__separator {

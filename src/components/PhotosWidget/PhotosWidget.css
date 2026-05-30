@@ -1,5 +1,5 @@
 .photos-widget {
-  width: 260px;
+  width: 320px;
   background: rgba(30, 30, 30, 0.6);
   backdrop-filter: blur(40px) saturate(150%);
   -webkit-backdrop-filter: blur(40px) saturate(150%);
@@ -35,7 +35,7 @@
 /* Photo */
 .photos-widget__photo-area {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 3/4;
   border-radius: 10px;
   overflow: hidden;
   background: rgba(255, 255, 255, 0.04);
