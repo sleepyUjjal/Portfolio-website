@@ -105,18 +105,18 @@ function App() {
     console.log('Open from Finder:', file);
     if (file.type === 'file-image') {
       // Map project system designs to actual images in the public folder
-      let url = 'https://via.placeholder.com/800x600.png?text=System+Design';
+      let url = 'https://via.placeholder.com/800x600.webp?text=System+Design';
       if (file.id === 'system_design') {
         if (file.project === 'nullpass') {
-          url = '/nullpass_lld.png';
+          url = '/nullpass_lld.webp';
         } else if (file.project === 'nuancenode') {
-          url = '/nuancenode_lld.png';
+          url = '/nuancenode_lld.webp';
         } else if (file.project === 'finprocessor') {
-          url = '/finprocessor_lld.png';
+          url = '/finprocessor_lld.webp';
         } else if (file.project === 'trading-cli') {
-          url = '/tradingcli_lld.png';
+          url = '/tradingcli_lld.webp';
         } else if (file.project === 'veridian') {
-          url = '/veridian_lld.png';
+          url = '/veridian_lld.webp';
         }
       }
       setOpenApp({ type: 'image', file: { ...file, url } });
