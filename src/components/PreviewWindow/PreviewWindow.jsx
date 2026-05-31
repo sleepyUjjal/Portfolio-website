@@ -14,6 +14,8 @@ function PreviewWindow({ file, onClose }) {
   const handleZoomOut = () => setZoom(prev => Math.max(prev - 25, 25));
   const handleRotate = () => setRotation(prev => (prev + 90) % 360);
 
+  const [isLoaded, setIsLoaded] = useState(false);
+
   // Handle trackpad pinch-to-zoom
   useEffect(() => {
     const container = containerRef.current;
@@ -63,13 +65,22 @@ function PreviewWindow({ file, onClose }) {
             display: 'flex', 
             alignItems: zoom > 100 ? 'flex-start' : 'center', 
             justifyContent: zoom > 100 ? 'flex-start' : 'center',
-            padding: '20px'
+            padding: '20px',
+            position: 'relative'
           }}
         >
+          {!isLoaded && (
+            <div style={{ position: 'absolute', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', color: 'rgba(255,255,255,0.6)' }}>
+              <div style={{ width: '24px', height: '24px', border: '3px solid rgba(255,255,255,0.1)', borderTopColor: '#78dce8', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
+              <span style={{ fontSize: '12px' }}>Loading High-Res Image...</span>
+              <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+            </div>
+          )}
           <img 
             src={imageUrl} 
             alt={file.label} 
             className="preview-app__image" 
+            onLoad={() => setIsLoaded(true)}
             style={{ 
               width: `${zoom}%`, 
               height: `${zoom}%`, 
@@ -77,8 +88,9 @@ function PreviewWindow({ file, onClose }) {
               maxHeight: 'none',
               objectFit: 'contain',
               flexShrink: 0,
+              opacity: isLoaded ? 1 : 0,
               transform: `rotate(${rotation}deg)`,
-              transition: 'transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), width 0.1s, height 0.1s',
+              transition: 'opacity 0.3s ease, transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), width 0.1s, height 0.1s',
               transformOrigin: 'center center'
             }} 
           />
