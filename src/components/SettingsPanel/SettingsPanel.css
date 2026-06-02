@@ -147,3 +147,48 @@
   font-weight: 500;
   color: var(--text-primary);
 }
+
+/* Custom Upload Tile */
+.wallpaper-item__preview--upload {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 2px dashed rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.wallpaper-item__preview--upload:hover {
+  border-color: var(--sys-blue);
+  background: rgba(0, 122, 255, 0.05);
+}
+
+.wallpaper-item--active .wallpaper-item__preview--upload {
+  border-style: solid;
+  border-color: var(--sys-blue);
+}
+
+.wallpaper-upload-icon {
+  font-size: 28px;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.4);
+  line-height: 1;
+}
+
+.settings-panel__remove-btn {
+  background: rgba(255, 69, 58, 0.15);
+  color: var(--sys-red);
+  border: 1px solid rgba(255, 69, 58, 0.25);
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+  align-self: flex-start;
+}
+
+.settings-panel__remove-btn:hover {
+  background: rgba(255, 69, 58, 0.25);
+}

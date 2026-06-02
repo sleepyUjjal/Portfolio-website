@@ -39,11 +39,19 @@ function App() {
   useEffect(() => {
     const savedTheme = localStorage.getItem('mac-theme');
     const savedWallpaper = localStorage.getItem('mac-wallpaper');
+    const customWallpaperData = localStorage.getItem('mac-custom-wallpaper-data');
 
     if (savedTheme) setTheme(savedTheme);
     if (savedWallpaper) {
       try {
-        setWallpaper(JSON.parse(savedWallpaper));
+        const parsed = JSON.parse(savedWallpaper);
+        // If it was a custom upload, rebuild the style with the saved data URL
+        if (parsed.id === 'custom-upload' && customWallpaperData) {
+          parsed.style = {
+            background: `url("${customWallpaperData}") center/cover no-repeat`
+          };
+        }
+        setWallpaper(parsed);
       } catch (e) {
         console.error('Failed to load wallpaper');
       }
@@ -61,7 +69,13 @@ function App() {
     if (wallpaper && wallpaper.style && wallpaper.style.background) {
       document.body.style.background = wallpaper.style.background;
       document.body.style.backgroundAttachment = 'fixed';
-      localStorage.setItem('mac-wallpaper', JSON.stringify(wallpaper));
+      document.body.style.backgroundSize = '';
+      // For custom uploads, save a lightweight version (data URL is stored separately)
+      if (wallpaper.id === 'custom-upload') {
+        localStorage.setItem('mac-wallpaper', JSON.stringify({ id: 'custom-upload', name: 'Custom' }));
+      } else {
+        localStorage.setItem('mac-wallpaper', JSON.stringify(wallpaper));
+      }
     }
   }, [wallpaper]);
 

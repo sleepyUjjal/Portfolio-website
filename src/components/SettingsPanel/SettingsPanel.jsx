@@ -1,8 +1,45 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import MacWindow from '../MacWindow/MacWindow';
 import './SettingsPanel.css';
 
 function SettingsPanel({ onClose, theme, setTheme, wallpaper, setWallpaper }) {
+  const fileInputRef = useRef(null);
+
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    // Check file size (max 5MB for localStorage)
+    if (file.size > 5 * 1024 * 1024) {
+      alert('Image too large! Please use an image under 5MB.');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const dataUrl = event.target.result;
+      const customWallpaper = {
+        id: 'custom-upload',
+        name: 'Custom',
+        style: {
+          background: `url("${dataUrl}") center/cover no-repeat`
+        }
+      };
+      // Save the data URL separately (wallpaper style JSON can get huge)
+      localStorage.setItem('mac-custom-wallpaper-data', dataUrl);
+      setWallpaper(customWallpaper);
+    };
+    reader.readAsDataURL(file);
+    // Reset input so same file can be re-uploaded
+    e.target.value = '';
+  };
+
+  const handleRemoveCustom = () => {
+    localStorage.removeItem('mac-custom-wallpaper-data');
+    // Revert to first default wallpaper
+    setWallpaper(wallpapers[0]);
+  };
+
   const wallpapers = [
     {
       id: 'sequoia-dark',
@@ -45,7 +82,7 @@ function SettingsPanel({ onClose, theme, setTheme, wallpaper, setWallpaper }) {
       title="System Settings" 
       onClose={onClose}
       initialWidth={550}
-      initialHeight={450}
+      initialHeight={500}
     >
       <div className="settings-panel">
         <div className="settings-panel__content">
@@ -87,7 +124,40 @@ function SettingsPanel({ onClose, theme, setTheme, wallpaper, setWallpaper }) {
                   <span className="wallpaper-item__name">{wp.name}</span>
                 </div>
               ))}
+
+              {/* Custom Upload Tile */}
+              <div 
+                className={`wallpaper-item ${wallpaper.id === 'custom-upload' ? 'wallpaper-item--active' : ''}`}
+                onClick={() => fileInputRef.current?.click()}
+              >
+                <div className="wallpaper-item__preview wallpaper-item__preview--upload"
+                  style={wallpaper.id === 'custom-upload' ? wallpaper.style : {}}
+                >
+                  {wallpaper.id !== 'custom-upload' && (
+                    <span className="wallpaper-upload-icon">+</span>
+                  )}
+                </div>
+                <span className="wallpaper-item__name">
+                  {wallpaper.id === 'custom-upload' ? 'Custom ✓' : 'Upload'}
+                </span>
+              </div>
             </div>
+
+            {/* Hidden file input */}
+            <input 
+              ref={fileInputRef}
+              type="file" 
+              accept="image/*" 
+              onChange={handleFileUpload}
+              style={{ display: 'none' }}
+            />
+
+            {/* Remove Custom button */}
+            {wallpaper.id === 'custom-upload' && (
+              <button className="settings-panel__remove-btn" onClick={handleRemoveCustom}>
+                Remove Custom Wallpaper
+              </button>
+            )}
           </div>
 
         </div>
