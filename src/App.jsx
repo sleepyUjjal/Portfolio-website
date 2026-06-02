@@ -10,6 +10,7 @@ import ResumeViewer from './components/ResumeViewer/ResumeViewer';
 import Dock from './components/Dock/Dock';
 import Terminal from './components/Terminal/Terminal';
 import MobileGate from './components/MobileGate/MobileGate';
+import BootScreen from './components/BootScreen/BootScreen';
 import { projectData } from './data/projects';
 import './App.css';
 
@@ -34,37 +35,49 @@ function App() {
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
   const [openFolder, setOpenFolder] = useState(null);
   const [openApp, setOpenApp] = useState(null); // { type, file }
-  const [theme, setTheme] = useState('dark');
-  const [wallpaper, setWallpaper] = useState(DEFAULT_WALLPAPERS['sequoia-dark']);
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('mac-theme') || 'dark';
+  });
+  
+  const [wallpaper, setWallpaper] = useState(() => {
+    const savedWallpaper = localStorage.getItem('mac-wallpaper');
+    if (savedWallpaper) {
+      try {
+        const parsed = JSON.parse(savedWallpaper);
+        if (parsed.id === 'custom-upload') {
+          const dataUrl = localStorage.getItem('mac-custom-wallpaper-data');
+          if (dataUrl) {
+            parsed.style = {
+              background: `url("${dataUrl}") center/cover no-repeat`
+            };
+          } else {
+            return DEFAULT_WALLPAPERS['sequoia-dark']; // fallback if data is missing
+          }
+        }
+        return parsed;
+      } catch (e) {
+        console.error('Failed to parse saved wallpaper');
+      }
+    }
+    return DEFAULT_WALLPAPERS['sequoia-dark'];
+  });
+
+  // Boot screen state
+  const [isBooting, setIsBooting] = useState(() => {
+    // Only show boot animation once per device
+    return !localStorage.getItem('mac-booted');
+  });
+
+  const handleBootComplete = () => {
+    localStorage.setItem('mac-booted', 'true');
+    setIsBooting(false);
+  };
 
   // Mobile detection
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  // Load saved preferences
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('mac-theme');
-    const savedWallpaper = localStorage.getItem('mac-wallpaper');
-    const customWallpaperData = localStorage.getItem('mac-custom-wallpaper-data');
-
-    if (savedTheme) setTheme(savedTheme);
-    if (savedWallpaper) {
-      try {
-        const parsed = JSON.parse(savedWallpaper);
-        // If it was a custom upload, rebuild the style with the saved data URL
-        if (parsed.id === 'custom-upload' && customWallpaperData) {
-          parsed.style = {
-            background: `url("${customWallpaperData}") center/cover no-repeat`
-          };
-        }
-        setWallpaper(parsed);
-      } catch (e) {
-        console.error('Failed to load wallpaper');
-      }
-    }
   }, []);
 
   // Apply theme class to document body
@@ -78,7 +91,6 @@ function App() {
     if (wallpaper && wallpaper.style && wallpaper.style.background) {
       document.body.style.background = wallpaper.style.background;
       document.body.style.backgroundAttachment = 'fixed';
-      document.body.style.backgroundSize = '';
       // For custom uploads, save a lightweight version (data URL is stored separately)
       if (wallpaper.id === 'custom-upload') {
         localStorage.setItem('mac-wallpaper', JSON.stringify({ id: 'custom-upload', name: 'Custom' }));
@@ -164,8 +176,10 @@ function App() {
   }
 
   return (
-    <div className="desktop">
-      {/* ── Menu Bar ── */}
+    <>
+      {isBooting && <BootScreen onComplete={handleBootComplete} />}
+      <div className="desktop" style={{ opacity: isBooting ? 0 : 1, transition: 'opacity 0.5s ease' }}>
+        {/* ── Menu Bar ── */}
       <div className="menu-bar">
         <div className="menu-bar__left">
           <span className="menu-bar__apple">&#63743;</span>
@@ -307,6 +321,7 @@ function App() {
         />
       )}
     </div>
+    </>
   );
 }
 

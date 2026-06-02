@@ -9,25 +9,60 @@ function SettingsPanel({ onClose, theme, setTheme, wallpaper, setWallpaper }) {
     const file = e.target.files[0];
     if (!file) return;
 
-    // Check file size (max 5MB for localStorage)
-    if (file.size > 5 * 1024 * 1024) {
-      alert('Image too large! Please use an image under 5MB.');
+    // Check file size (max 10MB for localStorage)
+    if (file.size > 10 * 1024 * 1024) {
+      alert('Image too large! Please use an image under 10MB.');
       return;
     }
 
     const reader = new FileReader();
     reader.onload = (event) => {
-      const dataUrl = event.target.result;
-      const customWallpaper = {
-        id: 'custom-upload',
-        name: 'Custom',
-        style: {
-          background: `url("${dataUrl}") center/cover no-repeat`
+      const img = new Image();
+      img.onload = () => {
+        // Compress image using canvas to avoid localStorage 5MB quota limit
+        const canvas = document.createElement('canvas');
+        const MAX_WIDTH = 2560;
+        const MAX_HEIGHT = 1440;
+        let width = img.width;
+        let height = img.height;
+
+        // Maintain aspect ratio while scaling down
+        if (width > height) {
+          if (width > MAX_WIDTH) {
+            height *= MAX_WIDTH / width;
+            width = MAX_WIDTH;
+          }
+        } else {
+          if (height > MAX_HEIGHT) {
+            width *= MAX_HEIGHT / height;
+            height = MAX_HEIGHT;
+          }
+        }
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        
+        // Export as compressed WebP (great size reduction)
+        const compressedDataUrl = canvas.toDataURL('image/webp', 0.85);
+
+        const customWallpaper = {
+          id: 'custom-upload',
+          name: 'Custom',
+          style: {
+            background: `url("${compressedDataUrl}") center/cover no-repeat`
+          }
+        };
+
+        try {
+          localStorage.setItem('mac-custom-wallpaper-data', compressedDataUrl);
+          setWallpaper(customWallpaper);
+        } catch (e) {
+          console.error('Storage error:', e);
+          alert('Image is still too large to save in browser memory. Please try a smaller file.');
         }
       };
-      // Save the data URL separately (wallpaper style JSON can get huge)
-      localStorage.setItem('mac-custom-wallpaper-data', dataUrl);
-      setWallpaper(customWallpaper);
+      img.src = event.target.result;
     };
     reader.readAsDataURL(file);
     // Reset input so same file can be re-uploaded
