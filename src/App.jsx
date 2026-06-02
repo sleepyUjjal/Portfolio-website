@@ -9,6 +9,7 @@ import TextEditWindow from './components/TextEditWindow/TextEditWindow';
 import ResumeViewer from './components/ResumeViewer/ResumeViewer';
 import Dock from './components/Dock/Dock';
 import Terminal from './components/Terminal/Terminal';
+import MobileGate from './components/MobileGate/MobileGate';
 import { projectData } from './data/projects';
 import './App.css';
 
@@ -26,6 +27,7 @@ const DEFAULT_WALLPAPERS = {
 };
 
 function App() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [currentTime, setCurrentTime] = useState('');
   const [currentDate, setCurrentDate] = useState('');
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -34,6 +36,13 @@ function App() {
   const [openApp, setOpenApp] = useState(null); // { type, file }
   const [theme, setTheme] = useState('dark');
   const [wallpaper, setWallpaper] = useState(DEFAULT_WALLPAPERS['sequoia-dark']);
+
+  // Mobile detection
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Load saved preferences
   useEffect(() => {
@@ -148,6 +157,11 @@ function App() {
       window.open(demoUrl, '_blank');
     }
   };
+
+  // Mobile gate — show redirect screen instead of desktop
+  if (isMobile) {
+    return <MobileGate />;
+  }
 
   return (
     <div className="desktop">
