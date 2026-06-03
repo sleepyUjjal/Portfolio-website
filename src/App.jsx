@@ -12,6 +12,8 @@ import Dock from './components/Dock/Dock';
 import Terminal from './components/Terminal/Terminal';
 import MobileGate from './components/MobileGate/MobileGate';
 import BootScreen from './components/BootScreen/BootScreen';
+import ContextMenu from './components/ContextMenu/ContextMenu';
+import NotificationCenter from './components/NotificationCenter/NotificationCenter';
 import { projectData } from './data/projects';
 import './App.css';
 
@@ -262,6 +264,36 @@ function App() {
     return <MobileGate />;
   }
 
+  // ── Context Menu ──
+  const [contextMenu, setContextMenu] = useState(null);
+
+  const handleContextMenu = (e) => {
+    // Prevent context menu on windows and dock
+    if (e.target.closest('.mac-window-wrapper') || e.target.closest('.dock')) return;
+    
+    e.preventDefault();
+    setContextMenu({
+      x: e.clientX,
+      y: e.clientY,
+      items: [
+        { label: 'Change Wallpaper...', action: () => openWindow('settings', { id: 'settings' }) },
+        { separator: true },
+        { label: 'Open Terminal', action: () => openWindow('terminal', { id: 'terminal' }) },
+        { separator: true },
+        { label: 'Reset Icon Positions', action: () => {
+            localStorage.removeItem('mac-icon-positions');
+            setIconPositions(generateDefaultPositions());
+          }
+        },
+        { separator: true },
+        { label: 'About This Mac', action: () => handleIconDoubleClick('about') },
+      ]
+    });
+  };
+
+  // ── Notification Center ──
+  const [isNCOpen, setIsNCOpen] = useState(false);
+
   // ── Window animation variants ──
   const windowVariants = {
     initial: { opacity: 0, scale: 0.92, y: 12 },
@@ -272,7 +304,11 @@ function App() {
   return (
     <>
       {isBooting && <BootScreen onComplete={handleBootComplete} />}
-      <div className="desktop" style={{ opacity: isBooting ? 0 : 1, transition: 'opacity 0.5s ease' }}>
+      <div 
+        className="desktop" 
+        style={{ opacity: isBooting ? 0 : 1, transition: 'opacity 0.5s ease' }}
+        onContextMenu={handleContextMenu}
+      >
         {/* ── Menu Bar ── */}
       <div className="menu-bar">
         <div className="menu-bar__left">
@@ -298,7 +334,9 @@ function App() {
             <path d="M3.5 6.5C4.5 5.5 5.8 5 7 5C8.2 5 9.5 5.5 10.5 6.5" stroke="white" strokeOpacity="0.7" strokeWidth="1.2" strokeLinecap="round" fill="none" />
             <path d="M1.5 4C3 2.5 5 1.5 7 1.5C9 1.5 11 2.5 12.5 4" stroke="white" strokeOpacity="0.5" strokeWidth="1.2" strokeLinecap="round" fill="none" />
           </svg>
-          <span className="menu-bar__time">{currentDate} {currentTime}</span>
+          <span className="menu-bar__time" onClick={() => setIsNCOpen(!isNCOpen)} style={{ cursor: 'pointer' }}>
+            {currentDate} {currentTime}
+          </span>
         </div>
       </div>
 
@@ -393,6 +431,20 @@ function App() {
           );
         })}
       </AnimatePresence>
+
+      {/* ── Context Menu ── */}
+      {contextMenu && (
+        <ContextMenu 
+          x={contextMenu.x} 
+          y={contextMenu.y} 
+          items={contextMenu.items} 
+          onClose={() => setContextMenu(null)} 
+        />
+      )}
+
+      {/* ── Notification Center ── */}
+      <NotificationCenter isOpen={isNCOpen} onClose={() => setIsNCOpen(false)} />
+
     </div>
     </>
   );
