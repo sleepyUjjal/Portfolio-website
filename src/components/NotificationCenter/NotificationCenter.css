@@ -1,13 +1,13 @@
 .notification-center {
   position: absolute;
-  top: 35px; /* Just below menu bar */
+  top: 35px;
   right: 5px;
   bottom: 5px;
   width: 320px;
-  background: rgba(30, 30, 30, 0.85); /* Solid fallback */
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: #1e1e1e;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
-  box-shadow: -5px 0 30px rgba(0, 0, 0, 0.3);
+  box-shadow: -5px 0 40px rgba(0, 0, 0, 0.6);
   z-index: 9000;
   padding: 15px;
   display: flex;
@@ -17,24 +17,10 @@
   color: #fff;
 }
 
-@supports ((-webkit-backdrop-filter: blur(40px)) or (backdrop-filter: blur(40px))) {
-  .notification-center {
-    background: rgba(30, 30, 30, 0.45);
-    backdrop-filter: blur(40px) saturate(180%);
-    -webkit-backdrop-filter: blur(40px) saturate(180%);
-  }
-}
-
 body.light-mode .notification-center {
-  background: rgba(255, 255, 255, 0.95); /* Solid fallback */
+  background: #f0f0f0;
   border: 1px solid rgba(0, 0, 0, 0.1);
   color: #000;
-}
-
-@supports ((-webkit-backdrop-filter: blur(40px)) or (backdrop-filter: blur(40px))) {
-  body.light-mode .notification-center {
-    background: rgba(255, 255, 255, 0.45);
-  }
 }
 
 .notification-center::-webkit-scrollbar {
@@ -42,16 +28,15 @@ body.light-mode .notification-center {
 }
 
 .nc-widget {
-  background: rgba(255, 255, 255, 0.1);
+  background: #2a2a2a;
   border-radius: 14px;
   padding: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  /* Removed nested backdrop-filter to prevent browser rendering bugs */
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 body.light-mode .nc-widget {
-  background: rgba(255, 255, 255, 0.5);
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  background: #e8e8e8;
+  border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .nc-widget__header {
