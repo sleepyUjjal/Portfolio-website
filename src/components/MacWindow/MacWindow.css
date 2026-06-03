@@ -140,3 +140,41 @@
   overflow: hidden;
   position: relative;
 }
+
+/* Resize Handle */
+.mac-window__resize-handle {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 15px;
+  height: 15px;
+  cursor: nwse-resize;
+  z-index: 100;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.mac-window-wrapper:hover .mac-window__resize-handle {
+  opacity: 1;
+}
+
+/* Optionally add a visual indicator for the resize handle */
+.mac-window__resize-handle::after {
+  content: '';
+  position: absolute;
+  bottom: 3px;
+  right: 3px;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid rgba(255, 255, 255, 0.3);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 1px;
+}
+
+body.light-mode .mac-window__resize-handle::after {
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.mac-window-wrapper--maximized {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), width 0.3s cubic-bezier(0.16, 1, 0.3, 1), height 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
