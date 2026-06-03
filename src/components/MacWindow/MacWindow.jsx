@@ -8,7 +8,10 @@ function MacWindow({
   actionButton = null,
   initialWidth = 800,
   initialHeight = 500,
-  sidebar = false
+  sidebar = false,
+  zIndex = 200,
+  onFocus,
+  onMinimize
 }) {
   const [position, setPosition] = useState({
     x: window.innerWidth / 2 - initialWidth / 2,
@@ -65,13 +68,15 @@ function MacWindow({
         transform: `translate(${position.x}px, ${position.y}px)`,
         position: 'absolute',
         top: 0,
-        left: 0
+        left: 0,
+        zIndex: zIndex
       }}
+      onMouseDown={onFocus}
     >
       <div className="mac-window__header" onMouseDown={handleMouseDown}>
         <div className="mac-window__traffic-lights">
           <div className="mac-window__btn mac-window__btn--close" onClick={onClose}></div>
-          <div className="mac-window__btn mac-window__btn--minimize" onClick={onClose}></div>
+          <div className="mac-window__btn mac-window__btn--minimize" onClick={onMinimize || onClose}></div>
           <div className="mac-window__btn mac-window__btn--maximize"></div>
         </div>
 

@@ -56,7 +56,7 @@ const TEA_ART = `
 
 const MATRIX_CHARS = 'ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ01234567890:・."=*+-<>¦|╌';
 
-function Terminal({ onClose, onOpenFolder, onOpenApp }) {
+function Terminal({ onClose, onOpenFolder, onOpenApp, zIndex, onFocus, onMinimize }) {
   const githubUrl = import.meta.env.GITHUB || 'https://github.com/sleepyUjjal';
   const linkedinUrl = import.meta.env.LINKEDIN || 'https://linkedin.com';
   const emailAddress = import.meta.env.EMAIL || 'your@email.com';
@@ -393,6 +393,9 @@ Currently exploring: Systems Design, Distributed Systems, and DevOps.
       onClose={onClose}
       initialWidth={700}
       initialHeight={450}
+      zIndex={zIndex}
+      onFocus={onFocus}
+      onMinimize={onMinimize}
     >
       <div className="terminal" onClick={handleTerminalClick}>
         {matrixActive && <div className="terminal__matrix-overlay" />}

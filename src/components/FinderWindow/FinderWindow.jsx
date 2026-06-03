@@ -18,7 +18,7 @@ const PROJECT_FILES = [
   { id: 'idea', label: 'idea.txt', type: 'file-text' }
 ];
 
-function FinderWindow({ onClose, onOpenFile, initialProject = 'nullpass' }) {
+function FinderWindow({ onClose, onOpenFile, initialProject = 'nullpass', zIndex, onFocus, onMinimize }) {
   const [selectedProject, setSelectedProject] = useState(initialProject);
   const [selectedFile, setSelectedFile] = useState(null);
 
@@ -31,6 +31,9 @@ function FinderWindow({ onClose, onOpenFile, initialProject = 'nullpass' }) {
       initialWidth={750}
       initialHeight={450}
       sidebar={true}
+      zIndex={zIndex}
+      onFocus={onFocus}
+      onMinimize={onMinimize}
     >
       <div className="finder">
         {/* Sidebar */}

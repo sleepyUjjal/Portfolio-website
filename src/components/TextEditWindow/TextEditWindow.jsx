@@ -1,7 +1,7 @@
 import MacWindow from '../MacWindow/MacWindow';
 import './TextEditWindow.css';
 
-function TextEditWindow({ file, onClose }) {
+function TextEditWindow({ file, onClose, zIndex, onFocus, onMinimize }) {
   // Mock content
   const content = file.content || `This is the content of ${file.label}.\n\nIt can contain multiple lines of text, mimicking a real TextEdit document on macOS.\n\nYou can edit this text but it won't save permanently!`;
 
@@ -11,6 +11,9 @@ function TextEditWindow({ file, onClose }) {
       onClose={onClose}
       initialWidth={600}
       initialHeight={450}
+      zIndex={zIndex}
+      onFocus={onFocus}
+      onMinimize={onMinimize}
     >
       <div className="textedit-app">
         <div className="textedit-app__toolbar">

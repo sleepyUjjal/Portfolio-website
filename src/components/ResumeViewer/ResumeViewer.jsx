@@ -2,7 +2,7 @@ import { useState } from 'react';
 import MacWindow from '../MacWindow/MacWindow';
 import './ResumeViewer.css';
 
-function ResumeViewer({ file, onClose }) {
+function ResumeViewer({ file, onClose, zIndex, onFocus, onMinimize }) {
   const resumeUrl = file?.url || '/resume_ujjal.pdf';
 
   const downloadButton = (
@@ -30,6 +30,9 @@ function ResumeViewer({ file, onClose }) {
       onClose={onClose}
       initialWidth={800}
       initialHeight={700}
+      zIndex={zIndex}
+      onFocus={onFocus}
+      onMinimize={onMinimize}
       actionButton={downloadButton}
     >
       <div className="resume-viewer">

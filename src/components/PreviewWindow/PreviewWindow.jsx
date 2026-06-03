@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import MacWindow from '../MacWindow/MacWindow';
 import './PreviewWindow.css';
 
-function PreviewWindow({ file, onClose }) {
+function PreviewWindow({ file, onClose, zIndex, onFocus, onMinimize }) {
   const [zoom, setZoom] = useState(100);
   const [rotation, setRotation] = useState(0);
   const containerRef = useRef(null);
@@ -39,6 +39,9 @@ function PreviewWindow({ file, onClose }) {
       onClose={onClose}
       initialWidth={800}
       initialHeight={600}
+      zIndex={zIndex}
+      onFocus={onFocus}
+      onMinimize={onMinimize}
     >
       <div className="preview-app">
         <div className="preview-app__toolbar">

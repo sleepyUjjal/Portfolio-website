@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import MacWindow from '../MacWindow/MacWindow';
 import './SettingsPanel.css';
 
-function SettingsPanel({ onClose, theme, setTheme, wallpaper, setWallpaper }) {
+function SettingsPanel({ onClose, theme, setTheme, wallpaper, setWallpaper, zIndex, onFocus, onMinimize }) {
   const fileInputRef = useRef(null);
 
   const handleFileUpload = (e) => {
@@ -118,6 +118,9 @@ function SettingsPanel({ onClose, theme, setTheme, wallpaper, setWallpaper }) {
       onClose={onClose}
       initialWidth={550}
       initialHeight={500}
+      zIndex={zIndex}
+      onFocus={onFocus}
+      onMinimize={onMinimize}
     >
       <div className="settings-panel">
         <div className="settings-panel__content">

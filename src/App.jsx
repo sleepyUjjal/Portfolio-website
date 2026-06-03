@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import DesktopIcon from './components/DesktopIcon/DesktopIcon';
 import PhotosWidget from './components/PhotosWidget/PhotosWidget';
 import NotesWidget from './components/NotesWidget/NotesWidget';
@@ -31,14 +32,55 @@ function App() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [currentTime, setCurrentTime] = useState('');
   const [currentDate, setCurrentDate] = useState('');
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [isTerminalOpen, setIsTerminalOpen] = useState(false);
-  const [openFolder, setOpenFolder] = useState(null);
-  const [openApp, setOpenApp] = useState(null); // { type, file }
+
+  // ── Window Management System ──
+  const [windows, setWindows] = useState([]);
+  const [topZ, setTopZ] = useState(200);
+
+  const openWindow = (type, props = {}) => {
+    setTopZ(z => {
+      const newZ = z + 1;
+      setWindows(prev => {
+        // Exact match — bring to front and un-minimize
+        const exactIdx = prev.findIndex(w => w.type === type && w.props.id === props.id);
+        if (exactIdx >= 0) {
+          return prev.map((w, i) => i === exactIdx ? { ...w, zIndex: newZ, isMinimized: false } : w);
+        }
+        // Un-minimize latest minimized window of same type
+        const minimized = prev.filter(w => w.type === type && w.isMinimized);
+        if (minimized.length > 0) {
+          const latest = minimized[minimized.length - 1];
+          return prev.map(w => w.id === latest.id ? { ...w, zIndex: newZ, isMinimized: false } : w);
+        }
+        // Create new window
+        const id = `${type}-${Date.now()}`;
+        return [...prev, { id, type, props, zIndex: newZ, isMinimized: false }];
+      });
+      return newZ;
+    });
+  };
+
+  const closeWindow = (id) => setWindows(prev => prev.filter(w => w.id !== id));
+
+  const minimizeWindow = (id) => setWindows(prev =>
+    prev.map(w => w.id === id ? { ...w, isMinimized: true } : w)
+  );
+
+  const bringToFront = (id) => {
+    setTopZ(z => {
+      const newZ = z + 1;
+      setWindows(prev =>
+        prev.map(w => w.id === id ? { ...w, zIndex: newZ, isMinimized: false } : w)
+      );
+      return newZ;
+    });
+  };
+
+  // ── Theme & Wallpaper ──
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem('mac-theme') || 'dark';
   });
-  
+
   const [wallpaper, setWallpaper] = useState(() => {
     const savedWallpaper = localStorage.getItem('mac-wallpaper');
     if (savedWallpaper) {
@@ -51,7 +93,7 @@ function App() {
               background: `url("${dataUrl}") center/cover no-repeat`
             };
           } else {
-            return DEFAULT_WALLPAPERS['sequoia-dark']; // fallback if data is missing
+            return DEFAULT_WALLPAPERS['sequoia-dark'];
           }
         }
         return parsed;
@@ -62,9 +104,8 @@ function App() {
     return DEFAULT_WALLPAPERS['sequoia-dark'];
   });
 
-  // Boot screen state
+  // ── Boot Screen ──
   const [isBooting, setIsBooting] = useState(() => {
-    // Only show boot animation once per device
     return !localStorage.getItem('mac-booted');
   });
 
@@ -80,18 +121,17 @@ function App() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Apply theme class to document body
+  // Apply theme
   useEffect(() => {
     document.body.className = theme === 'light' ? 'light-mode' : '';
     localStorage.setItem('mac-theme', theme);
   }, [theme]);
 
-  // Apply wallpaper style to body or desktop container and save
+  // Apply wallpaper
   useEffect(() => {
     if (wallpaper && wallpaper.style && wallpaper.style.background) {
       document.body.style.background = wallpaper.style.background;
       document.body.style.backgroundAttachment = 'fixed';
-      // For custom uploads, save a lightweight version (data URL is stored separately)
       if (wallpaper.id === 'custom-upload') {
         localStorage.setItem('mac-wallpaper', JSON.stringify({ id: 'custom-upload', name: 'Custom' }));
       } else {
@@ -100,7 +140,7 @@ function App() {
     }
   }, [wallpaper]);
 
-  // Clock logic
+  // Clock
   useEffect(() => {
     const update = () => {
       const now = new Date();
@@ -124,41 +164,24 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
-  const handleIconDoubleClick = (id) => {
-    console.log('Open from Desktop:', id);
-    if (['nullpass', 'nuancenode', 'finprocessor', 'trading-cli', 'veridian'].includes(id)) {
-      setOpenFolder(id);
-    } else if (id === 'resume') {
-      setOpenApp({ type: 'resume', file: { label: 'resume.pdf' } });
-    } else if (id === 'about') {
-      const aboutContent = `Hi everyone! I’m Ujjaldeep, an aspiring backend developer who’s curious about how things actually work behind what we see on the internet.\n\nI enjoy solving real-world problems using logic and programming, and I’m always trying to build things that are not only functional but also meaningful.\n\nI keep exploring new technologies to stay engaged and keep learning. My tech stack includes React.js for frontend and Python with Django, FastAPI, and Flask for backend development.\n\nI believe in learning from anyone and everyone, constantly improving myself every day. I’m always open to collaborating, learning, and building something impactful.`;
-      setOpenApp({ type: 'text', file: { label: 'about_me.txt', content: aboutContent } });
-    }
-  };
-
-  const handleFinderFileOpen = (file) => {
-    console.log('Open from Finder:', file);
-    if (file.type === 'file-image') {
-      // Map project system designs to actual images in the public folder
-      let url = 'https://via.placeholder.com/800x600.webp?text=System+Design';
-      if (file.id === 'system_design') {
-        if (file.project === 'nullpass') {
-          url = '/nullpass_lld.webp';
-        } else if (file.project === 'nuancenode') {
-          url = '/nuancenode_lld.webp';
-        } else if (file.project === 'finprocessor') {
-          url = '/finprocessor_lld.webp';
-        } else if (file.project === 'trading-cli') {
-          url = '/tradingcli_lld.webp';
-        } else if (file.project === 'veridian') {
-          url = '/veridian_lld.webp';
-        }
+  // ── Unified double-click handler ──
+  const handleIconDoubleClick = (file) => {
+    // Handle string IDs from desktop icons
+    if (typeof file === 'string') {
+      if (['nullpass', 'nuancenode', 'finprocessor', 'trading-cli', 'veridian'].includes(file)) {
+        openWindow('finder', { id: file, initialProject: file });
+      } else if (file === 'resume') {
+        openWindow('resume', { id: 'resume', file: { label: 'resume.pdf', url: '/resume_ujjal.pdf' } });
+      } else if (file === 'about') {
+        const aboutContent = `Hi everyone! I'm Ujjaldeep, an aspiring backend developer who's curious about how things actually work behind what we see on the internet.\n\nI enjoy solving real-world problems using logic and programming, and I'm always trying to build things that are not only functional but also meaningful.\n\nI keep exploring new technologies to stay engaged and keep learning. My tech stack includes React.js for frontend and Python with Django, FastAPI, and Flask for backend development.\n\nI believe in learning from anyone and everyone, constantly improving myself every day. I'm always open to collaborating, learning, and building something impactful.`;
+        openWindow('text', { id: 'about', file: { label: 'about_me.txt', content: aboutContent } });
       }
-      setOpenApp({ type: 'image', file: { ...file, url } });
-    } else if (file.type === 'file-text') {
-      const projectInfo = projectData[file.project];
-      const content = projectInfo ? projectInfo.idea : 'No content available.';
-      setOpenApp({ type: 'text', file: { ...file, content } });
+      return;
+    }
+
+    // Handle object files from Finder
+    if (file.id === 'resume') {
+      openWindow('resume', { id: 'resume', file: { label: 'resume.pdf', url: '/resume_ujjal.pdf' } });
     } else if (file.type === 'folder' && file.id === 'code') {
       const projectInfo = projectData[file.project];
       const githubUrl = projectInfo ? projectInfo.github : 'https://github.com/sleepyUjjal';
@@ -167,13 +190,34 @@ function App() {
       const projectInfo = projectData[file.project];
       const demoUrl = projectInfo ? projectInfo.demo : 'https://github.com/sleepyUjjal';
       window.open(demoUrl, '_blank');
+    } else if (file.type === 'file-image') {
+      let url = 'https://via.placeholder.com/800x600.webp?text=System+Design';
+      if (file.id === 'system_design') {
+        if (file.project === 'nullpass') url = '/nullpass_lld.webp';
+        else if (file.project === 'nuancenode') url = '/nuancenode_lld.webp';
+        else if (file.project === 'finprocessor') url = '/finprocessor_lld.webp';
+        else if (file.project === 'trading-cli') url = '/tradingcli_lld.webp';
+        else if (file.project === 'veridian') url = '/veridian_lld.webp';
+      }
+      openWindow('preview', { id: file.id + '-' + (file.project || ''), file: { ...file, url } });
+    } else if (file.type === 'file-text') {
+      const projectInfo = projectData[file.project];
+      const content = projectInfo ? projectInfo.idea : 'No content available.';
+      openWindow('text', { id: file.id + '-' + (file.project || ''), file: { ...file, content } });
     }
   };
 
-  // Mobile gate — show redirect screen instead of desktop
+  // Mobile gate
   if (isMobile) {
     return <MobileGate />;
   }
+
+  // ── Window animation variants ──
+  const windowVariants = {
+    initial: { opacity: 0, scale: 0.92, y: 12 },
+    animate: { opacity: 1, scale: 1, y: 0 },
+    exit: { opacity: 0, scale: 0.95, transition: { duration: 0.15 } }
+  };
 
   return (
     <>
@@ -254,7 +298,7 @@ function App() {
         <DesktopIcon
           label="resume.pdf"
           type="file-text"
-          onDoubleClick={() => setOpenApp({ type: 'resume', file: { label: 'resume.pdf', url: '/resume_ujjal.pdf' } })}
+          onDoubleClick={() => handleIconDoubleClick('resume')}
         />
         <DesktopIcon
           label="about_me.txt"
@@ -265,61 +309,66 @@ function App() {
 
       {/* ── Dock ── */}
       <Dock
-        isSettingsOpen={isSettingsOpen}
-        setIsSettingsOpen={setIsSettingsOpen}
-        onFinderClick={() => {
-          if (!openFolder) setOpenFolder('nullpass');
-        }}
-        onTerminalClick={() => setIsTerminalOpen(true)}
+        windows={windows}
+        onBringToFront={bringToFront}
+        onOpenFinder={() => openWindow('finder', { id: 'home', initialProject: 'nullpass' })}
+        onOpenSettings={() => openWindow('settings', { id: 'settings' })}
+        onOpenTerminal={() => openWindow('terminal', { id: 'terminal' })}
       />
 
-      {/* ── Overlays ── */}
-      {isSettingsOpen && (
-        <SettingsPanel
-          onClose={() => setIsSettingsOpen(false)}
-          theme={theme}
-          setTheme={setTheme}
-          wallpaper={wallpaper}
-          setWallpaper={setWallpaper}
-        />
-      )}
+      {/* ── Render All Open Windows ── */}
+      <AnimatePresence>
+        {windows.map(win => {
+          if (win.isMinimized) return null;
 
-      {openFolder && (
-        <FinderWindow
-          initialProject={openFolder}
-          onClose={() => setOpenFolder(null)}
-          onOpenFile={handleFinderFileOpen}
-        />
-      )}
+          const sharedProps = {
+            onClose: () => closeWindow(win.id),
+            zIndex: win.zIndex,
+            onFocus: () => bringToFront(win.id),
+            onMinimize: () => minimizeWindow(win.id),
+          };
 
-      {openApp && openApp.type === 'image' && (
-        <PreviewWindow
-          file={openApp.file}
-          onClose={() => setOpenApp(null)}
-        />
-      )}
+          let content = null;
+          switch (win.type) {
+            case 'settings':
+              content = <SettingsPanel {...sharedProps} theme={theme} setTheme={setTheme} wallpaper={wallpaper} setWallpaper={setWallpaper} />;
+              break;
+            case 'finder':
+              content = <FinderWindow {...sharedProps} folderId={win.props.id} initialProject={win.props.initialProject} onOpenFile={handleIconDoubleClick} />;
+              break;
+            case 'preview':
+              content = <PreviewWindow {...sharedProps} file={win.props.file} />;
+              break;
+            case 'text':
+              content = <TextEditWindow {...sharedProps} file={win.props.file} />;
+              break;
+            case 'resume':
+              content = <ResumeViewer {...sharedProps} file={win.props.file} />;
+              break;
+            case 'terminal':
+              content = <Terminal {...sharedProps} onOpenFolder={(props) => openWindow('finder', props)} onOpenApp={(t, props) => openWindow(t, props)} />;
+              break;
+            default:
+              return null;
+          }
 
-      {openApp && openApp.type === 'text' && (
-        <TextEditWindow
-          file={openApp.file}
-          onClose={() => setOpenApp(null)}
-        />
-      )}
-
-      {openApp && openApp.type === 'resume' && (
-        <ResumeViewer
-          file={openApp.file}
-          onClose={() => setOpenApp(null)}
-        />
-      )}
-
-      {isTerminalOpen && (
-        <Terminal
-          onClose={() => setIsTerminalOpen(false)}
-          onOpenFolder={setOpenFolder}
-          onOpenApp={setOpenApp}
-        />
-      )}
+          return (
+            <motion.div
+              key={win.id}
+              variants={windowVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              transition={{ type: "spring", stiffness: 450, damping: 28 }}
+              style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, pointerEvents: 'none', zIndex: win.zIndex }}
+            >
+              <div style={{ pointerEvents: 'auto', width: '100%', height: '100%' }}>
+                {content}
+              </div>
+            </motion.div>
+          );
+        })}
+      </AnimatePresence>
     </div>
     </>
   );
