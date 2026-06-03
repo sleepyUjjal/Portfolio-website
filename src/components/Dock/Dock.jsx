@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import './Dock.css';
 
-function Dock({ windows = [], onBringToFront, onOpenFinder, onOpenTerminal, onOpenSettings }) {
+function Dock({ windows = [], onBringToFront, onOpenFinder, onOpenTerminal, onOpenSettings, onOpenLaunchpad }) {
   const githubUrl = import.meta.env.GITHUB || 'https://github.com/sleepyUjjal';
   const linkedinUrl = import.meta.env.LINKEDIN || 'https://linkedin.com';
   const emailAddress = import.meta.env.EMAIL || 'your@email.com';
@@ -52,6 +52,11 @@ function Dock({ windows = [], onBringToFront, onOpenFinder, onOpenTerminal, onOp
         {/* Finder — always visible */}
         <motion.div layout key="finder" className={`dock__item ${isFinderOpen ? 'dock__item--active' : ''}`} data-tooltip="Finder" onClick={onOpenFinder}>
           <img src="/icons/finder.webp" alt="Finder" />
+        </motion.div>
+
+        {/* Launchpad — always visible */}
+        <motion.div layout key="launchpad" className="dock__item" data-tooltip="Launchpad" onClick={onOpenLaunchpad}>
+          <img src="/icons/launchpad.webp" alt="Launchpad" />
         </motion.div>
 
         {/* Terminal — always visible */}

@@ -14,6 +14,7 @@ import MobileGate from './components/MobileGate/MobileGate';
 import BootScreen from './components/BootScreen/BootScreen';
 import ContextMenu from './components/ContextMenu/ContextMenu';
 import NotificationCenter from './components/NotificationCenter/NotificationCenter';
+import Launchpad from './components/Launchpad/Launchpad';
 import { projectData } from './data/projects';
 import './App.css';
 
@@ -294,6 +295,9 @@ function App() {
   // ── Notification Center ──
   const [isNCOpen, setIsNCOpen] = useState(false);
 
+  // ── Launchpad ──
+  const [isLaunchpadOpen, setIsLaunchpadOpen] = useState(false);
+
   // ── Window animation variants ──
   const windowVariants = {
     initial: { opacity: 0, scale: 0.92, y: 12 },
@@ -376,6 +380,7 @@ function App() {
         onOpenFinder={() => openWindow('finder', { id: 'home', initialProject: 'nullpass' })}
         onOpenSettings={() => openWindow('settings', { id: 'settings' })}
         onOpenTerminal={() => openWindow('terminal', { id: 'terminal' })}
+        onOpenLaunchpad={() => setIsLaunchpadOpen(true)}
       />
 
       {/* ── Render All Open Windows ── */}
@@ -445,6 +450,25 @@ function App() {
       {/* ── Notification Center ── */}
       <NotificationCenter isOpen={isNCOpen} onClose={() => setIsNCOpen(false)} />
 
+      {/* ── Launchpad ── */}
+      <Launchpad 
+        isOpen={isLaunchpadOpen} 
+        onClose={() => setIsLaunchpadOpen(false)} 
+        onOpenApp={(id) => {
+          if (id === 'finder' || id === 'nullpass' || id === 'nuancenode' || id === 'finprocessor' || id === 'trading-cli' || id === 'veridian') {
+            openWindow('finder', { id: 'home', initialProject: id === 'finder' ? 'nullpass' : id });
+          } else if (id === 'terminal') {
+            openWindow('terminal', { id: 'terminal' });
+          } else if (id === 'settings') {
+            openWindow('settings', { id: 'settings' });
+          } else if (id === 'textedit' || id === 'preview') {
+             // Fallback to opening home folder to select a file
+             openWindow('finder', { id: 'home', initialProject: 'nullpass' });
+          } else {
+             handleIconDoubleClick(id);
+          }
+        }}
+      />
     </div>
     </>
   );
