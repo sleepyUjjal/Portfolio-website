@@ -271,7 +271,7 @@ function App() {
   const handleContextMenu = (e) => {
     // Prevent context menu on windows and dock
     if (e.target.closest('.mac-window-wrapper') || e.target.closest('.dock')) return;
-    
+
     e.preventDefault();
     setContextMenu({
       x: e.clientX,
@@ -281,7 +281,8 @@ function App() {
         { separator: true },
         { label: 'Open Terminal', action: () => openWindow('terminal', { id: 'terminal' }) },
         { separator: true },
-        { label: 'Reset Icon Positions', action: () => {
+        {
+          label: 'Reset Icon Positions', action: () => {
             localStorage.removeItem('mac-icon-positions');
             setIconPositions(generateDefaultPositions());
           }
@@ -308,168 +309,169 @@ function App() {
   return (
     <>
       {isBooting && <BootScreen onComplete={handleBootComplete} />}
-      <div 
-        className="desktop" 
+      <div
+        className="desktop"
         style={{ opacity: isBooting ? 0 : 1, transition: 'opacity 0.5s ease' }}
         onContextMenu={handleContextMenu}
       >
         {/* ── Menu Bar ── */}
-      <div className="menu-bar">
-        <div className="menu-bar__left">
-          <span className="menu-bar__apple">&#63743;</span>
-          <span className="menu-bar__app-name">Finder</span>
-          <span className="menu-bar__item">File</span>
-          <span className="menu-bar__item">Edit</span>
-          <span className="menu-bar__item">View</span>
-          <span className="menu-bar__item">Go</span>
-          <span className="menu-bar__item">Window</span>
-          <span className="menu-bar__item">Help</span>
+        <div className="menu-bar">
+          <div className="menu-bar__left">
+            <span className="menu-bar__apple">&#63743;</span>
+            <span className="menu-bar__app-name">Finder</span>
+            <span className="menu-bar__item">File</span>
+            <span className="menu-bar__item">Edit</span>
+            <span className="menu-bar__item">View</span>
+            <span className="menu-bar__item">Go</span>
+            <span className="menu-bar__item">Window</span>
+            <span className="menu-bar__item">Help</span>
+          </div>
+          <div className="menu-bar__right">
+            {/* Battery */}
+            <svg className="menu-bar__status-icon" width="20" height="12" viewBox="0 0 20 12" fill="none">
+              <rect x="0.5" y="1" width="16" height="10" rx="2" stroke="white" strokeOpacity="0.7" strokeWidth="1" />
+              <rect x="17" y="4" width="2" height="4" rx="0.5" fill="white" fillOpacity="0.4" />
+              <rect x="2" y="2.5" width="10" height="7" rx="1" fill="white" fillOpacity="0.7" />
+            </svg>
+            {/* WiFi */}
+            <svg className="menu-bar__status-icon" width="14" height="12" viewBox="0 0 14 12" fill="none">
+              <path d="M7 10.5L8.5 8.5C8 8 7.5 7.8 7 7.8C6.5 7.8 6 8 5.5 8.5L7 10.5Z" fill="white" fillOpacity="0.8" />
+              <path d="M3.5 6.5C4.5 5.5 5.8 5 7 5C8.2 5 9.5 5.5 10.5 6.5" stroke="white" strokeOpacity="0.7" strokeWidth="1.2" strokeLinecap="round" fill="none" />
+              <path d="M1.5 4C3 2.5 5 1.5 7 1.5C9 1.5 11 2.5 12.5 4" stroke="white" strokeOpacity="0.5" strokeWidth="1.2" strokeLinecap="round" fill="none" />
+            </svg>
+            <span className="menu-bar__time" onClick={() => setIsNCOpen(!isNCOpen)} style={{ cursor: 'pointer' }}>
+              {currentDate} {currentTime}
+            </span>
+          </div>
         </div>
-        <div className="menu-bar__right">
-          {/* Battery */}
-          <svg className="menu-bar__status-icon" width="20" height="12" viewBox="0 0 20 12" fill="none">
-            <rect x="0.5" y="1" width="16" height="10" rx="2" stroke="white" strokeOpacity="0.7" strokeWidth="1" />
-            <rect x="17" y="4" width="2" height="4" rx="0.5" fill="white" fillOpacity="0.4" />
-            <rect x="2" y="2.5" width="10" height="7" rx="1" fill="white" fillOpacity="0.7" />
-          </svg>
-          {/* WiFi */}
-          <svg className="menu-bar__status-icon" width="14" height="12" viewBox="0 0 14 12" fill="none">
-            <path d="M7 10.5L8.5 8.5C8 8 7.5 7.8 7 7.8C6.5 7.8 6 8 5.5 8.5L7 10.5Z" fill="white" fillOpacity="0.8" />
-            <path d="M3.5 6.5C4.5 5.5 5.8 5 7 5C8.2 5 9.5 5.5 10.5 6.5" stroke="white" strokeOpacity="0.7" strokeWidth="1.2" strokeLinecap="round" fill="none" />
-            <path d="M1.5 4C3 2.5 5 1.5 7 1.5C9 1.5 11 2.5 12.5 4" stroke="white" strokeOpacity="0.5" strokeWidth="1.2" strokeLinecap="round" fill="none" />
-          </svg>
-          <span className="menu-bar__time" onClick={() => setIsNCOpen(!isNCOpen)} style={{ cursor: 'pointer' }}>
-            {currentDate} {currentTime}
-          </span>
-        </div>
-      </div>
 
-      {/* ── Widgets (LEFT column) ── */}
-      <div className="widgets-area">
-        <PhotosWidget
-          name="Ujjal"
-          photoUrl="/photo.webp"
-          imagePosition="center 20%"
-        />
-        <NotesWidget
-          name="Ujjaldeep Singh"
-          title="Full-Stack Developer"
-          bio="Hi, people generally call me Ujjal. I'm a Backend developer with a keen interest in System Design. I enjoy building robust systems with clean architectures. Passionate about security, AI, and elegant user experiences."
-        />
-      </div>
-
-      {/* ── Desktop Icons (draggable, absolute positioned) ── */}
-      <div className="desktop-icons-grid">
-        {DESKTOP_ICONS.map(icon => (
-          <DesktopIcon
-            key={icon.id}
-            iconId={icon.id}
-            label={icon.label}
-            type={icon.type}
-            position={iconPositions[icon.id]}
-            onDragEnd={handleIconDragEnd}
-            onDoubleClick={() => handleIconDoubleClick(icon.id)}
+        {/* ── Widgets (LEFT column) ── */}
+        <div className="widgets-area">
+          <PhotosWidget
+            name="Ujjal"
+            photoUrl="/photo.webp"
+            imagePosition="center 20%"
           />
-        ))}
-      </div>
+          <NotesWidget
+            name="Ujjaldeep Singh"
+            title="Full-Stack Developer"
+            bio="Hi, people generally call me Ujjal. I'm a Backend developer with a keen interest in System Design. I enjoy building robust systems with clean architectures. Passionate about security, AI, and elegant user experiences."
+          />
+        </div>
 
-      {/* ── Dock ── */}
-      <Dock
-        windows={windows}
-        onBringToFront={bringToFront}
-        onOpenFinder={() => openWindow('finder', { id: 'home', initialProject: 'nullpass' })}
-        onOpenSettings={() => openWindow('settings', { id: 'settings' })}
-        onOpenTerminal={() => openWindow('terminal', { id: 'terminal' })}
-        onOpenLaunchpad={() => setIsLaunchpadOpen(true)}
-      />
+        {/* ── Desktop Icons (draggable, absolute positioned) ── */}
+        <div className="desktop-icons-grid">
+          {DESKTOP_ICONS.map(icon => (
+            <DesktopIcon
+              key={icon.id}
+              iconId={icon.id}
+              label={icon.label}
+              type={icon.type}
+              position={iconPositions[icon.id]}
+              onDragEnd={handleIconDragEnd}
+              onDoubleClick={() => handleIconDoubleClick(icon.id)}
+            />
+          ))}
+        </div>
 
-      {/* ── Render All Open Windows ── */}
-      <AnimatePresence>
-        {windows.map(win => {
-          if (win.isMinimized) return null;
-
-          const sharedProps = {
-            onClose: () => closeWindow(win.id),
-            zIndex: win.zIndex,
-            onFocus: () => bringToFront(win.id),
-            onMinimize: () => minimizeWindow(win.id),
-          };
-
-          let content = null;
-          switch (win.type) {
-            case 'settings':
-              content = <SettingsPanel {...sharedProps} theme={theme} setTheme={setTheme} wallpaper={wallpaper} setWallpaper={setWallpaper} />;
-              break;
-            case 'finder':
-              content = <FinderWindow {...sharedProps} folderId={win.props.id} initialProject={win.props.initialProject} onOpenFile={handleIconDoubleClick} />;
-              break;
-            case 'preview':
-              content = <PreviewWindow {...sharedProps} file={win.props.file} />;
-              break;
-            case 'text':
-              content = <TextEditWindow {...sharedProps} file={win.props.file} />;
-              break;
-            case 'resume':
-              content = <ResumeViewer {...sharedProps} file={win.props.file} />;
-              break;
-            case 'terminal':
-              content = <Terminal {...sharedProps} onOpenFolder={(props) => openWindow('finder', props)} onOpenApp={(t, props) => openWindow(t, props)} />;
-              break;
-            default:
-              return null;
-          }
-
-          return (
-            <motion.div
-              key={win.id}
-              variants={windowVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              transition={{ type: "spring", stiffness: 450, damping: 28 }}
-              style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, pointerEvents: 'none', zIndex: win.zIndex }}
-            >
-              <div style={{ pointerEvents: 'auto', width: '100%', height: '100%' }}>
-                {content}
-              </div>
-            </motion.div>
-          );
-        })}
-      </AnimatePresence>
-
-      {/* ── Context Menu ── */}
-      {contextMenu && (
-        <ContextMenu 
-          x={contextMenu.x} 
-          y={contextMenu.y} 
-          items={contextMenu.items} 
-          onClose={() => setContextMenu(null)} 
+        {/* ── Dock ── */}
+        <Dock
+          windows={windows}
+          onBringToFront={bringToFront}
+          onOpenFinder={() => openWindow('finder', { id: 'home', initialProject: 'nullpass' })}
+          onOpenSettings={() => openWindow('settings', { id: 'settings' })}
+          onOpenTerminal={() => openWindow('terminal', { id: 'terminal' })}
+          onOpenLaunchpad={() => setIsLaunchpadOpen(true)}
         />
-      )}
 
-      {/* ── Notification Center ── */}
-      <NotificationCenter isOpen={isNCOpen} onClose={() => setIsNCOpen(false)} />
+        {/* ── Render All Open Windows ── */}
+        <AnimatePresence>
+          {windows.map(win => {
+            if (win.isMinimized) return null;
 
-      {/* ── Launchpad ── */}
-      <Launchpad 
-        isOpen={isLaunchpadOpen} 
-        onClose={() => setIsLaunchpadOpen(false)} 
-        onOpenApp={(id) => {
-          if (id === 'finder' || id === 'nullpass' || id === 'nuancenode' || id === 'finprocessor' || id === 'trading-cli' || id === 'veridian') {
-            openWindow('finder', { id: 'home', initialProject: id === 'finder' ? 'nullpass' : id });
-          } else if (id === 'terminal') {
-            openWindow('terminal', { id: 'terminal' });
-          } else if (id === 'settings') {
-            openWindow('settings', { id: 'settings' });
-          } else if (id === 'textedit' || id === 'preview') {
-             // Fallback to opening home folder to select a file
-             openWindow('finder', { id: 'home', initialProject: 'nullpass' });
-          } else {
-             handleIconDoubleClick(id);
-          }
-        }}
-      />
-    </div>
+            const sharedProps = {
+              onClose: () => closeWindow(win.id),
+              zIndex: win.zIndex,
+              onFocus: () => bringToFront(win.id),
+              onMinimize: () => minimizeWindow(win.id),
+            };
+
+            let content = null;
+            switch (win.type) {
+              case 'settings':
+                content = <SettingsPanel {...sharedProps} theme={theme} setTheme={setTheme} wallpaper={wallpaper} setWallpaper={setWallpaper} />;
+                break;
+              case 'finder':
+                content = <FinderWindow {...sharedProps} folderId={win.props.id} initialProject={win.props.initialProject} onOpenFile={handleIconDoubleClick} />;
+                break;
+              case 'preview':
+                content = <PreviewWindow {...sharedProps} file={win.props.file} />;
+                break;
+              case 'text':
+                content = <TextEditWindow {...sharedProps} file={win.props.file} />;
+                break;
+              case 'resume':
+                content = <ResumeViewer {...sharedProps} file={win.props.file} />;
+                break;
+              case 'terminal':
+                content = <Terminal {...sharedProps} onOpenFolder={(props) => openWindow('finder', props)} onOpenApp={(t, props) => openWindow(t, props)} />;
+                break;
+              default:
+                return null;
+            }
+
+            return (
+              <motion.div
+                key={win.id}
+                variants={windowVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                transition={{ type: "spring", stiffness: 450, damping: 28 }}
+                style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, pointerEvents: 'none', zIndex: win.zIndex }}
+              >
+                <div style={{ pointerEvents: 'auto', width: '100%', height: '100%' }}>
+                  {content}
+                </div>
+              </motion.div>
+            );
+          })}
+        </AnimatePresence>
+
+        {/* ── Context Menu ── */}
+        {contextMenu && (
+          <ContextMenu
+            x={contextMenu.x}
+            y={contextMenu.y}
+            items={contextMenu.items}
+            onClose={() => setContextMenu(null)}
+          />
+        )}
+
+        {/* ── Notification Center ── */}
+        <NotificationCenter isOpen={isNCOpen} onClose={() => setIsNCOpen(false)} />
+
+        {/* ── Launchpad ── */}
+        <Launchpad
+          isOpen={isLaunchpadOpen}
+          onClose={() => setIsLaunchpadOpen(false)}
+          onOpenApp={(id) => {
+            if (id === 'finder' || id === 'nullpass' || id === 'nuancenode' || id === 'finprocessor' || id === 'trading-cli' || id === 'veridian') {
+              openWindow('finder', { id: 'home', initialProject: id === 'finder' ? 'nullpass' : id });
+            } else if (id === 'terminal') {
+              openWindow('terminal', { id: 'terminal' });
+            } else if (id === 'settings') {
+              openWindow('settings', { id: 'settings' });
+            } else if (id === 'textedit') {
+              handleIconDoubleClick('about');
+            } else if (id === 'preview') {
+              handleIconDoubleClick('resume');
+            } else {
+              handleIconDoubleClick(id);
+            }
+          }}
+        />
+      </div>
     </>
   );
 }

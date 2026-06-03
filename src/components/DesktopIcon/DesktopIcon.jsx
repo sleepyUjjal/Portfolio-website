@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import './DesktopIcon.css';
 
-const MacFolderIcon = () => (
+export const MacFolderIcon = () => (
   <svg viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
     <defs>
       <linearGradient id="folderBack" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -25,7 +25,7 @@ const MacFolderIcon = () => (
   </svg>
 );
 
-const MacDocIcon = () => (
+export const MacDocIcon = () => (
   <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
     <defs>
       <linearGradient id="docGrad" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -52,7 +52,7 @@ const MacDocIcon = () => (
   </svg>
 );
 
-const MacImageIcon = () => (
+export const MacImageIcon = () => (
   <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
     <defs>
       <linearGradient id="imgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
