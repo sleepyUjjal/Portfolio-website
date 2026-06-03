@@ -28,10 +28,60 @@ const DEFAULT_WALLPAPERS = {
   }
 };
 
+// Icon definitions for the desktop
+const DESKTOP_ICONS = [
+  { id: 'nullpass', label: 'NullPass', type: 'folder' },
+  { id: 'nuancenode', label: 'NuanceNode', type: 'folder' },
+  { id: 'finprocessor', label: 'FinProcessor', type: 'folder' },
+  { id: 'trading-cli', label: 'Trading CLI', type: 'folder' },
+  { id: 'veridian', label: 'Veridian', type: 'folder' },
+  { id: 'resume', label: 'resume.pdf', type: 'file-text' },
+  { id: 'about', label: 'about_me.txt', type: 'file-text' },
+];
+
+function generateDefaultPositions() {
+  // macOS-style: right-aligned column, top-to-bottom, right-to-left
+  const colWidth = 100;
+  const rowHeight = 95;
+  const startRight = 20; // px from right edge
+  const startTop = 45;   // below menu bar
+  const maxRows = Math.floor((window.innerHeight - startTop - 80) / rowHeight);
+
+  const positions = {};
+  DESKTOP_ICONS.forEach((icon, i) => {
+    const col = Math.floor(i / maxRows);
+    const row = i % maxRows;
+    positions[icon.id] = {
+      x: window.innerWidth - startRight - colWidth - (col * (colWidth + 15)),
+      y: startTop + row * rowHeight
+    };
+  });
+  return positions;
+}
+
 function App() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [currentTime, setCurrentTime] = useState('');
   const [currentDate, setCurrentDate] = useState('');
+
+  // ── Icon Positions ──
+  const [iconPositions, setIconPositions] = useState(() => {
+    const saved = localStorage.getItem('mac-icon-positions');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) { /* ignore */ }
+    }
+    return generateDefaultPositions();
+  });
+
+  const handleIconDragEnd = (iconId, newPos) => {
+    setIconPositions(prev => {
+      const updated = { ...prev, [iconId]: newPos };
+      localStorage.setItem('mac-icon-positions', JSON.stringify(updated));
+      return updated;
+    });
+  };
 
   // ── Window Management System ──
   const [windows, setWindows] = useState([]);
@@ -266,45 +316,19 @@ function App() {
         />
       </div>
 
-      {/* ── Desktop Icons (RIGHT grid) ── */}
+      {/* ── Desktop Icons (draggable, absolute positioned) ── */}
       <div className="desktop-icons-grid">
-        <DesktopIcon
-          label="NullPass"
-          type="folder"
-          onDoubleClick={() => handleIconDoubleClick('nullpass')}
-        />
-        <DesktopIcon
-          label="NuanceNode"
-          type="folder"
-          onDoubleClick={() => handleIconDoubleClick('nuancenode')}
-        />
-        <DesktopIcon
-          label="FinProcessor"
-          type="folder"
-          onDoubleClick={() => handleIconDoubleClick('finprocessor')}
-        />
-        <DesktopIcon
-          label="Trading CLI"
-          type="folder"
-          onDoubleClick={() => handleIconDoubleClick('trading-cli')}
-        />
-        <DesktopIcon
-          label="Veridian"
-          type="folder"
-          onDoubleClick={() => handleIconDoubleClick('veridian')}
-        />
-
-        {/* Mock Files directly on Desktop */}
-        <DesktopIcon
-          label="resume.pdf"
-          type="file-text"
-          onDoubleClick={() => handleIconDoubleClick('resume')}
-        />
-        <DesktopIcon
-          label="about_me.txt"
-          type="file-text"
-          onDoubleClick={() => handleIconDoubleClick('about')}
-        />
+        {DESKTOP_ICONS.map(icon => (
+          <DesktopIcon
+            key={icon.id}
+            iconId={icon.id}
+            label={icon.label}
+            type={icon.type}
+            position={iconPositions[icon.id]}
+            onDragEnd={handleIconDragEnd}
+            onDoubleClick={() => handleIconDoubleClick(icon.id)}
+          />
+        ))}
       </div>
 
       {/* ── Dock ── */}

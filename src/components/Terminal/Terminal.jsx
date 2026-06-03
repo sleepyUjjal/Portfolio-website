@@ -292,7 +292,7 @@ Currently exploring: Systems Design, Distributed Systems, and DevOps.
   ║   My git commits make sense                   ║
   ║   I Google things efficiently                 ║
   ║                                               ║
-  ║   Let's talk: ${emailAddress}                 ║
+  ║   Let's talk: ${emailAddress}        ║
   ║                                               ║
   ╚═══════════════════════════════════════════════╝
 

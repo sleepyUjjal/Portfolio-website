@@ -92,25 +92,21 @@
 
 /* ===========================
    Desktop Icons (RIGHT)
-   macOS: columns from right, items flow top-to-bottom
    =========================== */
 .desktop-icons-grid {
   position: absolute;
-  top: 40px;
-  right: 15px;
-  bottom: 80px;
-  display: grid;
-  grid-template-rows: repeat(auto-fill, 95px);
-  grid-auto-flow: column dense;
-  grid-auto-columns: 100px;
-  gap: 10px 15px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   z-index: 10;
-  direction: rtl; /* makes columns fill from right to left */
-  justify-content: start;
+  pointer-events: none;
+  /* Let clicks pass through empty space */
 }
 
-.desktop-icons-grid > * {
-  direction: ltr; /* reset text direction inside icons */
+.desktop-icons-grid .desktop-icon {
+  pointer-events: auto;
+  /* But icons themselves are clickable */
 }
 
 .menu-bar__status-icon {
@@ -128,6 +124,11 @@
    Animations
    =========================== */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }

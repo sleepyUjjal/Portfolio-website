@@ -1,3 +1,4 @@
+import { useState, useRef } from 'react';
 import './DesktopIcon.css';
 
 const MacFolderIcon = () => (
@@ -76,7 +77,13 @@ const MacImageIcon = () => (
   </svg>
 );
 
-function DesktopIcon({ label, type = 'folder', onClick, onDoubleClick, selected }) {
+const DRAG_THRESHOLD = 5; // pixels moved before it counts as a drag
+
+function DesktopIcon({ label, type = 'folder', onClick, onDoubleClick, selected, position, onDragEnd, iconId }) {
+  const [tempPos, setTempPos] = useState(null);
+  const dragRef = useRef({ startX: 0, startY: 0, startLeft: 0, startTop: 0, dragged: false });
+  const [isDragging, setIsDragging] = useState(false);
+
   const renderIcon = () => {
     switch (type) {
       case 'file-text': return <MacDocIcon />;
@@ -86,11 +93,77 @@ function DesktopIcon({ label, type = 'folder', onClick, onDoubleClick, selected 
     }
   };
 
+  const handleMouseDown = (e) => {
+    if (!position || !onDragEnd) return; // skip if not draggable
+    e.preventDefault();
+
+    dragRef.current = {
+      startX: e.clientX,
+      startY: e.clientY,
+      startLeft: position.x,
+      startTop: position.y,
+      dragged: false
+    };
+
+    const handleMouseMove = (e) => {
+      const dx = e.clientX - dragRef.current.startX;
+      const dy = e.clientY - dragRef.current.startY;
+
+      if (Math.abs(dx) > DRAG_THRESHOLD || Math.abs(dy) > DRAG_THRESHOLD) {
+        dragRef.current.dragged = true;
+        setIsDragging(true);
+        setTempPos({
+          x: dragRef.current.startLeft + dx,
+          y: dragRef.current.startTop + dy
+        });
+      }
+    };
+
+    const handleMouseUp = (e) => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+
+      if (dragRef.current.dragged) {
+        const dx = e.clientX - dragRef.current.startX;
+        const dy = e.clientY - dragRef.current.startY;
+        const finalX = dragRef.current.startLeft + dx;
+        const finalY = dragRef.current.startTop + dy;
+        onDragEnd(iconId, { x: finalX, y: finalY });
+      }
+
+      setIsDragging(false);
+      setTempPos(null);
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+  };
+
+  const handleDoubleClick = (e) => {
+    // Only fire double click if we didn't just drag
+    if (!dragRef.current.dragged && onDoubleClick) {
+      onDoubleClick(e);
+    }
+  };
+
+  // Determine the display position
+  const displayPos = tempPos || position;
+  const style = position ? {
+    position: 'absolute',
+    left: `${displayPos.x}px`,
+    top: `${displayPos.y}px`,
+    zIndex: isDragging ? 100 : 10,
+    opacity: isDragging ? 0.85 : 1,
+    transition: isDragging ? 'none' : 'opacity 0.15s ease'
+  } : {};
+
   return (
     <div
-      className={`desktop-icon ${selected ? 'desktop-icon--selected' : ''}`}
+      className={`desktop-icon ${selected ? 'desktop-icon--selected' : ''} ${isDragging ? 'desktop-icon--dragging' : ''}`}
+      style={style}
       onClick={onClick}
-      onDoubleClick={onDoubleClick}
+      onDoubleClick={handleDoubleClick}
+      onMouseDown={handleMouseDown}
       role="button"
       tabIndex={0}
     >
