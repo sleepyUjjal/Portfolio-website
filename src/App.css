@@ -32,13 +32,35 @@
 .menu-bar__left {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 0;
+}
+
+/* ── Menu Trigger (each clickable item in the bar) ── */
+.menu-bar__menu-trigger {
+  position: relative;
+  padding: 0 10px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  cursor: default;
+  border-radius: 4px;
+  transition: background 0.1s;
+  user-select: none;
+}
+
+.menu-bar__menu-trigger:hover,
+.menu-bar__menu-trigger--active {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+body.light-mode .menu-bar__menu-trigger:hover,
+body.light-mode .menu-bar__menu-trigger--active {
+  background: rgba(0, 0, 0, 0.08);
 }
 
 .menu-bar__apple {
   font-size: 14px;
   opacity: 0.9;
-  cursor: default;
   line-height: 1;
   color: #ffffff;
 }
@@ -54,8 +76,107 @@
   font-size: 13.5px;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.9);
-  cursor: default;
   letter-spacing: -0.01em;
+}
+
+/* ── Dropdown Panel ── */
+.menu-bar__dropdown {
+  position: absolute;
+  top: 25px;
+  left: 0;
+  min-width: 240px;
+  background: rgba(30, 30, 30, 0.78);
+  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  backdrop-filter: blur(40px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  padding: 4px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.55), 0 0 0 0.5px rgba(0, 0, 0, 0.3);
+  z-index: 10000;
+  animation: menuDropIn 0.12s ease-out;
+}
+
+body.light-mode .menu-bar__dropdown {
+  background: rgba(245, 245, 245, 0.85);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.18), 0 0 0 0.5px rgba(0, 0, 0, 0.08);
+}
+
+@keyframes menuDropIn {
+  from {
+    opacity: 0;
+    transform: scaleY(0.92);
+    transform-origin: top;
+  }
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
+/* ── Dropdown Item ── */
+.menu-bar__dropdown-item {
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #fff;
+  cursor: default;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  transition: background-color 0.08s;
+}
+
+body.light-mode .menu-bar__dropdown-item {
+  color: #000;
+}
+
+.menu-bar__dropdown-item:hover:not(.menu-bar__dropdown-item--disabled) {
+  background-color: #007aff;
+  color: #fff;
+}
+
+.menu-bar__dropdown-item--disabled {
+  color: rgba(255, 255, 255, 0.25);
+  pointer-events: none;
+}
+
+body.light-mode .menu-bar__dropdown-item--disabled {
+  color: rgba(0, 0, 0, 0.25);
+}
+
+/* ── Dropdown Shortcut Label ── */
+.menu-bar__dropdown-shortcut {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.4);
+  margin-left: auto;
+}
+
+body.light-mode .menu-bar__dropdown-shortcut {
+  color: rgba(0, 0, 0, 0.35);
+}
+
+.menu-bar__dropdown-item:hover:not(.menu-bar__dropdown-item--disabled) .menu-bar__dropdown-shortcut {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ── Dropdown Separator ── */
+.menu-bar__dropdown-separator {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.12);
+  margin: 4px 8px;
+}
+
+body.light-mode .menu-bar__dropdown-separator {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* ── Invisible Backdrop (closes menu on outside click) ── */
+.menu-bar__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 499;
 }
 
 .menu-bar__right {
@@ -65,8 +186,10 @@
 }
 
 .menu-bar__status-icon {
-  opacity: 0.85;
+  opacity: 0.9;
   cursor: default;
+  display: flex;
+  align-items: center;
 }
 
 .menu-bar__time {
@@ -108,14 +231,6 @@
   pointer-events: auto;
   /* But icons themselves are clickable */
 }
-
-.menu-bar__status-icon {
-  opacity: 0.9;
-  cursor: default;
-  display: flex;
-  align-items: center;
-}
-
 
 
 

@@ -295,6 +295,9 @@ function App() {
   // ── Launchpad ──
   const [isLaunchpadOpen, setIsLaunchpadOpen] = useState(false);
 
+  // ── Menu Bar Dropdowns ──
+  const [activeMenu, setActiveMenu] = useState(null);
+
   // ── Mobile gate (AFTER all hooks) ──
   if (isMobile) {
     return <MobileGate />;
@@ -307,6 +310,122 @@ function App() {
     exit: { opacity: 0, scale: 0.95, transition: { duration: 0.15 } }
   };
 
+  // ── Dynamic App Name ──
+  const focusedWindow = windows.filter(w => !w.isMinimized).sort((a, b) => b.zIndex - a.zIndex)[0];
+  const activeAppName = focusedWindow ? ({
+    settings: 'System Preferences',
+    finder: 'Finder',
+    preview: 'Preview',
+    text: 'TextEdit',
+    resume: 'Preview',
+    terminal: 'Terminal'
+  })[focusedWindow.type] || 'Finder' : 'Finder';
+
+  // ── Restart handler ──
+  const handleRestart = () => {
+    localStorage.removeItem('mac-booted');
+    setIsBooting(true);
+    setActiveMenu(null);
+  };
+
+  // ── Close focused window ──
+  const closeFocused = () => {
+    if (focusedWindow) closeWindow(focusedWindow.id);
+  };
+  const minimizeFocused = () => {
+    if (focusedWindow) minimizeWindow(focusedWindow.id);
+  };
+
+  // ── Menu Definitions ──
+  const toggleMenu = (name) => setActiveMenu(prev => prev === name ? null : name);
+
+  const githubUrl = import.meta.env.GITHUB || 'https://github.com/sleepyUjjal';
+  const linkedinUrl = import.meta.env.LINKEDIN || 'https://linkedin.com';
+  const emailAddress = import.meta.env.EMAIL || 'your@email.com';
+
+  const menus = {
+    apple: [
+      { label: 'About This Mac', action: () => handleIconDoubleClick('about') },
+      { separator: true },
+      { label: 'System Preferences...', action: () => openWindow('settings', { id: 'settings' }) },
+      { separator: true },
+      { label: 'Sleep', disabled: true },
+      { label: 'Restart...', action: handleRestart },
+    ],
+    file: [
+      { label: 'New Finder Window', shortcut: '⌘N', action: () => openWindow('finder', { id: 'home', initialProject: 'nullpass' }) },
+      { label: 'New Terminal Window', action: () => openWindow('terminal', { id: 'terminal' }) },
+      { separator: true },
+      { label: 'Close Window', shortcut: '⌘W', action: closeFocused, disabled: !focusedWindow },
+    ],
+    edit: [
+      { label: 'Undo', shortcut: '⌘Z', disabled: true },
+      { label: 'Redo', shortcut: '⇧⌘Z', disabled: true },
+      { separator: true },
+      { label: 'Cut', shortcut: '⌘X', disabled: true },
+      { label: 'Copy', shortcut: '⌘C', disabled: true },
+      { label: 'Paste', shortcut: '⌘V', disabled: true },
+      { label: 'Select All', shortcut: '⌘A', disabled: true },
+    ],
+    view: [
+      { label: theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode', action: () => setTheme(t => t === 'dark' ? 'light' : 'dark') },
+      { separator: true },
+      { label: 'Change Wallpaper...', action: () => openWindow('settings', { id: 'settings' }) },
+    ],
+    go: [
+      { label: 'GitHub', action: () => window.open(githubUrl, '_blank') },
+      { label: 'LinkedIn', action: () => window.open(linkedinUrl, '_blank') },
+      { label: 'Email', action: () => window.open(`mailto:${emailAddress}`) },
+      { separator: true },
+      { label: 'Resume', action: () => openWindow('resume', { id: 'resume', file: { label: 'resume.pdf', url: '/resume_ujjal.pdf' } }) },
+    ],
+    window: [
+      { label: 'Minimize', shortcut: '⌘M', action: minimizeFocused, disabled: !focusedWindow },
+      { separator: true },
+      { label: 'Close Window', shortcut: '⌘W', action: closeFocused, disabled: !focusedWindow },
+    ],
+    help: [
+      { label: 'Open Terminal for Help', action: () => openWindow('terminal', { id: 'terminal' }) },
+      { separator: true },
+      { label: 'Made with ❤️ by Ujjal', disabled: true },
+    ],
+  };
+
+  // ── Render a single menu bar trigger + dropdown ──
+  const renderMenu = (id, label, className = '') => (
+    <div
+      className={`menu-bar__menu-trigger ${activeMenu === id ? 'menu-bar__menu-trigger--active' : ''}`}
+      onClick={() => toggleMenu(id)}
+      onMouseEnter={() => activeMenu && activeMenu !== id && setActiveMenu(id)}
+    >
+      <span className={className}>{label}</span>
+      {activeMenu === id && menus[id] && (
+        <div className="menu-bar__dropdown">
+          {menus[id].map((item, i) =>
+            item.separator ? (
+              <div key={i} className="menu-bar__dropdown-separator" />
+            ) : (
+              <div
+                key={i}
+                className={`menu-bar__dropdown-item ${item.disabled ? 'menu-bar__dropdown-item--disabled' : ''}`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (!item.disabled && item.action) {
+                    item.action();
+                    setActiveMenu(null);
+                  }
+                }}
+              >
+                <span>{item.label}</span>
+                {item.shortcut && <span className="menu-bar__dropdown-shortcut">{item.shortcut}</span>}
+              </div>
+            )
+          )}
+        </div>
+      )}
+    </div>
+  );
+
   return (
     <>
       {isBooting && <BootScreen onComplete={handleBootComplete} />}
@@ -315,17 +434,22 @@ function App() {
         style={{ opacity: isBooting ? 0 : 1, transition: 'opacity 0.5s ease' }}
         onContextMenu={handleContextMenu}
       >
+        {/* ── Backdrop to close menus ── */}
+        {activeMenu && <div className="menu-bar__backdrop" onClick={() => setActiveMenu(null)} />}
+
         {/* ── Menu Bar ── */}
         <div className="menu-bar">
           <div className="menu-bar__left">
-            <span className="menu-bar__apple">&#63743;</span>
-            <span className="menu-bar__app-name">Finder</span>
-            <span className="menu-bar__item">File</span>
-            <span className="menu-bar__item">Edit</span>
-            <span className="menu-bar__item">View</span>
-            <span className="menu-bar__item">Go</span>
-            <span className="menu-bar__item">Window</span>
-            <span className="menu-bar__item">Help</span>
+            {renderMenu('apple', '\uF8FF', 'menu-bar__apple')}
+            <div className="menu-bar__menu-trigger">
+              <span className="menu-bar__app-name">{activeAppName}</span>
+            </div>
+            {renderMenu('file', 'File', 'menu-bar__item')}
+            {renderMenu('edit', 'Edit', 'menu-bar__item')}
+            {renderMenu('view', 'View', 'menu-bar__item')}
+            {renderMenu('go', 'Go', 'menu-bar__item')}
+            {renderMenu('window', 'Window', 'menu-bar__item')}
+            {renderMenu('help', 'Help', 'menu-bar__item')}
           </div>
           <div className="menu-bar__right">
             {/* Battery */}
