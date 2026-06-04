@@ -226,7 +226,7 @@ function App() {
       } else if (file === 'resume') {
         openWindow('resume', { id: 'resume', file: { label: 'resume.pdf', url: '/resume_ujjal.pdf' } });
       } else if (file === 'about') {
-        const aboutContent = `Hi everyone! I'm Ujjaldeep, an aspiring backend developer who's curious about how things actually work behind what we see on the internet.\n\nI enjoy solving real-world problems using logic and programming, and I'm always trying to build things that are not only functional but also meaningful.\n\nI keep exploring new technologies to stay engaged and keep learning. My tech stack includes React.js for frontend and Python with Django, FastAPI, and Flask for backend development.\n\nI believe in learning from anyone and everyone, constantly improving myself every day. I'm always open to collaborating, learning, and building something impactful.`;
+        const aboutContent = `Hi everyone! I'm Ujjaldeep, an aspiring full stack developer who's curious about how things actually work behind what we see on the internet.\n\nI enjoy solving real-world problems using logic and programming, and I'm always trying to build things that are not only functional but also meaningful.\n\nI keep exploring new technologies to stay engaged and keep learning. My tech stack includes React.js for frontend and Python with Django, FastAPI, Flask and Node.js and Express.js for backend development.\n\nI believe in learning from anyone and everyone, constantly improving myself every day. I'm always open to collaborating, learning, and building something impactful.`;
         openWindow('text', { id: 'about', file: { label: 'about_me.txt', content: aboutContent } });
       }
       return;
