@@ -1,8 +1,9 @@
+import { motion } from 'framer-motion';
 import './NotesWidget.css';
 
 function NotesWidget({ name, title, bio }) {
   return (
-    <div className="notes-widget">
+    <motion.div className="notes-widget" drag dragMomentum={false}>
       <div className="notes-widget__header">
         <div className="notes-widget__header-icon">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
@@ -20,7 +21,7 @@ function NotesWidget({ name, title, bio }) {
         <p className="notes-widget__role">{title || 'Developer'}</p>
         {bio && <p className="notes-widget__bio">{bio}</p>}
       </div>
-    </div>
+    </motion.div>
   );
 }
 

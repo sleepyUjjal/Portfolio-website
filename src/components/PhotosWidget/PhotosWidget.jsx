@@ -1,8 +1,9 @@
+import { motion } from 'framer-motion';
 import './PhotosWidget.css';
 
 function PhotosWidget({ name, photoUrl, imagePosition = "center center" }) {
   return (
-    <div className="photos-widget">
+    <motion.div className="photos-widget" drag dragMomentum={false}>
       {/* Widget Header */}
       <div className="photos-widget__header">
         <div className="photos-widget__header-icon">
@@ -36,7 +37,7 @@ function PhotosWidget({ name, photoUrl, imagePosition = "center center" }) {
           </div>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 }
 

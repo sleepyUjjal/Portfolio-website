@@ -355,7 +355,7 @@ function App() {
           <NotesWidget
             name="Ujjaldeep Singh"
             title="Full-Stack Developer"
-            bio="Hi, people generally call me Ujjal. I'm a Backend developer with a keen interest in System Design. I enjoy building robust systems with clean architectures. Passionate about security, AI, and elegant user experiences."
+            bio="Hi, people generally call me Ujjal. I'm a Full-Stack Developer with a keen interest in System Design. I enjoy building robust systems with clean architectures. Passionate about security, performance optimizations and elegant designs."
           />
         </div>
 

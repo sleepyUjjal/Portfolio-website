@@ -196,6 +196,28 @@ Currently exploring: Systems Design, Distributed Systems, and DevOps.
           setCurrentDir('~');
           return [];
         }
+
+        if (currentDir !== '~') {
+          const projectName = currentDir.split('/').pop();
+          const entry = Object.entries(projectData).find(([, data]) => data.title === projectName);
+          
+          if (target.toLowerCase() === 'code' || target.toLowerCase() === 'code/') {
+             if (entry && entry[1].github) {
+                window.open(entry[1].github, '_blank', 'noopener,noreferrer');
+                return [addOutput(`Done! Redirecting to GitHub repository...`, 'terminal__info')];
+             }
+             return [addOutput(`cd: no code repository found for ${projectName}`, 'terminal__error')];
+          }
+          
+          if (target.toLowerCase() === 'livedemo' || target.toLowerCase() === 'livedemo/') {
+             if (entry && entry[1].demo) {
+                window.open(entry[1].demo, '_blank', 'noopener,noreferrer');
+                return [addOutput(`Done! Redirecting to Live Demo...`, 'terminal__info')];
+             }
+             return [addOutput(`cd: no live demo found for ${projectName}`, 'terminal__error')];
+          }
+        }
+
         // Find project by name or id
         const projectEntry = Object.entries(projectData).find(
           ([id, data]) => id === target.toLowerCase() || data.title.toLowerCase() === target.toLowerCase()
