@@ -44,9 +44,9 @@ function Launchpad({ isOpen, onClose, onOpenApp }) {
       {isOpen && (
         <motion.div
           className="launchpad"
-          initial={{ opacity: 0, scale: 1.1 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 1.1 }}
+          initial={{ scale: 1.1 }}
+          animate={{ scale: 1 }}
+          exit={{ scale: 1.1 }}
           transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
           onClick={(e) => {
             // Close if clicking on the background (not an app or search bar)
