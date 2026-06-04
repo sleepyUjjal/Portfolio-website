@@ -260,10 +260,6 @@ function App() {
     }
   };
 
-  // Mobile gate
-  if (isMobile) {
-    return <MobileGate />;
-  }
 
   // ── Context Menu ──
   const [contextMenu, setContextMenu] = useState(null);
@@ -298,6 +294,11 @@ function App() {
 
   // ── Launchpad ──
   const [isLaunchpadOpen, setIsLaunchpadOpen] = useState(false);
+
+  // ── Mobile gate (AFTER all hooks) ──
+  if (isMobile) {
+    return <MobileGate />;
+  }
 
   // ── Window animation variants ──
   const windowVariants = {
