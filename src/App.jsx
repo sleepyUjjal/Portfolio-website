@@ -260,10 +260,6 @@ function App() {
     }
   };
 
-  // Mobile gate
-  if (isMobile) {
-    return <MobileGate />;
-  }
 
   // ── Context Menu ──
   const [contextMenu, setContextMenu] = useState(null);
@@ -299,13 +295,16 @@ function App() {
   // ── Launchpad ──
   const [isLaunchpadOpen, setIsLaunchpadOpen] = useState(false);
 
+  // ── Mobile gate (AFTER all hooks) ──
+  if (isMobile) {
+    return <MobileGate />;
+  }
+
   // ── Window animation variants ──
-  // NOTE: No opacity in variants — Chromium drops backdrop-filter blur
-  // when opacity is animated on the same compositing layer.
   const windowVariants = {
-    initial: { scale: 0.92, y: 12 },
-    animate: { scale: 1, y: 0 },
-    exit: { scale: 0.95, transition: { duration: 0.15 } }
+    initial: { opacity: 0, scale: 0.92, y: 12 },
+    animate: { opacity: 1, scale: 1, y: 0 },
+    exit: { opacity: 0, scale: 0.95, transition: { duration: 0.15 } }
   };
 
   return (
@@ -313,11 +312,7 @@ function App() {
       {isBooting && <BootScreen onComplete={handleBootComplete} />}
       <div
         className="desktop"
-        style={{
-          visibility: isBooting ? 'hidden' : 'visible',
-          transform: isBooting ? 'scale(0.98)' : 'scale(1)',
-          transition: 'transform 0.5s ease, visibility 0s linear ' + (isBooting ? '0s' : '0s')
-        }}
+        style={{ opacity: isBooting ? 0 : 1, transition: 'opacity 0.5s ease' }}
         onContextMenu={handleContextMenu}
       >
         {/* ── Menu Bar ── */}
