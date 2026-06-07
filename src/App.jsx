@@ -440,7 +440,7 @@ function App() {
         {/* ── Menu Bar ── */}
         <div className="menu-bar">
           <div className="menu-bar__left">
-            {renderMenu('apple', '\uF8FF', 'menu-bar__apple')}
+            {renderMenu('apple', <img src="/logo.webp" alt="Logo" style={{ height: '12px', width: 'auto', objectFit: 'contain', display: 'block' }} />, 'menu-bar__apple')}
             <div className="menu-bar__menu-trigger">
               <span className="menu-bar__app-name">{activeAppName}</span>
             </div>

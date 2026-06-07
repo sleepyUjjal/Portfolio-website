@@ -135,6 +135,16 @@
   font-weight: 600;
 }
 
+.mobile-gate__preview {
+  width: 100%;
+  max-width: 280px;
+  border-radius: 12px;
+  margin: 16px auto;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  display: block;
+}
+
 /* Social Links */
 .mobile-gate__links {
   display: flex;
