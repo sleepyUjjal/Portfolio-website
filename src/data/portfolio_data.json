@@ -1,0 +1,56 @@
+{
+  "about": {
+    "title": "Full-Stack Developer",
+    "name": "Ujjaldeep Singh",
+    "bio": "Hi everyone! I'm Ujjaldeep, an aspiring full stack developer who's curious about how things actually work behind what we see on the internet.\n\nI enjoy solving real-world problems using logic and programming, and I'm always trying to build things that are not only functional but also meaningful.\n\nI keep exploring new technologies to stay engaged and keep learning. My tech stack includes React.js for frontend and Python with Django, FastAPI, Flask and Node.js and Express.js for backend development.\n\nI believe in learning from anyone and everyone, constantly improving myself every day. I'm always open to collaborating, learning, and building something impactful."
+  },
+  "links": {
+    "github": "https://github.com/sleepyUjjal",
+    "linkedin": "https://linkedin.com",
+    "email": "your@email.com"
+  },
+  "projects": [
+    {
+      "id": "nullpass",
+      "title": "NullPass",
+      "github": "https://github.com/sleepyUjjal/NullPass",
+      "demo": "https://nullpass.ujjal.dev",
+      "idea": "NullPass is a passwordless authentication demo built with Django and React. Instead of passwords or OTPs, it uses a challenge-response flow where a trusted device signs a server-issued nonce with a locally stored private key. The server verifies that signature with the device's public key, then issues a JWT-backed session.\n\nFeatures include:\n- Device enrollment\n- QR-based login flow\n- Simulated authenticator view\n- Security dashboard\n- Cryptographic authentication without passwords or SMS/email OTPs"
+    },
+    {
+      "id": "nuancenode",
+      "title": "NuanceNode",
+      "github": "https://github.com/sleepyUjjal/NuanceNode",
+      "demo": "https://nuancenode.ujjal.dev",
+      "idea": "NuanceNode is a structured claim-analysis system built for people who want more than a one-shot chatbot answer. It breaks a claim into multiple reasoning layers, compares source quality, examines the logic behind the claim, and produces a final verdict with a context tree and downloadable report.\n\nFeatures include:\n- Multi-step analysis pipeline\n- Separation of fact extraction, source review, logic review, and belief dynamics\n- Authenticated user history and report generation\n- Uses React frontend, FastAPI backend, SQLAlchemy, and local LLM runtime (Ollama)"
+    },
+    {
+      "id": "finprocessor",
+      "title": "FinProcessor",
+      "github": "https://github.com/sleepyUjjal/FinProcessor",
+      "demo": "https://github.com/sleepyUjjal/FinProcessor",
+      "idea": "RBAC-FinProcessor is a finance operations platform with a Django REST backend (RBAC + audit logging + analytics) and a React frontend (protected routes + role-aware UI + dashboard charts).\n\nFeatures include:\n- Granular Role-Based Access Control (Admin, Analyst, User)\n- Multi-tenant aggregation\n- Real-time Dashboard with financial summary and range-based trend timelines\n- Soft delete/hard delete policies with Audit Logs\n- OpenAPI documentation and Swagger UI"
+    },
+    {
+      "id": "trading-cli",
+      "title": "Trading CLI",
+      "github": "https://github.com/sleepyUjjal/basic-trading-cli",
+      "demo": "https://github.com/sleepyUjjal/basic-trading-cli",
+      "idea": "Binance Futures Testnet — Trading Bot\n\nA Python CLI bot that places MARKET and LIMIT orders on the Binance Futures Testnet (USDT-M). Supports both an interactive menu and direct CLI commands.\n\nFeatures include:\n- REST client abstraction (signing, HTTP, error mapping)\n- Order orchestration + result objects\n- Input validation independent of I/O layer\n- Structured logging to file and console\n- Complete setup and environment variable configuration management"
+    },
+    {
+      "id": "veridian",
+      "title": "Veridian",
+      "github": "https://github.com/sleepyUjjal/Veridian",
+      "demo": "https://github.com/sleepyUjjal/Veridian",
+      "idea": "Veridian\n\nA Python-based backend service/web application. It handles user management, authentication, and database operations.\n\nFeatures include:\n- Python Virtual Environment setup and requirements handling\n- App.py execution logic\n- Local SQLite database management for users and static templates\n- Administrator setup scripts"
+    },
+    {
+      "id": "indian-hydraulic-works",
+      "title": "Indian Hydraulic Works (Freelance)",
+      "github": "Private (NDA)",
+      "demo": "In Progress",
+      "idea": "A custom software solution developed as freelance work for Indian Hydraulic Works. Due to a strict Non-Disclosure Agreement (NDA), the source code is kept strictly private. The web application handles internal business requirements and is currently under active development."
+    }
+  ]
+}
