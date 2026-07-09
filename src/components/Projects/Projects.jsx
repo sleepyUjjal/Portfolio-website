@@ -345,6 +345,29 @@ const Projects = () => {
 
   return (
     <section className="projects">
+      <div className="projects__header" style={{ textAlign: 'center', marginBottom: '4rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', padding: '0 2rem' }}>
+        <h1 style={{
+          fontFamily: '"Mondwest", "Courier New", Courier, monospace',
+          fontSize: '5rem',
+          color: 'var(--color-red-wine)',
+          textShadow: '-2px -2px 0 var(--retro-dark), 2px -2px 0 var(--retro-dark), -2px 2px 0 var(--retro-dark), 2px 2px 0 var(--retro-dark), 4px 4px 0 var(--retro-dark)',
+          margin: 0
+        }}>
+          My Projects
+        </h1>
+        <p style={{
+          fontFamily: '"NeueBit", "Courier New", Courier, monospace',
+          fontSize: '1.8rem',
+          color: 'var(--retro-outline)',
+          maxWidth: '800px',
+          margin: 0,
+          lineHeight: '1.2',
+          letterSpacing: '1px'
+        }}>
+          A collection of my latest works, ranging from complex architectures to seamless web experiences. Go ahead and explore.
+        </p>
+      </div>
+
       <div className="projects__list">
         {PROJECTS.map((project, index) => (
           <ProjectCard key={project.id} project={project} index={index} />
