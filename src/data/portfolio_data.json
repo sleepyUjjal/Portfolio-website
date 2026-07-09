@@ -15,42 +15,42 @@
       "title": "NullPass",
       "github": "https://github.com/sleepyUjjal/NullPass",
       "demo": "https://nullpass.ujjal.dev",
-      "idea": "NullPass is a passwordless authentication demo built with Django and React. Instead of passwords or OTPs, it uses a challenge-response flow where a trusted device signs a server-issued nonce with a locally stored private key. The server verifies that signature with the device's public key, then issues a JWT-backed session.\n\nFeatures include:\n- Device enrollment\n- QR-based login flow\n- Simulated authenticator view\n- Security dashboard\n- Cryptographic authentication without passwords or SMS/email OTPs"
+      "idea": "NullPass is an exploration into true passwordless authentication. Instead of relying on vulnerable SMS/email OTPs or standard passwords, the system leverages asymmetric cryptography right in the browser.\n\nWhen a user enrolls a device, the frontend uses the Web Crypto API to generate an ECDSA keypair. The public key is sent to the Django backend and stored securely, while the private key remains locked in the browser's localStorage.\n\nDuring a login attempt, the backend generates an Authentication Challenge containing a unique, time-sensitive nonce. The frontend takes this nonce, signs it using the stored private key, and sends the cryptographic signature back. Django verifies the signature against the stored public key. If the math checks out, the backend issues a secure JWT-backed session. The entire flow happens seamlessly across devices via QR codes, completely eliminating passwords while maintaining a strict, verifiable audit trail of all security events."
     },
     {
       "id": "nuancenode",
       "title": "NuanceNode",
       "github": "https://github.com/sleepyUjjal/NuanceNode",
       "demo": "https://nuancenode.ujjal.dev",
-      "idea": "NuanceNode is a structured claim-analysis system built for people who want more than a one-shot chatbot answer. It breaks a claim into multiple reasoning layers, compares source quality, examines the logic behind the claim, and produces a final verdict with a context tree and downloadable report.\n\nFeatures include:\n- Multi-step analysis pipeline\n- Separation of fact extraction, source review, logic review, and belief dynamics\n- Authenticated user history and report generation\n- Uses React frontend, FastAPI backend, SQLAlchemy, and local LLM runtime (Ollama)"
+      "idea": "NuanceNode is an investigative engine designed to dismantle complex claims rather than just outputting a simple chatbot answer. It addresses the core problem of AI hallucinations and conversational bias by intentionally breaking down the reasoning process into separate, inspectable layers.\n\nWhen a user submits a claim, the FastAPI backend orchestrates a multi-step pipeline using a local LLM runtime (Ollama). Instead of asking the model for an immediate verdict, NuanceNode forces it to first extract raw facts, critically evaluate the quality of the provided sources, test the logical soundness of the argument, and analyze the psychological 'anatomy of belief' surrounding the claim.\n\nOnly after these distinct nodes are processed does the system compile a final verdict. The React frontend presents this data as an interactive context tree, allowing the user to trace exactly why a conclusion was reached. Finally, the system generates a downloadable PDF report, turning a transient chat into a persistent, authenticated research artifact."
     },
     {
       "id": "finprocessor",
       "title": "FinProcessor",
       "github": "https://github.com/sleepyUjjal/FinProcessor",
       "demo": "https://github.com/sleepyUjjal/FinProcessor",
-      "idea": "RBAC-FinProcessor is a finance operations platform with a Django REST backend (RBAC + audit logging + analytics) and a React frontend (protected routes + role-aware UI + dashboard charts).\n\nFeatures include:\n- Granular Role-Based Access Control (Admin, Analyst, User)\n- Multi-tenant aggregation\n- Real-time Dashboard with financial summary and range-based trend timelines\n- Soft delete/hard delete policies with Audit Logs\n- OpenAPI documentation and Swagger UI"
+      "idea": "RBAC-FinProcessor is a production-grade finance operations platform that demonstrates how to implement strict, multi-tenant data boundaries across a distributed stack.\n\nAt its core, it relies on a Django REST backend to enforce granular Role-Based Access Control (Admin, Analyst, User). The architecture is designed around the principle of strict data ownership: Users can only mutate their own financial records, while Analysts have read-only access for reporting, and Admins handle global oversight. To prevent accidental data loss, standard deletions are soft-deleted (flagged with timestamps), whereas Admin actions execute true hard-deletes. Every mutating action triggers an immutable Audit Log.\n\nOn the frontend, a React application consumes these protected APIs using a resilient JWT refresh strategy. The UI dynamically reconfigures itself based on the user's role—hiding protected routes and rendering a real-time dashboard that aggregates financial data into dynamic, stock-style trend charts based on the authenticated user's clearance level."
     },
     {
       "id": "trading-cli",
       "title": "Trading CLI",
       "github": "https://github.com/sleepyUjjal/basic-trading-cli",
       "demo": "https://github.com/sleepyUjjal/basic-trading-cli",
-      "idea": "Binance Futures Testnet — Trading Bot\n\nA Python CLI bot that places MARKET and LIMIT orders on the Binance Futures Testnet (USDT-M). Supports both an interactive menu and direct CLI commands.\n\nFeatures include:\n- REST client abstraction (signing, HTTP, error mapping)\n- Order orchestration + result objects\n- Input validation independent of I/O layer\n- Structured logging to file and console\n- Complete setup and environment variable configuration management"
+      "idea": "The Binance Futures Trading CLI is a specialized orchestration bot built to interact securely with the Binance Testnet (USDT-M). It is engineered to remove the heavy dependencies of standard SDKs in favor of a lightweight, highly controlled execution environment.\n\nThe core of the system is a custom Python REST client that natively handles the complex HMAC SHA-256 signature generation required by Binance's API. Because financial execution requires absolute precision, the bot strictly separates input validation from the network layer. It catches invalid lot sizes, pricing errors, and malformed symbols locally before ever initiating a network request.\n\nWhether operated via its interactive terminal menu or direct CLI arguments, the bot orchestrates MARKET and LIMIT orders asynchronously while maintaining a strict, structured logging pipeline to track request latencies, network faults, and filled order confirmations in real time."
     },
     {
       "id": "veridian",
       "title": "Veridian",
       "github": "https://github.com/sleepyUjjal/Veridian",
       "demo": "https://github.com/sleepyUjjal/Veridian",
-      "idea": "Veridian\n\nA Python-based backend service/web application. It handles user management, authentication, and database operations.\n\nFeatures include:\n- Python Virtual Environment setup and requirements handling\n- App.py execution logic\n- Local SQLite database management for users and static templates\n- Administrator setup scripts"
+      "idea": "Veridian serves as a foundational Python backend service that prioritizes minimal overhead and maximum portability for managing user interactions and database transactions.\n\nUnlike heavy, containerized microservices, Veridian is engineered to run seamlessly via a streamlined execution script paired with a local SQLite database. This architecture eliminates the need for external database servers, allowing the application to read and write user profiles and static templates directly from disk with virtually zero latency.\n\nThe system manages its own virtual environment dependencies and ships with dedicated administrator setup scripts, ensuring that the backend can be bootstrapped, migrated, and securely deployed on any host machine in seconds, making it ideal for rapid prototyping and localized data management."
     },
     {
       "id": "indian-hydraulic-works",
       "title": "Indian Hydraulic Works (Freelance)",
       "github": "Private (NDA)",
       "demo": "In Progress",
-      "idea": "A custom software solution developed as freelance work for Indian Hydraulic Works. Due to a strict Non-Disclosure Agreement (NDA), the source code is kept strictly private. The web application handles internal business requirements and is currently under active development."
+      "idea": "Indian Hydraulic Works is a leading manufacturing and repair facility in Faridabad, India, specializing in heavy-duty hydraulic pumps and motors. For years, their inventory tracking, repair pipelines, and spare part logistics were managed through legacy, manual processes.\n\nI was brought on as a freelance developer to architect a custom digital ecosystem that modernizes their factory floor operations. The web application is built to directly map to their physical workflows like tracking the lifecycle of a hydraulic pump from intake and diagnosis to spare part allocation and final dispatch.\n\nBy migrating their operations to a scalable, centralized software solution, the system minimizes inventory discrepancies and speeds up repair turnaround times. Due to a strict Non-Disclosure Agreement (NDA), the underlying source code and proprietary business logic remain private, the system is currently under development."
     }
   ]
 }
