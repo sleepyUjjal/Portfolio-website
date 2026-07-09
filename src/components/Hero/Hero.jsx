@@ -25,12 +25,12 @@ const Hero = () => {
         <p className="retro-hero__subtitle">
           Building systems, crafting designs, and surviving the final boss — deployment.
         </p>
-      </div>
 
-      {/* Scroll hint above the floor */}
-      <div className="retro-hero__scroll-hint">
-        SCROLL DOWN
-        <span>▼</span>
+        {/* Scroll hint inside the normal flex flow to prevent overlap */}
+        <div className="retro-hero__scroll-hint">
+          SCROLL DOWN
+          <span>▼</span>
+        </div>
       </div>
 
       {/* Pixel grid floor */}
