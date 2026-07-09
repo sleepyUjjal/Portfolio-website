@@ -123,6 +123,27 @@ const Manifesto = () => {
     return () => clearTimeout(timeoutRef.current);
   }, []);
 
+  const canvasRef = React.useRef(null);
+  
+  // Align background grid to the canvas placeholder
+  React.useEffect(() => {
+    const updateBgPosition = () => {
+      if (canvasRef.current && containerRef.current) {
+        const rect = canvasRef.current.getBoundingClientRect();
+        // Calculate offset so the grid exactly aligns with the top-left of the canvas border
+        const offsetX = rect.left % 64;
+        const offsetY = rect.top % 64;
+        // Apply offset globally so the Hero section grid can align with it
+        document.documentElement.style.setProperty('--bg-offset-x', `${offsetX}px`);
+        document.documentElement.style.setProperty('--bg-offset-y', `${offsetY}px`);
+      }
+    };
+    
+    updateBgPosition();
+    window.addEventListener('resize', updateBgPosition);
+    return () => window.removeEventListener('resize', updateBgPosition);
+  }, []);
+
   return (
     <section ref={containerRef} className="manifesto">
       {/* Sticky viewport — this stays pinned while the user scrolls through the tall container */}
@@ -145,7 +166,7 @@ const Manifesto = () => {
         {/* 3-Column Layout */}
         <div className="manifesto__layout">
           {/* Left: Level Number */}
-          <div className="manifesto__left">
+          <div className="manifesto__left" style={{ borderColor: currentPoint.color }}>
             <span className="manifesto__level-label">LEVEL</span>
             <span className="manifesto__level-number" style={{ color: currentPoint.color }}>
               {currentPoint.level}
@@ -154,23 +175,11 @@ const Manifesto = () => {
 
           {/* Center: Pixel Art Placeholder */}
           <div className="manifesto__center">
-            <div className="manifesto__canvas-placeholder" style={{ borderColor: currentPoint.color, position: 'relative', overflow: 'hidden' }}>
+            <div ref={canvasRef} className="manifesto__canvas-placeholder" style={{ borderColor: currentPoint.color, position: 'relative', overflow: 'hidden' }}>
               <AnimatePresence>
-                {displayedPoint && displayedPoint.image ? (
+                {displayedPoint && displayedPoint.image && (
                   <motion.div key={displayedImageIndex} style={{ position: 'absolute', width: '100%', height: '100%' }}>
                     <SlicedImage src={displayedPoint.image} alt={displayedPoint.title} />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="placeholder"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}
-                  >
-                    <span className="manifesto__canvas-label">PIXEL ART</span>
-                    <span className="manifesto__canvas-sublabel">{currentPoint.title}</span>
                   </motion.div>
                 )}
               </AnimatePresence>

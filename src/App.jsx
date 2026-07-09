@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header/Header';
 import LoadingScreen from './components/LoadingScreen/LoadingScreen';
-import Hero from './components/Hero/Hero';
-import Manifesto from './components/Manifesto/Manifesto';
+import Home from './pages/Home';
+import Projects from './components/Projects/Projects';
 import './App.css';
+
+import ProjectDetail from './pages/ProjectDetail/ProjectDetail';
 
 function App() {
   const [isStarted, setIsStarted] = useState(false);
@@ -19,9 +22,11 @@ function App() {
       <div className="app-container" style={{ visibility: isStarted ? 'visible' : 'hidden' }}>
         <Header />
         <main>
-          <Hero />
-          <Manifesto />
-          {/* Future phases (Projects, Arcade) will be added here */}
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/project/:id" element={<ProjectDetail />} />
+          </Routes>
         </main>
       </div>
     </>
