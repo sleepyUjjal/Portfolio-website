@@ -6,28 +6,34 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem 2.5rem;
+  padding: 0.5rem 2.5rem;
   z-index: 100;
-  /* Deep slightly transparent blue so content underneath is barely visible */
-  background: rgba(15, 23, 42, 0.9); 
-  border-bottom: 4px solid var(--retro-border);
+  background: var(--color-wheat-field);
+  border-bottom: 4px solid var(--retro-dark);
 }
 
 .retro-header__logo {
-  font-size: 2.2rem;
+  font-size: 2.8rem;
   font-weight: bold;
-  color: var(--retro-gold);
-  text-shadow: 3px 3px 0 var(--retro-neon-pink);
+  color: var(--color-red-wine);
   letter-spacing: 2px;
 }
 
 .blink {
   animation: blink-caret 1s step-end infinite;
+  color: var(--retro-dark);
 }
 
 @keyframes blink-caret {
-  from, to { opacity: 1; }
-  50% { opacity: 0; }
+
+  from,
+  to {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
 }
 
 .retro-header__nav {
@@ -37,36 +43,55 @@
 }
 
 .retro-header__nav a {
-  color: var(--retro-text-light);
   text-decoration: none;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   text-transform: uppercase;
-  transition: color 0.2s;
   letter-spacing: 1px;
+  font-weight: bold;
 }
 
-.retro-header__nav a:hover:not(.pixel-btn) {
-  color: var(--retro-gold);
-}
-
-/* Pixel Button style for Contact */
+/* Clean Pixel Button */
 .pixel-btn {
-  background-color: var(--retro-red);
-  color: white !important;
-  padding: 0.6rem 1.5rem;
-  border: 4px solid var(--retro-border);
-  box-shadow: 4px 4px 0 0 var(--retro-border);
-  transition: transform 0.1s, box-shadow 0.1s;
+  color: var(--retro-dark) !important;
+  padding: 0.4rem 1.5rem;
+  border: 4px solid var(--retro-dark);
+  box-shadow: 4px 4px 0 0 var(--retro-dark);
+  transition: transform 0.1s, box-shadow 0.1s, filter 0.1s;
   cursor: pointer;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.pixel-btn:hover {
+  filter: brightness(1.15);
 }
 
 .pixel-btn:active {
   transform: translate(4px, 4px);
-  box-shadow: 0px 0px 0 0 var(--retro-border);
+  box-shadow: 0px 0px 0 0 var(--retro-dark);
+}
+
+/* Specific Colors for each Navigation Button */
+.btn-about {
+  background-color: var(--color-orange-yellow);
+}
+
+.btn-projects {
+  background-color: var(--color-nice-blue);
+  color: var(--color-wheat-field) !important;
+}
+
+.btn-games {
+  background-color: var(--color-blaze-orange);
+}
+
+.btn-contact {
+  background-color: var(--color-red-wine);
+  color: var(--color-wheat-field) !important;
 }
 
 @media (max-width: 768px) {
   .retro-header__nav {
-    display: none; /* We will add a retro hamburger menu later if needed */
+    display: none;
   }
 }

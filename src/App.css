@@ -1,24 +1,37 @@
 @font-face {
-  font-family: 'RetroFont';
-  /* Replace these with your actual font filenames once you add them to the public/fonts folder */
-  src: url('/fonts/YourFont.woff2') format('woff2'),
-       url('/fonts/YourFont.otf') format('opentype'),
-       url('/fonts/YourFont.ttf') format('truetype');
+  font-family: 'NeueBit';
+  src: url('/fonts/ppneuebit-bold.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Mondwest';
+  src: url('/fonts/ppmondwest.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'BoldPixels';
+  src: url('/fonts/BoldPixels.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
 }
 
 :root {
-  /* 8-Bit Retro Arcade Color Palette */
-  --retro-bg-dark: #0f172a; /* Night blue */
-  --retro-neon-pink: #ec4899;
-  --retro-red: #ef4444;
-  --retro-gold: #fcd34d;
-  --retro-green: #22c55e;
-  --retro-text-light: #f8fafc;
-  --retro-border: #020617; /* Very dark blue/black for thick pixel borders */
-  
-  --font-primary: 'RetroFont', 'Courier New', Courier, monospace;
+  /* User's Custom Palette */
+  --color-blaze-orange: #f06b04;
+  --color-orange-yellow: #fbb728;
+  --color-wheat-field: #f5ecd2;
+  --color-curious-blue: #2c9fc7;
+  --color-nice-blue: #1570ac;
+  --color-red-wine: #a1081e;
+
+  /* Modern 8-bit requires a strong dark tone for contrast, outlines, and text */
+  --retro-dark: #1e1e24;
+
+  --font-primary: 'Mondwest', 'Courier New', Courier, monospace;
 }
 
 * {
@@ -29,38 +42,19 @@
 
 body {
   font-family: var(--font-primary);
-  background-color: var(--retro-bg-dark);
-  color: var(--retro-text-light);
+  /* Clean, flat Honeydew background. No messy gradients. */
+  background-color: var(--color-wheat-field);
+  color: var(--retro-dark);
   overflow-x: hidden;
-  
-  /* CRT Scanline effect overlay on the entire body */
-  background-image: linear-gradient(
-    rgba(18, 16, 16, 0) 50%,
-    rgba(0, 0, 0, 0.25) 50%
-  );
+  /* Extremely subtle, modern CRT line, barely visible for texture */
+  background-image: linear-gradient(rgba(30, 30, 36, 0.03) 1px, transparent 1px);
   background-size: 100% 4px;
 }
 
-/* CRT Flicker Animation */
-@keyframes flicker {
-  0% { opacity: 0.95; }
-  5% { opacity: 0.85; }
-  10% { opacity: 0.95; }
-  15% { opacity: 1; }
-  100% { opacity: 1; }
-}
-
-.crt-effect {
-  animation: flicker 0.15s infinite;
-  pointer-events: none;
-}
-
-/* Utility classes for Pixel Borders (box-shadow hack) */
+/* Crisp, solid pixel borders with hard shadows (Modern indie game style) */
 .pixel-border {
-  border: 4px solid var(--retro-border);
-  box-shadow: 
-    -4px 0 0 0 white,
-    4px 0 0 0 white,
-    0 -4px 0 0 white,
-    0 4px 0 0 white;
+  border: 4px solid var(--retro-dark);
+  box-shadow: 6px 6px 0 0 var(--retro-dark);
+  border-radius: 2px;
+  /* Slight softening for modern feel */
 }
