@@ -50,27 +50,35 @@
 
 .title-level {
   display: block;
-  font-size: 2.5rem;
+  font-size: 4rem;
   color: var(--color-orange-yellow);
   margin-bottom: 0.5rem;
   font-weight: bold;
   text-shadow:
-    -2px -2px 0 var(--retro-dark),
-    2px -2px 0 var(--retro-dark),
-    -2px 2px 0 var(--retro-dark),
-    2px 2px 0 var(--retro-dark),
-    0px -2px 0 var(--retro-dark),
-    0px 2px 0 var(--retro-dark),
-    -2px 0px 0 var(--retro-dark),
-    2px 0px 0 var(--retro-dark);
+    -3px -3px 0 var(--retro-outline),
+    3px -3px 0 var(--retro-outline),
+    -3px 3px 0 var(--retro-outline),
+    3px 3px 0 var(--retro-outline),
+    0px -3px 0 var(--retro-outline),
+    0px 3px 0 var(--retro-outline),
+    -3px 0px 0 var(--retro-outline),
+    3px 0px 0 var(--retro-outline);
   font-family: 'NeueBit', 'Courier New', Courier, monospace;
 }
 
 .retro-hero__title {
-  font-size: 7rem;
+  font-size: 7.3rem;
   line-height: 1.05;
   color: var(--color-red-wine);
-  text-shadow: 5px 5px 0 var(--retro-dark);
+  text-shadow:
+    -4px -4px 0 var(--retro-outline),
+    4px -4px 0 var(--retro-outline),
+    -4px 4px 0 var(--retro-outline),
+    4px 4px 0 var(--retro-outline),
+    0px -4px 0 var(--retro-outline),
+    0px 4px 0 var(--retro-outline),
+    -4px 0px 0 var(--retro-outline),
+    4px 0px 0 var(--retro-outline);
   margin-bottom: 2rem;
   font-family: 'Mondwest', 'Courier New', Courier, monospace;
 }
@@ -104,6 +112,7 @@
 }
 
 @keyframes scroll-bounce {
+
   0%,
   100% {
     transform: translateY(0);

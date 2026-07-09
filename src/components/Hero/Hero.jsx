@@ -19,8 +19,8 @@ const Hero = () => {
       {/* Main Hero Content */}
       <div className="retro-hero__content">
         <h1 className="retro-hero__title">
-          <span className="title-level">LEVEL 1</span>
-          FULL STACK<br />DEVELOPER
+          <span className="title-level">Full Stack Developer</span>
+          UJJALDEEP SINGH
         </h1>
         <p className="retro-hero__subtitle">
           Building systems, crafting designs, and surviving the final boss — deployment.

@@ -31,6 +31,7 @@
 
   /* Modern 8-bit requires a strong dark tone for contrast, outlines, and text */
   --retro-dark: #1e1e24;
+  --retro-outline: #121212e4;
 
   --font-primary: 'Mondwest', 'Courier New', Courier, monospace;
 }

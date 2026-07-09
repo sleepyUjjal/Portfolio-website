@@ -5,11 +5,16 @@ import LoadingScreen from './components/LoadingScreen/LoadingScreen';
 import Home from './pages/Home';
 import Projects from './components/Projects/Projects';
 import './App.css';
-
 import ProjectDetail from './pages/ProjectDetail/ProjectDetail';
 
 function App() {
-  const [isStarted, setIsStarted] = useState(false);
+  const [isStarted, setIsStarted] = useState(() => {
+    // Skip loading screen if we hard refresh on any page other than the landing page
+    if (window.location.pathname !== '/') {
+      return true;
+    }
+    return false;
+  });
 
   return (
     <>
