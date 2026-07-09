@@ -8,7 +8,7 @@ const Home = () => {
     <>
       <Hero />
       <Manifesto />
-      
+
       {/* View Projects CTA */}
       <section style={{
         minHeight: '40vh',
@@ -19,19 +19,31 @@ const Home = () => {
         background: 'var(--retro-dark)',
         gap: '2rem'
       }}>
-        <h2 style={{
-          fontFamily: '"BoldPixels", "Courier New", Courier, monospace',
-          fontSize: '4rem',
-          color: 'var(--color-wheat-field)',
-          margin: 0
-        }}>
-          SYSTEM_ARCHIVES.EXE
-        </h2>
-        <Link 
-          to="/projects" 
-          style={{
+        <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <h2 style={{
             fontFamily: '"Mondwest", "Courier New", Courier, monospace',
+            fontSize: '4rem',
+            color: 'var(--color-wheat-field)',
+            margin: 0,
+            textShadow: '4px 4px 0 rgba(0, 0, 0, 0.4)'
+          }}>
+            SYSTEM_ARCHIVES.EXE
+          </h2>
+          <p style={{
+            fontFamily: '"NeueBit", "Courier New", Courier, monospace',
             fontSize: '1.5rem',
+            color: 'var(--color-curious-blue)',
+            margin: 0,
+            letterSpacing: '4px'
+          }}>
+            See almost all of my (actually decent) projects!
+          </p>
+        </div>
+        <Link
+          to="/projects"
+          style={{
+            fontFamily: '"BoldPixels", "Courier New", Courier, monospace',
+            fontSize: '2rem',
             color: 'var(--retro-dark)',
             backgroundColor: 'var(--color-curious-blue)',
             textDecoration: 'none',

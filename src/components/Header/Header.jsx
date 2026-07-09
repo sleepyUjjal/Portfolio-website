@@ -9,10 +9,10 @@ const Header = () => {
         <span className="blink">_</span>
       </div>
       <nav className="retro-header__nav">
-        <a href="#about" className="pixel-btn btn-about">ABOUT</a>
-        <a href="#projects" className="pixel-btn btn-projects">PROJECTS</a>
-        <a href="#games" className="pixel-btn btn-games">GAMES</a>
-        <a href="#contact" className="pixel-btn btn-contact">CONTACT</a>
+        <a href="/about" className="pixel-btn btn-about">ABOUT</a>
+        <a href="/projects" className="pixel-btn btn-projects">PROJECTS</a>
+        <a href="/games" className="pixel-btn btn-games">GAMES</a>
+        <a href="/contact" className="pixel-btn btn-contact">CONTACT</a>
       </nav>
     </header>
   );
