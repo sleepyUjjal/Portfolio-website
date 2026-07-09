@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Header from './components/Header/Header';
 import LoadingScreen from './components/LoadingScreen/LoadingScreen';
 import Hero from './components/Hero/Hero';
+import Manifesto from './components/Manifesto/Manifesto';
 import './App.css';
 
 function App() {
@@ -19,7 +20,8 @@ function App() {
         <Header />
         <main>
           <Hero />
-          {/* Future phases (Manifesto, Projects, Arcade) will be added here */}
+          <Manifesto />
+          {/* Future phases (Projects, Arcade) will be added here */}
         </main>
       </div>
     </>
@@ -27,3 +29,4 @@ function App() {
 }
 
 export default App;
+
