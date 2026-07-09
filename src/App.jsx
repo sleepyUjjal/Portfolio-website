@@ -1,11 +1,21 @@
-import React, { useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header/Header';
 import LoadingScreen from './components/LoadingScreen/LoadingScreen';
 import Home from './pages/Home';
 import Projects from './components/Projects/Projects';
 import './App.css';
 import ProjectDetail from './pages/ProjectDetail/ProjectDetail';
+
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+};
 
 function App() {
   const [isStarted, setIsStarted] = useState(() => {
@@ -18,6 +28,7 @@ function App() {
 
   return (
     <>
+      <ScrollToTop />
       {/* Phase 3: Loading screen blocks everything until user clicks START */}
       {!isStarted && (
         <LoadingScreen onStart={() => setIsStarted(true)} />
