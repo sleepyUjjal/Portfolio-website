@@ -9,6 +9,12 @@
     "linkedin": "https://linkedin.com",
     "email": "your@email.com"
   },
+  "skills": {
+    "Languages": ["C", "C++", "Python", "JavaScript", "HTML5", "CSS3", "Markdown", "LaTeX", "Bash", "PowerShell"],
+    "Frontend": ["React", "Next.js", "Vite", "Bootstrap", "EJS", "Chart.js", "Streamlit"],
+    "Backend & APIs": ["Node.js", "Express.js", "Django", "Django REST", "FastAPI", "Flask", "JWT", "Nginx", "Gunicorn"],
+    "Databases & Cloud": ["PostgreSQL", "MySQL", "MongoDB", "SQLite", "Redis", "Supabase", "AWS", "Google Cloud", "Vercel", "Netlify", "Render"]
+  },
   "projects": [
     {
       "id": "nullpass",

@@ -42,6 +42,10 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/project/:id" element={<ProjectDetail />} />
+            {/* Placeholders for upcoming phases to prevent blank screens */}
+            <Route path="/about" element={<div style={{padding: '10rem', color: 'white', textAlign: 'center', fontFamily: 'BoldPixels'}}><h2>ABOUT - PENDING PHASE 10</h2></div>} />
+            <Route path="/games" element={<div style={{padding: '10rem', color: 'white', textAlign: 'center', fontFamily: 'BoldPixels'}}><h2>GAMES - PENDING PHASE 11</h2></div>} />
+            <Route path="/contact" element={<div style={{padding: '10rem', color: 'white', textAlign: 'center', fontFamily: 'BoldPixels'}}><h2>CONTACT - PENDING PHASE 12</h2></div>} />
           </Routes>
         </main>
       </div>

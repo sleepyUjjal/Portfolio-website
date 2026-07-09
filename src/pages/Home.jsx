@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Hero from '../components/Hero/Hero';
 import Manifesto from '../components/Manifesto/Manifesto';
+import Skills from '../components/Skills/Skills';
 
 const Home = () => {
   return (
@@ -58,6 +59,7 @@ const Home = () => {
           VIEW PROJECTS
         </Link>
       </section>
+      <Skills />
     </>
   );
 };
