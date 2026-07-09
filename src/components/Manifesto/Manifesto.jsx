@@ -1,42 +1,89 @@
 import React, { useRef } from 'react';
-import { useScroll, useTransform, motion, useMotionValueEvent } from 'framer-motion';
+import { useScroll, useTransform, motion, useMotionValueEvent, AnimatePresence } from 'framer-motion';
 import './Manifesto.css';
 
 const MANIFESTO_POINTS = [
   {
     level: '01',
-    title: 'BACKEND SYSTEMS',
-    description: 'I design server architectures that don\'t crumble under pressure. APIs, databases, auth flows — the invisible infrastructure that holds everything together.',
-    color: 'var(--color-nice-blue)',
+    title: 'BACKEND',
+    description: 'I (try to) architect backend systems built to scale. Crafting seamless APIs and rock-solid authentication to engineer the invisible foundation that applications rely on.',
+    color: 'var(--color-curious-blue)',
+    image: '/do.webp',
   },
   {
     level: '02',
-    title: 'FRONTEND CRAFT',
-    description: 'Pixels matter. I build interfaces that feel alive — responsive, accessible, and satisfying to use. Every hover state, every transition is intentional.',
+    title: 'FRONTEND',
+    description: 'Pixels matter just as much as the architecture. I build responsive, accessible interfaces that feel alive, ensuring every transition and hover state is as intentional as the infrastructure that powers it.',
     color: 'var(--color-blaze-orange)',
+    image: '/snoop.webp',
   },
   {
     level: '03',
     title: 'DATA & STORAGE',
-    description: 'From SQL schemas to cache layers, I architect data pipelines that are fast to query and safe to trust. Your data deserves better than a JSON file.',
-    color: 'var(--color-curious-blue)',
+    description: 'Your data deserves better than a JSON file. From complex SQL schemas to optimized cache layers, I (try to) architect data pipelines that are lightning-fast to query and rock-solid to trust.',
+    color: 'var(--color-nice-blue)',
+    image: '/char.webp',
   },
   {
     level: '04',
     title: 'USER EXPERIENCE',
-    description: 'Good UX is invisible. I obsess over the tiny details — loading states, error messages, micro-interactions — that separate "works" from "feels great".',
+    description: 'Great UX is invisible. I obsess over the friction points. By perfecting loading states, edge cases, and micro interactions, I (generally) close the gap between \'it works\' and \'it feels great\'.',
     color: 'var(--color-orange-yellow)',
+    image: '/tj.webp',
   },
   {
     level: '05',
-    title: 'SHIP IT',
-    description: 'CI/CD, Docker, deployment pipelines. I don\'t just build software — I put it in front of real users. The final boss is always production.',
+    title: 'DEPLOYMENT',
+    description: 'Code doesn\'t matter until it ships. I engineer reliable deployment pipelines using Docker and CI/CD to get software out of the editor and into the hands of real users. The final boss is always production, and I come prepared.',
     color: 'var(--color-red-wine)',
+    image: '/offline.webp',
   },
 ];
 
+// Helper component to slice the image into horizontal bands and animate them time-based
+const SlicedImage = ({ src, alt }) => {
+  const SLICES = 12;
+  return (
+    <>
+      {Array.from({ length: SLICES }).map((_, i) => {
+        const top = (i / SLICES) * 100;
+        const bottom = (1 - (i + 1) / SLICES) * 100;
+        const direction = i % 2 === 0 ? 1 : -1;
+        
+        return (
+          <motion.img
+            key={i}
+            src={src}
+            alt={alt}
+            initial={{ x: `${100 * direction}%`, opacity: 0 }}
+            animate={{ x: '0%', opacity: 1 }}
+            exit={{ x: `${-100 * direction}%`, opacity: 0 }}
+            transition={{ 
+              duration: 0.6, 
+              ease: [0.16, 1, 0.3, 1], // snappy custom ease-out
+              delay: (SLICES - i - 1) * 0.02 // staggered effect
+            }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'contain',
+              imageRendering: 'pixelated',
+              clipPath: `inset(${top}% 0% ${bottom}% 0%)`,
+              WebkitClipPath: `inset(${top}% 0% ${bottom}% 0%)`,
+            }}
+          />
+        );
+      })}
+    </>
+  );
+};
+
 const Manifesto = () => {
   const containerRef = useRef(null);
+  const timeoutRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end end'],
@@ -46,12 +93,22 @@ const Manifesto = () => {
   const activeIndex = useTransform(scrollYProgress, [0, 1], [0, MANIFESTO_POINTS.length - 1]);
 
   const [currentIndex, setCurrentIndex] = React.useState(0);
+  const [displayedImageIndex, setDisplayedImageIndex] = React.useState(0);
 
   useMotionValueEvent(activeIndex, 'change', (latest) => {
     setCurrentIndex(Math.round(latest));
+    
+    // We clear the timeout every single frame during a scroll
+    clearTimeout(timeoutRef.current);
+    
+    // Only update the image if the scroll has stopped for 60ms
+    timeoutRef.current = setTimeout(() => {
+      setDisplayedImageIndex(Math.round(latest));
+    }, 60);
   });
 
   const currentPoint = MANIFESTO_POINTS[currentIndex];
+  const displayedPoint = MANIFESTO_POINTS[displayedImageIndex];
 
   const handleDotClick = (index) => {
     if (containerRef.current) {
@@ -60,6 +117,11 @@ const Manifesto = () => {
       window.scrollTo({ top: targetScrollY, behavior: 'smooth' });
     }
   };
+
+  // Cleanup timeout on unmount
+  React.useEffect(() => {
+    return () => clearTimeout(timeoutRef.current);
+  }, []);
 
   return (
     <section ref={containerRef} className="manifesto">
@@ -92,9 +154,26 @@ const Manifesto = () => {
 
           {/* Center: Pixel Art Placeholder */}
           <div className="manifesto__center">
-            <div className="manifesto__canvas-placeholder" style={{ borderColor: currentPoint.color }}>
-              <span className="manifesto__canvas-label">PIXEL ART</span>
-              <span className="manifesto__canvas-sublabel">{currentPoint.title}</span>
+            <div className="manifesto__canvas-placeholder" style={{ borderColor: currentPoint.color, position: 'relative', overflow: 'hidden' }}>
+              <AnimatePresence>
+                {displayedPoint && displayedPoint.image ? (
+                  <motion.div key={displayedImageIndex} style={{ position: 'absolute', width: '100%', height: '100%' }}>
+                    <SlicedImage src={displayedPoint.image} alt={displayedPoint.title} />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="placeholder"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}
+                  >
+                    <span className="manifesto__canvas-label">PIXEL ART</span>
+                    <span className="manifesto__canvas-sublabel">{currentPoint.title}</span>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </div>
 
