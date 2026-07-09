@@ -8,7 +8,8 @@
   text-align: center;
   padding: 0 2rem;
   overflow: hidden;
-  background: var(--color-soft-peach);
+  background: var(--color-wheat-field);
+  font-family: 'Mondwest', 'Courier New', Courier, monospace;
 }
 
 .retro-hero__hearts {
@@ -23,11 +24,10 @@
 .pixel-heart {
   width: 24px;
   height: 24px;
-  background-color: var(--color-tomato-jam);
+  background-color: var(--color-red-wine);
   position: relative;
   clip-path: polygon(10% 0, 40% 0, 50% 20%, 60% 0, 90% 0,
       100% 30%, 100% 50%, 50% 100%, 0 50%, 0 30%);
-  /* Simulating a border by placing it over a slightly larger dark heart, but for simplicity we use drop-shadow */
   filter: drop-shadow(4px 4px 0px var(--retro-dark));
 }
 
@@ -38,40 +38,66 @@
 
 .title-level {
   display: block;
-  font-size: 1.5rem;
-  color: var(--color-coral-glow);
-  margin-bottom: 1rem;
+  font-size: 2.5rem;
+  color: var(--color-orange-yellow);
+  margin-bottom: 0.5rem;
   font-weight: bold;
+  /* Multi-directional text-shadow to create a solid 8-bit outline */
+  text-shadow:
+    -2px -2px 0 var(--retro-dark),
+    2px -2px 0 var(--retro-dark),
+    -2px 2px 0 var(--retro-dark),
+    2px 2px 0 var(--retro-dark),
+    0px -2px 0 var(--retro-dark),
+    0px 2px 0 var(--retro-dark),
+    -2px 0px 0 var(--retro-dark),
+    2px 0px 0 var(--retro-dark);
+  font-family: 'NeueBit', 'Courier New', Courier, monospace;
 }
 
 .retro-hero__title {
-  font-size: 5rem;
+  font-size: 6rem;
   line-height: 1.1;
-  color: var(--color-tomato-jam);
+  color: var(--color-red-wine);
   /* Crisp, solid drop shadow for the title */
   text-shadow: 4px 4px 0 var(--retro-dark);
   margin-bottom: 2rem;
 }
 
 .retro-hero__subtitle {
-  font-size: 1.5rem;
+  font-size: 2rem;
   color: var(--retro-dark);
   margin-bottom: 3rem;
   font-weight: bold;
 }
 
 .start-btn {
-  background: var(--color-soft-peach);
-  color: var(--retro-dark);
+  background: var(--color-nice-blue);
+  color: var(--color-wheat-field);
   font-family: inherit;
-  font-size: 2rem;
-  padding: 1rem 2rem;
+  font-size: 2.5rem;
+  padding: 1rem 2.5rem;
   border: 4px solid var(--retro-dark);
   box-shadow: 6px 6px 0 var(--retro-dark);
   cursor: pointer;
   text-transform: uppercase;
-  transition: transform 0.1s, box-shadow 0.1s;
+  transition: transform 0.1s, box-shadow 0.1s, filter 0.1s;
   font-weight: bold;
+  font-family: 'BoldPixels', 'Courier New', Courier, monospace;
+  /* Multi-directional text-shadow to create a solid 8-bit text outline */
+  text-shadow:
+    -2px -2px 0 var(--retro-dark),
+    2px -2px 0 var(--retro-dark),
+    -2px 2px 0 var(--retro-dark),
+    2px 2px 0 var(--retro-dark),
+    0px -2px 0 var(--retro-dark),
+    0px 2px 0 var(--retro-dark),
+    -2px 0px 0 var(--retro-dark),
+    2px 0px 0 var(--retro-dark);
+}
+
+.start-btn:hover {
+  filter: brightness(1.2);
 }
 
 .start-btn:active {
@@ -90,7 +116,7 @@
     linear-gradient(var(--retro-dark) 4px, transparent 4px),
     linear-gradient(90deg, var(--retro-dark) 4px, transparent 4px);
   background-size: 64px 64px;
-  background-color: var(--color-sky-blue);
+  background-color: var(--color-curious-blue);
   border-top: 4px solid var(--retro-dark);
   z-index: 1;
 }

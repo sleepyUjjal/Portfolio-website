@@ -20,19 +20,16 @@
 }
 
 .blink {
-  animation: blink-caret 1s step-end infinite;
+  animation: blink-caret 1.5s infinite;
   color: var(--retro-dark);
 }
 
 @keyframes blink-caret {
-
-  from,
-  to {
-    opacity: 1;
+  0%, 75% {
+    opacity: 1; /* Visible for 75% of the time (1.12s) */
   }
-
-  50% {
-    opacity: 0;
+  76%, 100% {
+    opacity: 0; /* Hidden for 25% of the time (0.38s) */
   }
 }
 
