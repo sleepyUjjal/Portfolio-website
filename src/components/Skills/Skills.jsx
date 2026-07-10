@@ -61,15 +61,17 @@ const Skills = () => {
 
   return (
     <section className="retro-skills">
-      <div className="retro-inventory">
+      <div className="skills-layout-container">
         
-        <div className="retro-inventory__header">
-          <span className="retro-inventory__title">INVENTORY</span>
+        <div className="skills-header-side">
+          <h2 className="skills-title">INVENTORY</h2>
+          <p className="skills-subtitle">These are my skills listed below types.</p>
         </div>
-
-        <div className="retro-inventory__layout">
-          
-          <div className="retro-inventory__sidebar">
+        
+        <div className="retro-inventory">
+          <div className="retro-inventory__layout">
+            
+            <div className="retro-inventory__sidebar">
             <div className="retro-inventory__level-box">
               <div className="level-hexagon">99</div>
               <div className="level-bars">
@@ -111,6 +113,7 @@ const Skills = () => {
           </div>
 
         </div>
+      </div>
       </div>
     </section>
   );
