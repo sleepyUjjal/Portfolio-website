@@ -92,6 +92,13 @@
   color: var(--retro-dark) !important;
 }
 
+.btn-crt-toggle {
+  background-color: var(--retro-dark);
+  color: var(--color-wheat-field) !important;
+  border-color: var(--color-wheat-field) !important;
+  margin-left: auto;
+}
+
 @media (max-width: 768px) {
   .retro-header__nav {
     display: none;

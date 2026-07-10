@@ -67,3 +67,130 @@ a, button, input[type="submit"], input[type="button"], [role="button"], .cursor-
   border-radius: 2px;
   /* Slight softening for modern feel */
 }
+
+/* =========================================
+   CRT / DARK MODE (Gameboy / Terminal Style)
+   ========================================= */
+body.crt-mode {
+  /* Core Theme Inversion */
+  background-color: #050a05 !important;
+  --color-wheat-field: #050a05; /* Near Black */
+  --retro-dark: #39ff14; /* Neon / Phosphor Green */
+  --retro-outline: #39ff14;
+  
+  /* Accent Colors mapped to darker greens to provide contrast against the bright green text */
+  --color-blaze-orange: #0a2e0a;
+  --color-orange-yellow: #0a2e0a;
+  --color-curious-blue: #0a2e0a;
+  --color-nice-blue: #0a2e0a;
+  --color-red-wine: #0a2e0a;
+  --color-raddish: #0a2e0a;
+}
+
+/* =========================================
+   CRT MODE VISIBILITY OVERRIDES
+   ========================================= */
+/* Force all buttons, cards, and interactive elements to use Black bg and Green text */
+body.crt-mode .pixel-btn,
+body.crt-mode .contact-link-card,
+body.crt-mode .resume-btn,
+body.crt-mode .contact-status,
+body.crt-mode .terminal__submit {
+  background: var(--color-wheat-field) !important;
+  color: var(--retro-dark) !important;
+  border-color: var(--retro-dark) !important;
+  box-shadow: 6px 6px 0 0 var(--retro-dark) !important;
+}
+
+/* Fix specific title colors and shadows */
+body.crt-mode .games-header__title,
+body.crt-mode h1, body.crt-mode h2 {
+  color: var(--retro-dark) !important;
+  text-shadow: none !important;
+}
+
+/* Force terminal inputs and game cells to be visible */
+body.crt-mode .terminal-window,
+body.crt-mode .contact-terminal,
+body.crt-mode .terminal__titlebar,
+body.crt-mode .projects__card,
+body.crt-mode .projects__card-left,
+body.crt-mode .about-dialogue-box,
+body.crt-mode .dialogue-title,
+body.crt-mode .dialogue-nameplate,
+body.crt-mode .photo-frame {
+  background: var(--color-wheat-field) !important;
+  border-color: var(--retro-dark) !important;
+}
+
+body.crt-mode .terminal__input,
+body.crt-mode .terminal__textarea,
+body.crt-mode .ttt-cell,
+body.crt-mode .memory-card__front,
+body.crt-mode .memory-card__back,
+body.crt-mode .wam-hole,
+body.crt-mode .game-card {
+  background: var(--color-wheat-field) !important;
+  border: 2px solid var(--retro-dark) !important;
+  color: var(--retro-dark) !important;
+}
+
+body.crt-mode .terminal__input::placeholder,
+body.crt-mode .terminal__textarea::placeholder {
+  color: rgba(57, 255, 20, 0.5) !important; /* Semi-transparent phosphor green */
+}
+
+/* Fix text colors that were hardcoded or inheriting poorly */
+body.crt-mode .game-card__title,
+body.crt-mode .game-card__tagline,
+body.crt-mode .projects__card-title,
+body.crt-mode .projects__card-meta,
+body.crt-mode .projects__card-desc,
+body.crt-mode .projects__card-tag,
+body.crt-mode .projects__card-link,
+body.crt-mode .dialogue-text,
+body.crt-mode .dialogue-title,
+body.crt-mode .dialogue-nameplate,
+body.crt-mode .contact-link-card__name,
+body.crt-mode .contact-link-card__url,
+body.crt-mode .terminal__title,
+body.crt-mode .terminal__line,
+body.crt-mode .terminal__label,
+body.crt-mode .terminal__prompt,
+body.crt-mode .contact-header__subtitle {
+  color: var(--retro-dark) !important;
+  border-color: var(--retro-dark) !important;
+}
+
+body.crt-mode .game-card__badge {
+  background: var(--color-wheat-field) !important;
+  color: var(--retro-dark) !important;
+  border: 1px solid var(--retro-dark) !important;
+}
+
+/* Tint all images and videos to green */
+body.crt-mode img, body.crt-mode video {
+  filter: grayscale(100%) sepia(100%) hue-rotate(70deg) saturate(300%) brightness(0.8) contrast(1.2);
+}
+
+/* Scanlines and screen flicker */
+body.crt-mode::after {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+  z-index: 9999;
+  background-size: 100% 4px;
+  pointer-events: none;
+  animation: crt-flicker 0.15s infinite;
+}
+
+@keyframes crt-flicker {
+  0% { opacity: 0.95; }
+  50% { opacity: 1; }
+  100% { opacity: 0.95; }
+}
