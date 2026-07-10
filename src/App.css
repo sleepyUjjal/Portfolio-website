@@ -157,7 +157,9 @@ body.crt-mode .terminal__title,
 body.crt-mode .terminal__line,
 body.crt-mode .terminal__label,
 body.crt-mode .terminal__prompt,
-body.crt-mode .contact-header__subtitle {
+body.crt-mode .contact-header__subtitle,
+body.crt-mode .project-detail__viewer-controls,
+body.crt-mode .project-detail__viewer-close {
   color: var(--retro-dark) !important;
   border-color: var(--retro-dark) !important;
 }

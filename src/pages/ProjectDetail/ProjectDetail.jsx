@@ -33,22 +33,34 @@ const ProjectDetail = () => {
   useEffect(() => {
     if (!isViewerOpen) return;
 
+    const getMaxBounds = () => {
+      if (zoom <= 1) return { x: 0, y: 0 };
+      const padding = 50;
+      return {
+        x: (window.innerWidth * (zoom - 1)) / 2 + padding,
+        y: (window.innerHeight * (zoom - 1)) / 2 + padding
+      };
+    };
+
     const handleKeyDown = (e) => {
       const PAN_SPEED = 40;
       const ZOOM_SPEED = 0.2;
+      
+      const bounds = getMaxBounds();
+      const bound = (val, max) => Math.min(Math.max(val, -max), max);
 
       switch (e.key) {
         case 'ArrowUp':
-          setPos(prev => ({ ...prev, y: prev.y + PAN_SPEED }));
+          if (zoom > 1) setPos(prev => ({ ...prev, y: bound(prev.y + PAN_SPEED, bounds.y) }));
           break;
         case 'ArrowDown':
-          setPos(prev => ({ ...prev, y: prev.y - PAN_SPEED }));
+          if (zoom > 1) setPos(prev => ({ ...prev, y: bound(prev.y - PAN_SPEED, bounds.y) }));
           break;
         case 'ArrowLeft':
-          setPos(prev => ({ ...prev, x: prev.x + PAN_SPEED }));
+          if (zoom > 1) setPos(prev => ({ ...prev, x: bound(prev.x + PAN_SPEED, bounds.x) }));
           break;
         case 'ArrowRight':
-          setPos(prev => ({ ...prev, x: prev.x - PAN_SPEED }));
+          if (zoom > 1) setPos(prev => ({ ...prev, x: bound(prev.x - PAN_SPEED, bounds.x) }));
           break;
         case '+':
         case '=':
@@ -56,7 +68,11 @@ const ProjectDetail = () => {
           break;
         case '-':
         case '_':
-          setZoom(prev => Math.max(prev - ZOOM_SPEED, 0.2));
+          setZoom(prev => {
+            const newZoom = Math.max(prev - ZOOM_SPEED, 1);
+            if (newZoom <= 1) setPos({ x: 0, y: 0 });
+            return newZoom;
+          });
           break;
         case 'Escape':
           setIsViewerOpen(false);
@@ -70,7 +86,11 @@ const ProjectDetail = () => {
       if (e.ctrlKey || e.metaKey) {
         e.preventDefault();
         const delta = e.deltaY * -0.01;
-        setZoom(prev => Math.min(Math.max(prev + delta, 0.2), 5));
+        setZoom(prev => {
+          const newZoom = Math.min(Math.max(prev + delta, 1), 5);
+          if (newZoom <= 1) setPos({ x: 0, y: 0 });
+          return newZoom;
+        });
       }
     };
 
@@ -81,18 +101,23 @@ const ProjectDetail = () => {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('wheel', handleWheel);
     };
-  }, [isViewerOpen]);
+  }, [isViewerOpen, zoom]);
 
   const handleMouseDown = (e) => {
+    if (zoom <= 1) return; // Disallow dragging if not zoomed in
     setIsDragging(true);
     dragStart.current = { x: e.clientX - pos.x, y: e.clientY - pos.y };
   };
 
   const handleMouseMove = (e) => {
-    if (!isDragging) return;
+    if (!isDragging || zoom <= 1) return;
+    
+    let maxX = (window.innerWidth * (zoom - 1)) / 2 + 50;
+    let maxY = (window.innerHeight * (zoom - 1)) / 2 + 50;
+    
     setPos({
-      x: e.clientX - dragStart.current.x,
-      y: e.clientY - dragStart.current.y
+      x: Math.min(Math.max(e.clientX - dragStart.current.x, -maxX), maxX),
+      y: Math.min(Math.max(e.clientY - dragStart.current.y, -maxY), maxY)
     });
   };
 
