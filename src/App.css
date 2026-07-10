@@ -51,6 +51,13 @@ body {
   /* Extremely subtle, modern CRT line, barely visible for texture */
   background-image: linear-gradient(rgba(30, 30, 36, 0.03) 1px, transparent 1px);
   background-size: 100% 4px;
+  /* Custom Retro Pixel Cursor */
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><polygon points="2,2 2,20 7,15 11,22 15,20 11,13 18,13" fill="%23ffffff" stroke="%23000000" stroke-width="2" stroke-linejoin="miter"/></svg>'), auto;
+}
+
+/* Custom Pointer Cursor for interactive elements */
+a, button, input[type="submit"], input[type="button"], [role="button"], .cursor-pointer {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><polygon points="2,2 2,20 7,15 11,22 15,20 11,13 18,13" fill="%23fbb728" stroke="%23000000" stroke-width="2" stroke-linejoin="miter"/></svg>'), pointer !important;
 }
 
 /* Crisp, solid pixel borders with hard shadows (Modern indie game style) */

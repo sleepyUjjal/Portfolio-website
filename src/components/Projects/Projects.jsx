@@ -182,7 +182,7 @@ const ProjectCard = ({ project, index }) => {
 
   return (
     <motion.div
-      className="projects__card"
+      className="projects__card cursor-pointer"
       style={{ borderColor: color }}
       onClick={() => navigate(`/project/${project.id}`)}
       whileHover="hover"

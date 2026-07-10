@@ -156,7 +156,7 @@
 }
 
 .about-resume-btn:hover {
-  background: var(--color-wheat-field);
+  background: var(--color-orange-yellow);
   color: var(--retro-dark);
   transform: translateY(-2px);
   box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.5);

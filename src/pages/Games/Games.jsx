@@ -95,7 +95,7 @@ const Games = () => {
           {GAMES_LIST.map((game) => (
             <div
               key={game.id}
-              className={`game-card ${game.locked ? 'game-card--locked' : ''}`}
+              className={`game-card cursor-pointer ${game.locked ? 'game-card--locked' : ''}`}
               onClick={() => !game.locked && setActiveGame(game)}
               style={{ '--card-accent': game.color }}
             >
