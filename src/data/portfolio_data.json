@@ -58,24 +58,27 @@
   },
   "projects": [
     {
-      "id": "nullpass",
-      "title": "NullPass",
-      "github": "https://github.com/sleepyUjjal/NullPass",
-      "demo": "https://nullpass.ujjal.dev",
-      "idea": "NullPass is an exploration into true passwordless authentication. Instead of relying on vulnerable SMS/email OTPs or standard passwords, the system leverages asymmetric cryptography right in the browser.\n\nWhen a user enrolls a device, the frontend uses the Web Crypto API to generate an ECDSA keypair. The public key is sent to the Django backend and stored securely, while the private key remains locked in the browser's localStorage.\n\nDuring a login attempt, the backend generates an Authentication Challenge containing a unique, time-sensitive nonce. The frontend takes this nonce, signs it using the stored private key, and sends the cryptographic signature back. Django verifies the signature against the stored public key. If the math checks out, the backend issues a secure JWT-backed session. The entire flow happens seamlessly across devices via QR codes, completely eliminating passwords while maintaining a strict, verifiable audit trail of all security events."
-    },
-    {
       "id": "nuancenode",
       "title": "NuanceNode",
       "github": "https://github.com/sleepyUjjal/NuanceNode",
       "demo": "https://nuancenode.ujjal.dev",
+      "hld": "/nuancenode_hld.webp",
       "idea": "NuanceNode is an investigative engine designed to dismantle complex claims rather than just outputting a simple chatbot answer. It addresses the core problem of AI hallucinations and conversational bias by intentionally breaking down the reasoning process into separate, inspectable layers.\n\nWhen a user submits a claim, the FastAPI backend orchestrates a multi-step pipeline using a local LLM runtime (Ollama). Instead of asking the model for an immediate verdict, NuanceNode forces it to first extract raw facts, critically evaluate the quality of the provided sources, test the logical soundness of the argument, and analyze the psychological 'anatomy of belief' surrounding the claim.\n\nOnly after these distinct nodes are processed does the system compile a final verdict. The React frontend presents this data as an interactive context tree, allowing the user to trace exactly why a conclusion was reached. Finally, the system generates a downloadable PDF report, turning a transient chat into a persistent, authenticated research artifact."
+    },
+    {
+      "id": "nullpass",
+      "title": "NullPass",
+      "github": "https://github.com/sleepyUjjal/NullPass",
+      "demo": "https://nullpass.ujjal.dev",
+      "hld": "/nullpass_hld.webp",
+      "idea": "NullPass is an exploration into true passwordless authentication. Instead of relying on vulnerable SMS/email OTPs or standard passwords, the system leverages asymmetric cryptography right in the browser.\n\nWhen a user enrolls a device, the frontend uses the Web Crypto API to generate an ECDSA keypair. The public key is sent to the Django backend and stored securely, while the private key remains locked in the browser's localStorage.\n\nDuring a login attempt, the backend generates an Authentication Challenge containing a unique, time-sensitive nonce. The frontend takes this nonce, signs it using the stored private key, and sends the cryptographic signature back. Django verifies the signature against the stored public key. If the math checks out, the backend issues a secure JWT-backed session. The entire flow happens seamlessly across devices via QR codes, completely eliminating passwords while maintaining a strict, verifiable audit trail of all security events."
     },
     {
       "id": "finprocessor",
       "title": "FinProcessor",
       "github": "https://github.com/sleepyUjjal/FinProcessor",
       "demo": "https://github.com/sleepyUjjal/FinProcessor",
+      "hld": "/finprocessor_hld.webp",
       "idea": "RBAC-FinProcessor is a production-grade finance operations platform that demonstrates how to implement strict, multi-tenant data boundaries across a distributed stack.\n\nAt its core, it relies on a Django REST backend to enforce granular Role-Based Access Control (Admin, Analyst, User). The architecture is designed around the principle of strict data ownership: Users can only mutate their own financial records, while Analysts have read-only access for reporting, and Admins handle global oversight. To prevent accidental data loss, standard deletions are soft-deleted (flagged with timestamps), whereas Admin actions execute true hard-deletes. Every mutating action triggers an immutable Audit Log.\n\nOn the frontend, a React application consumes these protected APIs using a resilient JWT refresh strategy. The UI dynamically reconfigures itself based on the user's role—hiding protected routes and rendering a real-time dashboard that aggregates financial data into dynamic, stock-style trend charts based on the authenticated user's clearance level."
     },
     {
@@ -83,6 +86,7 @@
       "title": "Trading CLI",
       "github": "https://github.com/sleepyUjjal/basic-trading-cli",
       "demo": "https://github.com/sleepyUjjal/basic-trading-cli",
+      "hld": "/tradingcli_hld.webp",
       "idea": "The Binance Futures Trading CLI is a specialized orchestration bot built to interact securely with the Binance Testnet (USDT-M). It is engineered to remove the heavy dependencies of standard SDKs in favor of a lightweight, highly controlled execution environment.\n\nThe core of the system is a custom Python REST client that natively handles the complex HMAC SHA-256 signature generation required by Binance's API. Because financial execution requires absolute precision, the bot strictly separates input validation from the network layer. It catches invalid lot sizes, pricing errors, and malformed symbols locally before ever initiating a network request.\n\nWhether operated via its interactive terminal menu or direct CLI arguments, the bot orchestrates MARKET and LIMIT orders asynchronously while maintaining a strict, structured logging pipeline to track request latencies, network faults, and filled order confirmations in real time."
     },
     {
@@ -90,6 +94,7 @@
       "title": "Veridian",
       "github": "https://github.com/sleepyUjjal/Veridian",
       "demo": "https://github.com/sleepyUjjal/Veridian",
+      "hld": "/veridian_hld.webp",
       "idea": "Veridian serves as a foundational Python backend service that prioritizes minimal overhead and maximum portability for managing user interactions and database transactions.\n\nUnlike heavy, containerized microservices, Veridian is engineered to run seamlessly via a streamlined execution script paired with a local SQLite database. This architecture eliminates the need for external database servers, allowing the application to read and write user profiles and static templates directly from disk with virtually zero latency.\n\nThe system manages its own virtual environment dependencies and ships with dedicated administrator setup scripts, ensuring that the backend can be bootstrapped, migrated, and securely deployed on any host machine in seconds, making it ideal for rapid prototyping and localized data management."
     },
     {

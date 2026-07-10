@@ -281,6 +281,23 @@
   margin-top: 0.2rem;
 }
 
+.contact-link-card--resume {
+  background: var(--color-curious-blue);
+  border-color: var(--color-curious-blue);
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.4);
+}
+
+.contact-link-card--resume .contact-link-card__name {
+  color: var(--retro-dark);
+}
+
+.contact-link-card--resume:hover {
+  background: #39b2db;
+  border-color: #39b2db;
+  transform: translateY(-2px);
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.4);
+}
+
 /* Status indicator */
 .contact-status {
   display: flex;

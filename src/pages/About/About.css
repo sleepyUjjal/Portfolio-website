@@ -138,6 +138,30 @@
   }
 }
 
+.about-resume-btn {
+  display: block;
+  margin: 3rem auto 0;
+  width: fit-content;
+  font-family: 'BoldPixels', Courier, monospace;
+  font-size: 1.5rem;
+  color: var(--color-wheat-field);
+  background: var(--retro-dark);
+  padding: 1rem 2rem;
+  text-decoration: none;
+  border: 2px solid var(--color-wheat-field);
+  transition: all 0.2s;
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.5);
+  position: relative;
+  z-index: 10;
+}
+
+.about-resume-btn:hover {
+  background: var(--color-wheat-field);
+  color: var(--retro-dark);
+  transform: translateY(-2px);
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.5);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .about-photo-float {

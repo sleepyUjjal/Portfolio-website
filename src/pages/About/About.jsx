@@ -39,6 +39,10 @@ const About = () => {
           {/* RPG Bouncing Cursor */}
           <div className="dialogue-cursor"></div>
           
+          <a href="/resume.pdf" download className="about-resume-btn">
+            DOWNLOAD RESUME ↓
+          </a>
+          
         </div>
       </div>
     </section>

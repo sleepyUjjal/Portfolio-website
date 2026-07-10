@@ -227,6 +227,13 @@ const Contact = () => {
               </div>
             </a>
 
+            <a href="/resume.pdf" download className="contact-link-card contact-link-card--resume">
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', gap: '0.8rem' }}>
+                <span style={{ fontSize: '1.4rem' }}>📄</span>
+                <span className="contact-link-card__name" style={{ margin: 0 }}>DOWNLOAD RESUME</span>
+              </div>
+            </a>
+
             <div className="contact-status">
               <span>Currently open for opportunities</span>
             </div>
