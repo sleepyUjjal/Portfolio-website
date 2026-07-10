@@ -116,22 +116,19 @@ const ProjectDetail = () => {
   }
 
   return (
-    <div className="project-detail">
+    <div className="project-detail" style={{ '--project-color': projectColor }}>
       <div className="project-detail__header">
-        <button onClick={() => navigate(-1)} className="project-detail__back" style={{ color: 'var(--retro-dark)', background: 'none', border: 'none', cursor: 'pointer', padding: 0, font: 'inherit', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <button onClick={() => navigate(-1)} className="project-detail__back">
           <span>&larr;</span> BACK
         </button>
-        <h1 className="project-detail__title" style={{
-          color: projectColor,
-          textShadow: '-2px -2px 0 var(--retro-dark), 2px -2px 0 var(--retro-dark), -2px 2px 0 var(--retro-dark), 2px 2px 0 var(--retro-dark), 4px 4px 0 var(--retro-dark)'
-        }}>
+        <h1 className="project-detail__title">
           {project.title}
         </h1>
       </div>
 
       <div className="project-detail__content">
-        <div className="project-detail__info-box" style={{ borderColor: projectColor, backgroundColor: 'var(--retro-dark)' }}>
-          <div className="project-detail__info-titlebar" style={{ backgroundColor: projectColor, color: 'var(--retro-dark)' }}>
+        <div className="project-detail__info-box">
+          <div className="project-detail__info-titlebar">
             INFO.EXE
           </div>
           <div className="project-detail__info-body">
@@ -148,17 +145,17 @@ const ProjectDetail = () => {
 
         <div className="project-detail__links">
           {project.hld && (
-            <button onClick={openViewer} className="project-detail__link-btn" style={{ borderColor: projectColor, backgroundColor: projectColor, color: 'var(--retro-dark)' }}>
+            <button onClick={openViewer} className="project-detail__link-btn">
               VIEW SYSTEM DESIGN
             </button>
           )}
           {project.github && project.github !== 'Private (NDA)' && (
-            <a href={project.github} target="_blank" rel="noopener noreferrer" className="project-detail__link-btn" style={{ borderColor: projectColor, backgroundColor: projectColor, color: 'var(--retro-dark)' }}>
+            <a href={project.github} target="_blank" rel="noopener noreferrer" className="project-detail__link-btn">
               VIEW SOURCE CODE
             </a>
           )}
           {project.demo && project.demo !== 'In Progress' && (
-            <a href={project.demo} target="_blank" rel="noopener noreferrer" className="project-detail__link-btn" style={{ borderColor: projectColor, backgroundColor: projectColor, color: 'var(--retro-dark)' }}>
+            <a href={project.demo} target="_blank" rel="noopener noreferrer" className="project-detail__link-btn">
               LIVE DEMO
             </a>
           )}
