@@ -7,6 +7,7 @@ import Projects from './components/Projects/Projects';
 import './App.css';
 import ProjectDetail from './pages/ProjectDetail/ProjectDetail';
 import About from './pages/About/About';
+import Games from './pages/Games/Games';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -45,7 +46,7 @@ function App() {
             <Route path="/project/:id" element={<ProjectDetail />} />
             {/* Placeholders for upcoming phases to prevent blank screens */}
             <Route path="/about" element={<About />} />
-            <Route path="/games" element={<div style={{padding: '10rem', color: 'white', textAlign: 'center', fontFamily: 'BoldPixels'}}><h2>GAMES - PENDING PHASE 11</h2></div>} />
+            <Route path="/games" element={<Games />} />
             <Route path="/contact" element={<div style={{padding: '10rem', color: 'white', textAlign: 'center', fontFamily: 'BoldPixels'}}><h2>CONTACT - PENDING PHASE 12</h2></div>} />
           </Routes>
         </main>
