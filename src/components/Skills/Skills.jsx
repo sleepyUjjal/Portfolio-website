@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { 
+import {
   SiC, SiCplusplus, SiPython, SiJavascript, SiHtml5, SiMarkdown, SiLatex, SiGnubash,
   SiReact, SiNextdotjs, SiVite, SiBootstrap, SiEjs, SiChartdotjs, SiStreamlit,
   SiNodedotjs, SiExpress, SiDjango, SiFastapi, SiFlask, SiJsonwebtokens, SiNginx, SiGunicorn,
@@ -62,58 +62,58 @@ const Skills = () => {
   return (
     <section className="retro-skills">
       <div className="skills-layout-container">
-        
+
         <div className="skills-header-side">
           <h2 className="skills-title">INVENTORY</h2>
-          <p className="skills-subtitle">These are my skills listed below types.</p>
+          <p className="skills-subtitle">Collected through projects, internships, and curiosity.</p>
         </div>
-        
+
         <div className="retro-inventory">
           <div className="retro-inventory__layout">
-            
+
             <div className="retro-inventory__sidebar">
-            <div className="retro-inventory__level-box">
-              <div className="level-hexagon">99</div>
-              <div className="level-bars">
-                <div className="hp-bar"></div>
-                <div className="xp-bar"></div>
+              <div className="retro-inventory__level-box">
+                <div className="level-hexagon">99</div>
+                <div className="level-bars">
+                  <div className="hp-bar"></div>
+                  <div className="xp-bar"></div>
+                </div>
+              </div>
+
+              <div className="retro-inventory__tabs">
+                {categories.map((cat) => (
+                  <button
+                    key={cat}
+                    className={`retro-inventory__tab ${activeCategory === cat ? 'active' : ''}`}
+                    onClick={() => setActiveCategory(cat)}
+                  >
+                    {cat}
+                  </button>
+                ))}
               </div>
             </div>
 
-            <div className="retro-inventory__tabs">
-              {categories.map((cat) => (
-                <button 
-                  key={cat} 
-                  className={`retro-inventory__tab ${activeCategory === cat ? 'active' : ''}`}
-                  onClick={() => setActiveCategory(cat)}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
-          </div>
+            <div className="retro-inventory__content">
+              <div className="retro-inventory__grid">
 
-          <div className="retro-inventory__content">
-            <div className="retro-inventory__grid">
-              
-              {currentSkills.map((skill, index) => (
-                <div key={index} className="retro-inventory__slot has-item">
-                  <div className="slot-content">
-                    <div className="slot-icon">{iconMap[skill]}</div>
-                    <span className="slot-text">{skill}</span>
+                {currentSkills.map((skill, index) => (
+                  <div key={index} className="retro-inventory__slot has-item">
+                    <div className="slot-content">
+                      <div className="slot-icon">{iconMap[skill]}</div>
+                      <span className="slot-text">{skill}</span>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
 
-              {Array.from({ length: emptySlotsCount }).map((_, index) => (
-                <div key={`empty-${index}`} className="retro-inventory__slot empty-slot"></div>
-              ))}
+                {Array.from({ length: emptySlotsCount }).map((_, index) => (
+                  <div key={`empty-${index}`} className="retro-inventory__slot empty-slot"></div>
+                ))}
 
+              </div>
             </div>
-          </div>
 
+          </div>
         </div>
-      </div>
       </div>
     </section>
   );
