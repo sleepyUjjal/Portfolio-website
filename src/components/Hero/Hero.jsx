@@ -1,7 +1,14 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Hero.css';
 
 const Hero = () => {
+  const [score, setScore] = useState('000000');
+
+  useEffect(() => {
+    const randomScore = Math.floor(Math.random() * 100000);
+    setScore(randomScore.toString().padStart(6, '0'));
+  }, []);
+
   return (
     <section className="retro-hero">
       {/* Health bar — top left */}
@@ -13,7 +20,7 @@ const Hero = () => {
 
       {/* Score — top right */}
       <div className="retro-hero__score">
-        SCORE: 000000
+        SCORE: {score}
       </div>
 
       {/* Main Hero Content */}
