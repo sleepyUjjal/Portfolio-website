@@ -1,6 +1,6 @@
 .about-page {
   min-height: 100vh;
-  background-color: var(--color-nice-blue);
+  background-color: var(--color-orange-yellow);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,8 +9,8 @@
   padding-left: 2rem;
   padding-right: 2rem;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.1) 2px, transparent 2px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.1) 2px, transparent 2px);
+    linear-gradient(rgba(0, 0, 0, 0.1) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.1) 2px, transparent 2px);
   background-size: 32px 32px;
 }
 
