@@ -40,44 +40,29 @@ const MANIFESTO_POINTS = [
   },
 ];
 
-// Helper component to slice the image into horizontal bands and animate them time-based
-const SlicedImage = ({ src, alt }) => {
-  const SLICES = 12;
+// Unified, smooth image transition replacing the sliced effect for better performance and aesthetics
+const ImageTransition = ({ src, alt }) => {
   return (
-    <>
-      {Array.from({ length: SLICES }).map((_, i) => {
-        const top = (i / SLICES) * 100;
-        const bottom = (1 - (i + 1) / SLICES) * 100;
-        const direction = i % 2 === 0 ? 1 : -1;
-        
-        return (
-          <motion.img
-            key={i}
-            src={src}
-            alt={alt}
-            initial={{ x: `${100 * direction}%`, opacity: 0 }}
-            animate={{ x: '0%', opacity: 1 }}
-            exit={{ x: `${-100 * direction}%`, opacity: 0 }}
-            transition={{ 
-              duration: 0.6, 
-              ease: [0.16, 1, 0.3, 1], // snappy custom ease-out
-              delay: (SLICES - i - 1) * 0.02 // staggered effect
-            }}
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              objectFit: 'contain',
-              imageRendering: 'pixelated',
-              clipPath: `inset(${top}% 0% ${bottom}% 0%)`,
-              WebkitClipPath: `inset(${top}% 0% ${bottom}% 0%)`,
-            }}
-          />
-        );
-      })}
-    </>
+    <motion.img
+      src={src}
+      alt={alt}
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 1.05 }}
+      transition={{ 
+        duration: 0.15, 
+        ease: "easeOut"
+      }}
+      style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        objectFit: 'contain',
+        imageRendering: 'pixelated',
+      }}
+    />
   );
 };
 
@@ -96,15 +81,9 @@ const Manifesto = () => {
   const [displayedImageIndex, setDisplayedImageIndex] = React.useState(0);
 
   useMotionValueEvent(activeIndex, 'change', (latest) => {
-    setCurrentIndex(Math.round(latest));
-    
-    // We clear the timeout every single frame during a scroll
-    clearTimeout(timeoutRef.current);
-    
-    // Only update the image if the scroll has stopped for 60ms
-    timeoutRef.current = setTimeout(() => {
-      setDisplayedImageIndex(Math.round(latest));
-    }, 60);
+    const current = Math.round(latest);
+    setCurrentIndex(current);
+    setDisplayedImageIndex(current);
   });
 
   const currentPoint = MANIFESTO_POINTS[currentIndex];
@@ -179,7 +158,7 @@ const Manifesto = () => {
               <AnimatePresence>
                 {displayedPoint && displayedPoint.image && (
                   <motion.div key={displayedImageIndex} style={{ position: 'absolute', width: '100%', height: '100%' }}>
-                    <SlicedImage src={displayedPoint.image} alt={displayedPoint.title} />
+                    <ImageTransition src={displayedPoint.image} alt={displayedPoint.title} />
                   </motion.div>
                 )}
               </AnimatePresence>
