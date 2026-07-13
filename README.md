@@ -1,45 +1,40 @@
-# 🍏 macOS Portfolio OS
+# 👾 Retro-Aesthetic Developer Portfolio
 
-Welcome to my interactive, web-based operating system portfolio! This project is a highly detailed, functional clone of the macOS desktop environment, built entirely from scratch using React and vanilla CSS. 
+Welcome to my personal developer portfolio! This project is a modern, retro-inspired web application designed to showcase my projects, skills, and personality with a unique, interactive pixel-art aesthetic. 
 
-It serves as my personal developer portfolio, designed to showcase not just my projects, but my attention to detail, UI/UX skills, and frontend engineering capabilities.
-
-![macOS Portfolio Preview](public/desktop.webp) <!-- You can replace this with an actual screenshot of your desktop -->
+Built from scratch using React, this portfolio balances playful design with high performance and mobile responsiveness.
 
 ---
 
-## ✨ Key Features
+## Key Features
 
-This isn't just a static webpage; it's a fully interactive web application:
+This portfolio is fully interactive and designed to provide a memorable user experience:
 
-*   **🪟 Advanced Window Management:** Draggable, resizable, and maximizable windows just like a native OS.
-*   **📱 Launchpad:** A full-screen, blurred iOS-style grid of applications with real-time search filtering.
-*   **🔔 Notification Center:** Slide-in panel featuring:
-    *   **Live Weather Widget:** IP-based precise location fetching via `ipinfo.io` and real-time weather via `Open-Meteo`.
-    *   **Live GitHub Activity:** Fetches and displays my latest commits and pushes using the GitHub public API.
-    *   **Quick Note:** A persistent scratchpad that saves data to `localStorage`.
-*   **💻 Interactive Terminal:** A fully functional mock terminal with commands (`help`, `whoami`, `projects`, `clear`) and hidden easter eggs!
-*   **📂 Finder & File System:** Browse through my actual projects as if they were directories, complete with `about_me.txt` and `resume.pdf` viewers.
-*   **🖱️ Context Menu:** Custom right-click desktop menu to change wallpapers, reset layouts, and view system info.
-*   **💾 Persistent State:** Your desktop icon positions, wallpaper choices, and notes are saved locally across sessions.
-*   **🎨 Glassmorphism UI:** Heavy use of CSS `backdrop-filter` to replicate the premium Apple frosted glass aesthetics.
+*   **Retro & Pixel Aesthetic:** A unique design system with custom pixel-art elements, typography, and vibrant color palettes inspired by classic gaming and early web design.
+*   **Fully Responsive:** Carefully crafted to collapse elegantly on mobile devices, featuring a seamless hamburger navigation menu and optimized layouts.
+*   **Interactive Games:** Take a break and play custom-built mini-games (like Tic-Tac-Toe) directly within the browser.
+*   **Dynamic Manifesto:** A unique scrolling text manifesto layout, styled to match the retro aesthetic.
+*   **Project Showcase:** Browse my latest work with detailed views, clean layouts, and direct links.
+*   **Contact Integration:** A fully functional contact form powered by EmailJS, allowing visitors to reach out directly.
+*   **Smooth Animations:** Powered by Framer Motion for elegant page transitions, scroll reveals, and micro-interactions.
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
-*   **Frontend Framework:** React 18
+*   **Frontend Framework:** React 19
+*   **Routing:** React Router DOM
 *   **Build Tool:** Vite
 *   **Styling:** Vanilla CSS (CSS Variables, Flexbox, CSS Grid)
 *   **Animations:** Framer Motion
-*   **Data Fetching:** Native `fetch` API for GitHub and Weather data
-*   **Deployment:** Vercel
+*   **Contact Form:** EmailJS
+*   **Deployment:** Vercel (with Analytics & Speed Insights)
 
 ---
 
-## 🚀 Running Locally
+## Running Locally
 
-Want to run this OS on your local machine? It's simple:
+Want to explore the codebase or run this portfolio on your local machine? It's simple:
 
 1.  **Clone the repository:**
     ```bash
@@ -58,13 +53,13 @@ Want to run this OS on your local machine? It's simple:
     ```
 
 4.  **Open in your browser:**
-    Navigate to `http://localhost:5173` to boot up the OS!
+    Navigate to `http://localhost:5173` to explore!
 
 ---
 
-## 👨‍💻 About Me
+## About Me
 
-Hi, I'm **Ujjaldeep Singh**, a Full-Stack Developer passionate about System Design, robust backend architectures, and creating interfaces that don't make people cry. 
+Hi, I'm **Ujjaldeep Singh**, a Developer passionate about system design, robust backend architectures, and creating unique frontend interfaces that leave a lasting impression.
 
 If you like this project, feel free to drop a ⭐ on the repository, or reach out to me for collaboration!
 
@@ -74,5 +69,5 @@ If you like this project, feel free to drop a ⭐ on the repository, or reach ou
 ---
 
 <p align="center">
-  <i>"Sorry, I wanted to write something myself." — Ujjal</i>
+  <i>"I just wanted to write something myself.🙃" — Ujjal</i>
 </p>
