@@ -1,0 +1,263 @@
+.manifesto {
+  /* 5 sections × 100vh = 500vh of scroll space for the sticky trick */
+  height: 500vh;
+  position: relative;
+}
+
+/* ===== Sticky Viewport ===== */
+.manifesto__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  padding: 6rem 3rem 3rem 3rem;
+  background-color: var(--retro-dark);
+  background-image:
+    linear-gradient(var(--color-curious-blue) 4px, transparent 4px),
+    linear-gradient(90deg, var(--color-curious-blue) 4px, transparent 4px);
+  background-size: 64px 64px;
+  background-position: var(--bg-offset-x, 0px) var(--bg-offset-y, 0px);
+}
+
+/* ===== Progress Dots (left side) ===== */
+.manifesto__progress {
+  position: absolute;
+  left: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.manifesto__dot {
+  width: 14px;
+  height: 14px;
+  border: 3px solid var(--color-wheat-field);
+  background: transparent;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.manifesto__dot--active {
+  transform: scale(1.4);
+}
+
+/* ===== 3-Column Layout ===== */
+.manifesto__layout {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1.5fr;
+  gap: 3rem;
+  width: 100%;
+  max-width: 1200px;
+  align-items: center;
+}
+
+/* --- Left Column: Level Number --- */
+.manifesto__left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--retro-dark);
+  padding: 2rem;
+  border: 4px solid var(--color-wheat-field);
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.4);
+}
+
+.manifesto__level-label {
+  font-family: 'NeueBit', 'Courier New', Courier, monospace;
+  font-size: 2.5rem;
+  color: var(--color-wheat-field);
+  letter-spacing: 4px;
+  margin-bottom: 0rem;
+}
+
+.manifesto__level-number {
+  font-family: 'BoldPixels', 'Courier New', Courier, monospace;
+  font-size: 10rem;
+  line-height: 1;
+  text-shadow: 4px 4px 0 rgba(0, 0, 0, 0.8);
+  transition: color 0.4s;
+  -webkit-text-stroke: 2px rgba(255, 255, 255, 0.2);
+}
+
+/* --- Center Column: Pixel Art Canvas Placeholder --- */
+.manifesto__center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.manifesto__canvas-placeholder {
+  width: 384px;
+  height: 384px;
+  border: 4px solid var(--color-wheat-field);
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  background: repeating-conic-gradient(rgba(255, 255, 255, 0.03) 0% 25%,
+      transparent 0% 50%) 0 0 / 24px 24px;
+  transition: border-color 0.4s;
+}
+
+.manifesto__canvas-label {
+  font-family: 'NeueBit', 'Courier New', Courier, monospace;
+  font-size: 1.4rem;
+  color: var(--color-wheat-field);
+  opacity: 0.5;
+  letter-spacing: 3px;
+}
+
+.manifesto__canvas-sublabel {
+  font-family: 'NeueBit', 'Courier New', Courier, monospace;
+  font-size: 1rem;
+  color: var(--color-wheat-field);
+  opacity: 0.3;
+  letter-spacing: 2px;
+}
+
+/* --- Right Column: Text Box (Retro OS Window) --- */
+.manifesto__right {
+  display: flex;
+  justify-content: center;
+}
+
+.manifesto__textbox {
+  border: 4px solid var(--color-wheat-field);
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.3);
+  max-width: 400px;
+  width: 100%;
+  transition: border-color 0.4s;
+}
+
+.manifesto__textbox-titlebar {
+  padding: 0.5rem 1rem;
+  border-bottom: 4px solid var(--retro-dark);
+  font-family: 'Mondwest', 'Courier New', Courier, monospace;
+  font-size: 1rem;
+  color: var(--color-wheat-field);
+  font-weight: bold;
+  letter-spacing: 2px;
+  transition: background-color 0.4s;
+  text-shadow:
+    -1px -1px 0 var(--retro-dark),
+    1px -1px 0 var(--retro-dark),
+    -1px 1px 0 var(--retro-dark),
+    1px 1px 0 var(--retro-dark),
+    0px -1px 0 var(--retro-dark),
+    0px 1px 0 var(--retro-dark),
+    -1px 0px 0 var(--retro-dark),
+    1px 0px 0 var(--retro-dark);
+}
+
+.manifesto__textbox-body {
+  padding: 1.5rem;
+  background: var(--retro-dark);
+}
+
+.manifesto__textbox-body p {
+  font-family: 'NeueBit', 'Courier New', Courier, monospace;
+  font-size: 1.3rem;
+  color: var(--color-wheat-field);
+  line-height: 1.6;
+}
+
+/* ===== Footer Counter ===== */
+.manifesto__footer {
+  position: absolute;
+  bottom: 2rem;
+  right: 3rem;
+  font-family: 'NeueBit', 'Courier New', Courier, monospace;
+  font-size: 1.4rem;
+  color: var(--color-wheat-field);
+  opacity: 0.5;
+  letter-spacing: 3px;
+}
+
+/* ===== Mobile Responsive ===== */
+@media (max-width: 900px) {
+  .manifesto__layout {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .manifesto__left {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  .manifesto__level-number {
+    font-size: 6rem;
+  }
+
+  .manifesto__canvas-placeholder {
+    width: 280px;
+    height: 280px;
+  }
+}
+
+@media (max-width: 600px) {
+  .manifesto__sticky {
+    padding: 4rem 1.2rem 2rem 1.2rem;
+  }
+
+  .manifesto__layout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .manifesto__left {
+    flex-direction: row;
+    padding: 1rem;
+  }
+
+  .manifesto__level-number {
+    font-size: 5rem;
+  }
+
+  .manifesto__level-label {
+    font-size: 1.8rem;
+  }
+
+  .manifesto__canvas-placeholder {
+    width: 100%;
+    max-width: 280px;
+    height: auto;
+    aspect-ratio: 1;
+  }
+
+  .manifesto__textbox {
+    max-width: 100%;
+  }
+
+  .manifesto__textbox-body p {
+    font-size: 1.1rem;
+  }
+
+  .manifesto__progress {
+    display: none;
+  }
+
+  .manifesto__footer {
+    right: 1.2rem;
+    bottom: 1rem;
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .manifesto__level-number {
+    font-size: 4rem;
+  }
+  .manifesto__level-label {
+    font-size: 1.6rem;
+  }
+}

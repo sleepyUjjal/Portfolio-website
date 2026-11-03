@@ -1,248 +1,198 @@
-/* ===========================
-   Desktop
-   =========================== */
-.desktop {
-  width: 100vw;
-  height: 100vh;
-  position: relative;
-  overflow: hidden;
+@font-face {
+  font-family: 'NeueBit';
+  src: url('/fonts/ppneuebit-bold.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
 }
 
-/* ===========================
-   macOS Menu Bar
-   =========================== */
-.menu-bar {
+@font-face {
+  font-family: 'Mondwest';
+  src: url('/fonts/ppmondwest.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'BoldPixels';
+  src: url('/fonts/BoldPixels.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  /* User's Custom Palette */
+  --color-blaze-orange: #f06b04;
+  --color-orange-yellow: #fbb728;
+  --color-wheat-field: #f5ecd2;
+  --color-curious-blue: #2c9fc7;
+  --color-nice-blue: #1570ac;
+  --color-red-wine: #a1081e;
+  --color-raddish: #767ae6;
+
+  /* Modern 8-bit requires a strong dark tone for contrast, outlines, and text */
+  --retro-dark: #1e1e24;
+  --retro-outline: #121212e4;
+
+  --font-primary: 'Mondwest', 'Courier New', Courier, monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-primary);
+  /* Clean, flat Honeydew background. No messy gradients. */
+  background-color: var(--color-wheat-field);
+  color: var(--retro-dark);
+  overflow-x: hidden;
+  /* Extremely subtle, modern CRT line, barely visible for texture */
+  background-image: linear-gradient(rgba(30, 30, 36, 0.03) 1px, transparent 1px);
+  background-size: 100% 4px;
+  /* Custom Retro Pixel Cursor */
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><polygon points="2,2 2,20 7,15 11,22 15,20 11,13 18,13" fill="%23ffffff" stroke="%23000000" stroke-width="2" stroke-linejoin="miter"/></svg>'), auto;
+}
+
+/* Custom Pointer Cursor for interactive elements */
+a, button, input[type="submit"], input[type="button"], [role="button"], .cursor-pointer {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><polygon points="2,2 2,20 7,15 11,22 15,20 11,13 18,13" fill="%23fbb728" stroke="%23000000" stroke-width="2" stroke-linejoin="miter"/></svg>'), pointer !important;
+}
+
+/* Crisp, solid pixel borders with hard shadows (Modern indie game style) */
+.pixel-border {
+  border: 4px solid var(--retro-dark);
+  box-shadow: 6px 6px 0 0 var(--retro-dark);
+  border-radius: 2px;
+  /* Slight softening for modern feel */
+}
+
+/* =========================================
+   CRT / DARK MODE (Gameboy / Terminal Style)
+   ========================================= */
+body.crt-mode {
+  /* Core Theme Inversion */
+  background-color: #050a05 !important;
+  --color-wheat-field: #050a05; /* Near Black */
+  --retro-dark: #39ff14; /* Neon / Phosphor Green */
+  --retro-outline: #39ff14;
+  
+  /* Accent Colors mapped to darker greens to provide contrast against the bright green text */
+  --color-blaze-orange: #0a2e0a;
+  --color-orange-yellow: #0a2e0a;
+  --color-curious-blue: #0a2e0a;
+  --color-nice-blue: #0a2e0a;
+  --color-red-wine: #0a2e0a;
+  --color-raddish: #0a2e0a;
+}
+
+/* =========================================
+   CRT MODE VISIBILITY OVERRIDES
+   ========================================= */
+/* Force all buttons, cards, and interactive elements to use Black bg and Green text */
+body.crt-mode .pixel-btn,
+body.crt-mode .contact-link-card,
+body.crt-mode .resume-btn,
+body.crt-mode .contact-status,
+body.crt-mode .terminal__submit {
+  background: var(--color-wheat-field) !important;
+  color: var(--retro-dark) !important;
+  border-color: var(--retro-dark) !important;
+  box-shadow: 6px 6px 0 0 var(--retro-dark) !important;
+}
+
+/* Fix specific title colors and shadows */
+body.crt-mode .games-header__title,
+body.crt-mode h1, body.crt-mode h2 {
+  color: var(--retro-dark) !important;
+  text-shadow: none !important;
+}
+
+/* Force terminal inputs and game cells to be visible */
+body.crt-mode .terminal-window,
+body.crt-mode .contact-terminal,
+body.crt-mode .terminal__titlebar,
+body.crt-mode .projects__card,
+body.crt-mode .projects__card-left,
+body.crt-mode .about-dialogue-box,
+body.crt-mode .dialogue-title,
+body.crt-mode .dialogue-nameplate,
+body.crt-mode .photo-frame {
+  background: var(--color-wheat-field) !important;
+  border-color: var(--retro-dark) !important;
+}
+
+body.crt-mode .terminal__input,
+body.crt-mode .terminal__textarea,
+body.crt-mode .ttt-cell,
+body.crt-mode .memory-card__front,
+body.crt-mode .memory-card__back,
+body.crt-mode .wam-hole,
+body.crt-mode .game-card {
+  background: var(--color-wheat-field) !important;
+  border: 2px solid var(--retro-dark) !important;
+  color: var(--retro-dark) !important;
+}
+
+body.crt-mode .terminal__input::placeholder,
+body.crt-mode .terminal__textarea::placeholder {
+  color: rgba(57, 255, 20, 0.5) !important; /* Semi-transparent phosphor green */
+}
+
+/* Fix text colors that were hardcoded or inheriting poorly */
+body.crt-mode .game-card__title,
+body.crt-mode .game-card__tagline,
+body.crt-mode .projects__card-title,
+body.crt-mode .projects__card-meta,
+body.crt-mode .projects__card-desc,
+body.crt-mode .projects__card-tag,
+body.crt-mode .projects__card-link,
+body.crt-mode .dialogue-text,
+body.crt-mode .dialogue-title,
+body.crt-mode .dialogue-nameplate,
+body.crt-mode .contact-link-card__name,
+body.crt-mode .contact-link-card__url,
+body.crt-mode .terminal__title,
+body.crt-mode .terminal__line,
+body.crt-mode .terminal__label,
+body.crt-mode .terminal__prompt,
+body.crt-mode .contact-header__subtitle,
+body.crt-mode .project-detail__viewer-controls,
+body.crt-mode .project-detail__viewer-close {
+  color: var(--retro-dark) !important;
+  border-color: var(--retro-dark) !important;
+}
+
+body.crt-mode .game-card__badge {
+  background: var(--color-wheat-field) !important;
+  color: var(--retro-dark) !important;
+  border: 1px solid var(--retro-dark) !important;
+}
+
+/* Tint all images and videos to green */
+body.crt-mode img, body.crt-mode video {
+  filter: grayscale(100%) sepia(100%) hue-rotate(70deg) saturate(300%) brightness(0.8) contrast(1.2);
+}
+
+/* Scanlines and screen flicker */
+body.crt-mode::after {
+  content: " ";
+  display: block;
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  height: 25px;
-  background: rgba(0, 0, 0, 0.35);
-  -webkit-backdrop-filter: blur(50px) saturate(180%);
-  backdrop-filter: blur(50px) saturate(180%);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 10px;
-  z-index: 500;
-  /* Force white text always — menu bar sits on dark translucent bg */
-  color: #ffffff;
-}
-
-.menu-bar__left {
-  display: flex;
-  align-items: center;
-  gap: 0;
-}
-
-/* ── Menu Trigger (each clickable item in the bar) ── */
-.menu-bar__menu-trigger {
-  position: relative;
-  padding: 0 10px;
-  height: 25px;
-  display: flex;
-  align-items: center;
-  cursor: default;
-  border-radius: 4px;
-  transition: background 0.1s;
-  user-select: none;
-}
-
-.menu-bar__menu-trigger:hover,
-.menu-bar__menu-trigger--active {
-  background: rgba(255, 255, 255, 0.12);
-}
-
-body.light-mode .menu-bar__menu-trigger:hover,
-body.light-mode .menu-bar__menu-trigger--active {
-  background: rgba(0, 0, 0, 0.08);
-}
-
-.menu-bar__apple {
-  font-size: 14px;
-  opacity: 0.9;
-  line-height: 1;
-  color: #ffffff;
-}
-
-.menu-bar__app-name {
-  font-size: 13.5px;
-  font-weight: 600;
-  color: #ffffff;
-  letter-spacing: -0.01em;
-}
-
-.menu-bar__item {
-  font-size: 13.5px;
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.9);
-  letter-spacing: -0.01em;
-}
-
-/* ── Dropdown Panel ── */
-.menu-bar__dropdown {
-  position: absolute;
-  top: 25px;
-  left: 0;
-  min-width: 240px;
-  background: rgba(30, 30, 30, 0.78);
-  -webkit-backdrop-filter: blur(40px) saturate(200%);
-  backdrop-filter: blur(40px) saturate(200%);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 6px;
-  padding: 4px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.55), 0 0 0 0.5px rgba(0, 0, 0, 0.3);
-  z-index: 10000;
-  animation: menuDropIn 0.12s ease-out;
-}
-
-body.light-mode .menu-bar__dropdown {
-  background: rgba(245, 245, 245, 0.85);
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.18), 0 0 0 0.5px rgba(0, 0, 0, 0.08);
-}
-
-@keyframes menuDropIn {
-  from {
-    opacity: 0;
-    transform: scaleY(0.92);
-    transform-origin: top;
-  }
-  to {
-    opacity: 1;
-    transform: scaleY(1);
-  }
-}
-
-/* ── Dropdown Item ── */
-.menu-bar__dropdown-item {
-  padding: 4px 12px;
-  border-radius: 4px;
-  font-size: 13px;
-  color: #fff;
-  cursor: default;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  transition: background-color 0.08s;
-}
-
-body.light-mode .menu-bar__dropdown-item {
-  color: #000;
-}
-
-.menu-bar__dropdown-item:hover:not(.menu-bar__dropdown-item--disabled) {
-  background-color: #007aff;
-  color: #fff;
-}
-
-.menu-bar__dropdown-item--disabled {
-  color: rgba(255, 255, 255, 0.25);
-  pointer-events: none;
-}
-
-body.light-mode .menu-bar__dropdown-item--disabled {
-  color: rgba(0, 0, 0, 0.25);
-}
-
-/* ── Dropdown Shortcut Label ── */
-.menu-bar__dropdown-shortcut {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.4);
-  margin-left: auto;
-}
-
-body.light-mode .menu-bar__dropdown-shortcut {
-  color: rgba(0, 0, 0, 0.35);
-}
-
-.menu-bar__dropdown-item:hover:not(.menu-bar__dropdown-item--disabled) .menu-bar__dropdown-shortcut {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-/* ── Dropdown Separator ── */
-.menu-bar__dropdown-separator {
-  height: 1px;
-  background: rgba(255, 255, 255, 0.12);
-  margin: 4px 8px;
-}
-
-body.light-mode .menu-bar__dropdown-separator {
-  background: rgba(0, 0, 0, 0.1);
-}
-
-/* ── Invisible Backdrop (closes menu on outside click) ── */
-.menu-bar__backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: 499;
-}
-
-.menu-bar__right {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.menu-bar__status-icon {
-  opacity: 0.9;
-  cursor: default;
-  display: flex;
-  align-items: center;
-}
-
-.menu-bar__time {
-  font-size: 13px;
-  font-weight: 500;
-  color: #ffffff;
-  letter-spacing: -0.01em;
-}
-
-/* ===========================
-   Widgets Area (LEFT)
-   =========================== */
-.widgets-area {
-  position: absolute;
-  top: 38px;
-  left: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  z-index: 10;
-  animation: slideIn 0.5s ease-out 0.2s both;
-}
-
-/* ===========================
-   Desktop Icons (RIGHT)
-   =========================== */
-.desktop-icons-grid {
-  position: absolute;
-  top: 0;
-  right: 0;
   bottom: 0;
-  left: 0;
-  z-index: 10;
+  right: 0;
+  background: linear-gradient(rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+  z-index: 9999;
+  background-size: 100% 4px;
   pointer-events: none;
-  /* Let clicks pass through empty space */
+  animation: crt-flicker 0.15s infinite;
 }
 
-.desktop-icons-grid .desktop-icon {
-  pointer-events: auto;
-  /* But icons themselves are clickable */
-}
-
-
-
-/* ===========================
-   Animations
-   =========================== */
-@keyframes slideIn {
-  from {
-    transform: translateY(8px) scale(0.97);
-  }
-
-  to {
-    transform: translateY(0) scale(1);
-  }
+@keyframes crt-flicker {
+  0% { opacity: 0.95; }
+  50% { opacity: 1; }
+  100% { opacity: 0.95; }
 }

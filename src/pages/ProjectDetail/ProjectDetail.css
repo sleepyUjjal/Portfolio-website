@@ -1,0 +1,271 @@
+.project-detail {
+  min-height: 100vh;
+  background: var(--color-wheat-field);
+  padding: 6rem 3rem 3rem 3rem;
+  display: flex;
+  flex-direction: column;
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.1) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.1) 2px, transparent 2px);
+  background-size: 40px 40px;
+  align-items: center;
+}
+
+.project-detail__not-found {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  color: var(--color-wheat-field);
+  font-family: 'NeueBit', 'Courier New', Courier, monospace;
+}
+
+.project-detail__header {
+  width: 100%;
+  max-width: 1000px;
+  margin-bottom: 3rem;
+}
+
+.project-detail__back {
+  font-family: 'NeueBit', 'Courier New', Courier, monospace;
+  font-size: 1.5rem;
+  color: var(--project-color);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0.7;
+  transition: opacity 0.3s, transform 0.3s;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.project-detail__back:hover {
+  opacity: 1;
+  transform: translateX(-5px);
+}
+
+.project-detail__title {
+  font-family: 'Mondwest', 'Courier New', Courier, monospace;
+  font-size: 6rem;
+  color: var(--project-color);
+  text-shadow: -2px -2px 0 var(--retro-dark), 2px -2px 0 var(--retro-dark), -2px 2px 0 var(--retro-dark), 2px 2px 0 var(--retro-dark), 4px 4px 0 var(--retro-dark);
+  margin-top: 1rem;
+  margin-bottom: 0;
+}
+
+.project-detail__content {
+  width: 100%;
+  max-width: 1000px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+.project-detail__info-box {
+  border: 4px solid var(--project-color);
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.3);
+  width: 100%;
+  background-color: var(--retro-dark);
+}
+
+.project-detail__info-titlebar {
+  padding: 0.5rem 1rem;
+  border-bottom: 4px solid var(--retro-dark);
+  font-family: 'Mondwest', 'Courier New', Courier, monospace;
+  font-size: 1.2rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  background-color: var(--project-color);
+  color: var(--retro-dark);
+}
+
+.project-detail__info-body {
+  padding: 2rem;
+  background: var(--retro-dark);
+}
+
+.project-detail__idea {
+  font-family: 'NeueBit', 'Courier New', Courier, monospace;
+  font-size: 1.5rem;
+  color: var(--color-wheat-field);
+  line-height: 1.8;
+  margin: 0;
+}
+
+.project-detail__links {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.project-detail__link-btn {
+  font-family: 'BoldPixels', 'Courier New', Courier, monospace;
+  font-size: 1.5rem;
+  text-decoration: none;
+  padding: 0.8rem 1.5rem;
+  border: 4px solid var(--project-color);
+  background-color: var(--project-color);
+  color: var(--retro-dark);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-align: center;
+  flex: 1;
+  min-width: 200px;
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.3);
+}
+
+.project-detail__link-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* Image Viewer Overlay */
+.project-detail__viewer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-detail__viewer-controls {
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--color-wheat-field);
+  font-family: 'NeueBit', Courier, monospace;
+  font-size: 1.5rem;
+  background: rgba(0, 0, 0, 0.5);
+  border-bottom: 2px solid var(--color-wheat-field);
+  z-index: 10;
+}
+
+.project-detail__viewer-close {
+  background: none;
+  border: none;
+  color: var(--color-wheat-field);
+  font-family: 'NeueBit', Courier, monospace;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.project-detail__viewer-close:hover {
+  color: var(--color-blaze-orange);
+}
+
+.project-detail__viewer-canvas {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.project-detail__viewer-img {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  transition: transform 0.1s cubic-bezier(0.2, 0, 0, 1);
+  will-change: transform;
+}
+
+/* Viewer zoom buttons */
+.viewer-controls__buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.viewer-zoom-btn {
+  background: rgba(245, 236, 210, 0.15);
+  border: 2px solid var(--color-wheat-field);
+  color: var(--color-wheat-field);
+  font-family: 'NeueBit', Courier, monospace;
+  font-size: 1.8rem;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.viewer-zoom-btn:hover {
+  background: rgba(245, 236, 210, 0.3);
+}
+
+.project-detail__viewer-canvas {
+  touch-action: none; /* Prevent browser default pinch-zoom */
+}
+
+/* ===== Mobile Responsive ===== */
+@media (max-width: 768px) {
+  .project-detail {
+    padding: 5rem 1.2rem 2rem 1.2rem;
+  }
+
+  .project-detail__title {
+    font-size: 3.5rem;
+  }
+
+  .project-detail__idea {
+    font-size: 1.3rem;
+    line-height: 1.6;
+  }
+
+  .project-detail__links {
+    flex-direction: column;
+  }
+
+  .project-detail__link-btn {
+    font-size: 1.3rem;
+    min-width: unset;
+    width: 100%;
+  }
+
+  .project-detail__viewer-controls {
+    font-size: 1.1rem;
+    padding: 0.8rem 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .viewer-controls__hint {
+    display: none;
+  }
+}
+
+@media (max-width: 450px) {
+  .project-detail__title {
+    font-size: 2.5rem;
+  }
+
+  .project-detail__info-body {
+    padding: 1.2rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .project-detail__title {
+    font-size: 2rem;
+  }
+  .project-detail__idea {
+    font-size: 1.1rem;
+  }
+  .project-detail__link-btn {
+    font-size: 1.1rem;
+  }
+}
