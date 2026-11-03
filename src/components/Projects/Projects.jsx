@@ -113,11 +113,12 @@ const ProjectDVD = ({ title, color }) => {
           </span>
           <span style={{
             fontFamily: '"BoldPixels", Courier, monospace',
-            fontSize: '2.5rem',
+            fontSize: title.length > 8 ? '1.8rem' : '2.5rem',
             color: color,
             textAlign: 'center',
             wordBreak: 'break-word',
             textShadow: '3px 3px 0 rgba(0, 0, 0, 0.8)',
+            lineHeight: '1.2'
           }}>
             {title}
           </span>
@@ -195,14 +196,7 @@ const ProjectCard = ({ project, index }) => {
 
       {/* Left: DVD Image */}
       <div className="projects__card-left">
-        <div style={{
-          position: 'relative',
-          width: '200px',
-          height: '280px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
+        <div className="projects__dvd-container">
           {/* The DVD Disc */}
           <motion.div
             variants={discVariants}
@@ -286,7 +280,7 @@ const ProjectCard = ({ project, index }) => {
               </span>
               <span style={{
                 fontFamily: '"BoldPixels", Courier, monospace',
-                fontSize: '2.5rem',
+                fontSize: getCoverTitle(project.title).length > 8 ? '1.6rem' : '2.5rem',
                 color: color,
                 textAlign: 'center',
                 wordBreak: 'break-word',
@@ -345,25 +339,11 @@ const Projects = () => {
 
   return (
     <section className="projects">
-      <div className="projects__header" style={{ textAlign: 'center', marginBottom: '4rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', padding: '0 2rem' }}>
-        <h1 style={{
-          fontFamily: '"Mondwest", "Courier New", Courier, monospace',
-          fontSize: '5rem',
-          color: 'var(--color-red-wine)',
-          textShadow: '-2px -2px 0 var(--retro-dark), 2px -2px 0 var(--retro-dark), -2px 2px 0 var(--retro-dark), 2px 2px 0 var(--retro-dark), 4px 4px 0 var(--retro-dark)',
-          margin: 0
-        }}>
+      <div className="projects__header">
+        <h1 className="projects__page-title">
           My Projects
         </h1>
-        <p style={{
-          fontFamily: '"NeueBit", "Courier New", Courier, monospace',
-          fontSize: '1.8rem',
-          color: 'var(--retro-outline)',
-          maxWidth: '800px',
-          margin: 0,
-          lineHeight: '1.2',
-          letterSpacing: '1px'
-        }}>
+        <p className="projects__page-subtitle">
           A collection of my latest works, ranging from complex architectures to seamless web experiences. Go ahead and explore.
         </p>
       </div>

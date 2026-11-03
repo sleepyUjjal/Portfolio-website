@@ -354,3 +354,18 @@
     min-height: 300px;
   }
 }
+
+@media (max-width: 400px) {
+  .contact-header__title {
+    font-size: 2.5rem;
+  }
+  .contact-header__subtitle {
+    font-size: 1.4rem;
+  }
+  .contact-link-card__name {
+    font-size: 1rem;
+  }
+  .contact-status {
+    font-size: 0.9rem;
+  }
+}

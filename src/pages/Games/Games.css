@@ -506,6 +506,10 @@
 }
 
 @media (max-width: 550px) {
+  .games-page {
+    padding-top: 100px;
+  }
+
   .games-catalogue {
     grid-template-columns: 1fr;
     gap: 1.5rem;
@@ -539,5 +543,14 @@
 
   .reaction-msg {
     font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .games-header__title {
+    font-size: 3rem;
+  }
+  .games-header__subtitle {
+    font-size: 1.5rem;
   }
 }

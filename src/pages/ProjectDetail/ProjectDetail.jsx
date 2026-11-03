@@ -25,6 +25,8 @@ const ProjectDetail = () => {
   const [pos, setPos] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const dragStart = useRef({ x: 0, y: 0 });
+  const lastTouchDist = useRef(null);
+  const lastTouchPos = useRef(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -131,6 +133,58 @@ const ProjectDetail = () => {
     setIsViewerOpen(true);
   };
 
+  // Touch handlers for mobile pinch-to-zoom and pan
+  const handleTouchStart = (e) => {
+    if (e.touches.length === 2) {
+      // Pinch start
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      lastTouchDist.current = Math.sqrt(dx * dx + dy * dy);
+    } else if (e.touches.length === 1 && zoom > 1) {
+      // Single finger pan
+      lastTouchPos.current = { x: e.touches[0].clientX - pos.x, y: e.touches[0].clientY - pos.y };
+    }
+  };
+
+  const handleTouchMove = (e) => {
+    e.preventDefault();
+    if (e.touches.length === 2 && lastTouchDist.current) {
+      // Pinch zoom
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      const scale = dist / lastTouchDist.current;
+      setZoom(prev => {
+        const newZoom = Math.min(Math.max(prev * scale, 1), 5);
+        if (newZoom <= 1) setPos({ x: 0, y: 0 });
+        return newZoom;
+      });
+      lastTouchDist.current = dist;
+    } else if (e.touches.length === 1 && zoom > 1 && lastTouchPos.current) {
+      // Single finger pan
+      const maxX = (window.innerWidth * (zoom - 1)) / 2 + 50;
+      const maxY = (window.innerHeight * (zoom - 1)) / 2 + 50;
+      setPos({
+        x: Math.min(Math.max(e.touches[0].clientX - lastTouchPos.current.x, -maxX), maxX),
+        y: Math.min(Math.max(e.touches[0].clientY - lastTouchPos.current.y, -maxY), maxY)
+      });
+    }
+  };
+
+  const handleTouchEnd = () => {
+    lastTouchDist.current = null;
+    lastTouchPos.current = null;
+  };
+
+  const zoomIn = () => setZoom(prev => Math.min(prev + 0.3, 5));
+  const zoomOut = () => {
+    setZoom(prev => {
+      const newZoom = Math.max(prev - 0.3, 1);
+      if (newZoom <= 1) setPos({ x: 0, y: 0 });
+      return newZoom;
+    });
+  };
+
   if (!project) {
     return (
       <div className="project-detail__not-found">
@@ -190,10 +244,14 @@ const ProjectDetail = () => {
       {isViewerOpen && (
         <div className="project-detail__viewer">
           <div className="project-detail__viewer-controls">
-            <span>Arrow Keys to Pan | +/- to Zoom | Esc to Close</span>
-            <button className="project-detail__viewer-close" onClick={() => setIsViewerOpen(false)}>
-              [X]
-            </button>
+            <span className="viewer-controls__hint">Pinch or +/- to Zoom | Drag to Pan</span>
+            <div className="viewer-controls__buttons">
+              <button className="viewer-zoom-btn" onClick={zoomOut}>−</button>
+              <button className="viewer-zoom-btn" onClick={zoomIn}>+</button>
+              <button className="project-detail__viewer-close" onClick={() => setIsViewerOpen(false)}>
+                [X]
+              </button>
+            </div>
           </div>
           <div
             className="project-detail__viewer-canvas"
@@ -201,6 +259,9 @@ const ProjectDetail = () => {
             onMouseMove={handleMouseMove}
             onMouseUp={handleMouseUp}
             onMouseLeave={handleMouseUp}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
           >
             <img
               src={project.hld}

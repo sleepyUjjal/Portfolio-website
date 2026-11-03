@@ -274,6 +274,24 @@
 
 @media (max-width: 500px) {
   .retro-inventory__grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 1rem;
+  }
+
+  .slot-text {
+    font-size: 1.2rem;
+  }
+
+  .slot-icon {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .skills-title {
+    font-size: 3rem;
+  }
+  .skills-subtitle {
+    font-size: 1.5rem;
   }
 }

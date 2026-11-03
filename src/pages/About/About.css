@@ -164,6 +164,12 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+  .about-page {
+    padding-top: 100px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
   .about-photo-float {
     float: none;
     margin-left: 0;
@@ -172,8 +178,13 @@
     justify-content: center;
   }
 
+  .photo-frame {
+    width: 180px;
+    height: 180px;
+  }
+
   .about-dialogue-box {
-    padding: 3rem 2rem;
+    padding: 3rem 1.5rem;
     margin-top: 30px;
     /* Room for nameplate */
   }
@@ -181,11 +192,44 @@
   .dialogue-nameplate {
     left: 50%;
     transform: translateX(-50%);
+    font-size: 1.6rem;
+    white-space: nowrap;
   }
 
   .dialogue-title {
     top: -40px;
     right: 50%;
     transform: translateX(50%);
+    font-size: 1.4rem;
+    white-space: nowrap;
+  }
+
+  .dialogue-text {
+    font-size: 1.5rem;
+  }
+
+  .about-resume-btn {
+    font-size: 1.2rem;
+    padding: 0.8rem 1.5rem;
+  }
+}
+
+@media (max-width: 450px) {
+  .dialogue-nameplate {
+    font-size: 1.3rem;
+    padding: 0.3rem 1rem;
+  }
+
+  .dialogue-title {
+    font-size: 1.1rem;
+  }
+
+  .photo-frame {
+    width: 150px;
+    height: 150px;
+  }
+
+  .dialogue-text {
+    font-size: 1.3rem;
   }
 }

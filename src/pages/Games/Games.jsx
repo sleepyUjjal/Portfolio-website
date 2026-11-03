@@ -63,7 +63,7 @@ const Games = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+  }, [activeGame]);
 
   const handleBack = () => setActiveGame(null);
 

@@ -162,3 +162,32 @@
   0%, 80% { opacity: 1; }
   81%, 100% { opacity: 0; }
 }
+
+/* ===== Mobile Responsive ===== */
+@media (max-width: 500px) {
+  .loading-screen__container {
+    width: 95%;
+  }
+
+  .loading-screen__start-btn {
+    font-size: 1.8rem;
+    padding: 0.6rem 2rem;
+  }
+
+  .terminal__body {
+    padding: 1rem;
+    min-height: 150px;
+  }
+
+  .terminal__line {
+    font-size: 1.2rem;
+  }
+
+  .loading-screen__progress-track {
+    height: 18px;
+  }
+
+  .loading-screen__progress-text {
+    font-size: 1.4rem;
+  }
+}

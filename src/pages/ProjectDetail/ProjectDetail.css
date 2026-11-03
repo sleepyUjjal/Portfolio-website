@@ -180,3 +180,92 @@
   transition: transform 0.1s cubic-bezier(0.2, 0, 0, 1);
   will-change: transform;
 }
+
+/* Viewer zoom buttons */
+.viewer-controls__buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.viewer-zoom-btn {
+  background: rgba(245, 236, 210, 0.15);
+  border: 2px solid var(--color-wheat-field);
+  color: var(--color-wheat-field);
+  font-family: 'NeueBit', Courier, monospace;
+  font-size: 1.8rem;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.viewer-zoom-btn:hover {
+  background: rgba(245, 236, 210, 0.3);
+}
+
+.project-detail__viewer-canvas {
+  touch-action: none; /* Prevent browser default pinch-zoom */
+}
+
+/* ===== Mobile Responsive ===== */
+@media (max-width: 768px) {
+  .project-detail {
+    padding: 5rem 1.2rem 2rem 1.2rem;
+  }
+
+  .project-detail__title {
+    font-size: 3.5rem;
+  }
+
+  .project-detail__idea {
+    font-size: 1.3rem;
+    line-height: 1.6;
+  }
+
+  .project-detail__links {
+    flex-direction: column;
+  }
+
+  .project-detail__link-btn {
+    font-size: 1.3rem;
+    min-width: unset;
+    width: 100%;
+  }
+
+  .project-detail__viewer-controls {
+    font-size: 1.1rem;
+    padding: 0.8rem 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .viewer-controls__hint {
+    display: none;
+  }
+}
+
+@media (max-width: 450px) {
+  .project-detail__title {
+    font-size: 2.5rem;
+  }
+
+  .project-detail__info-body {
+    padding: 1.2rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .project-detail__title {
+    font-size: 2rem;
+  }
+  .project-detail__idea {
+    font-size: 1.1rem;
+  }
+  .project-detail__link-btn {
+    font-size: 1.1rem;
+  }
+}

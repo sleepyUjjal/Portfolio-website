@@ -9,6 +9,39 @@
   background-size: 32px 32px;
 }
 
+.projects__header {
+  text-align: center;
+  margin-bottom: 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 2rem;
+}
+
+.projects__page-title {
+  font-family: 'Mondwest', 'Courier New', Courier, monospace;
+  font-size: 5rem;
+  color: var(--color-red-wine);
+  text-shadow:
+    -2px -2px 0 var(--retro-dark),
+    2px -2px 0 var(--retro-dark),
+    -2px 2px 0 var(--retro-dark),
+    2px 2px 0 var(--retro-dark),
+    4px 4px 0 var(--retro-dark);
+  margin: 0;
+}
+
+.projects__page-subtitle {
+  font-family: 'NeueBit', 'Courier New', Courier, monospace;
+  font-size: 1.8rem;
+  color: var(--retro-outline);
+  max-width: 800px;
+  margin: 0;
+  line-height: 1.2;
+  letter-spacing: 1px;
+}
+
 .projects__list {
   display: flex;
   flex-direction: column;
@@ -61,6 +94,15 @@
   justify-content: center;
 }
 
+.projects__dvd-container {
+  position: relative;
+  width: 200px;
+  height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .projects__card-title {
   font-family: 'Mondwest', Courier, monospace;
   font-size: 3.5rem;
@@ -103,4 +145,90 @@
   font-family: 'BoldPixels', Courier, monospace;
   font-size: 1.4rem;
   letter-spacing: 2px;
+}
+
+/* ===== Mobile Responsive ===== */
+@media (max-width: 850px) {
+  .projects {
+    padding-top: 100px;
+  }
+
+  .projects__page-title {
+    font-size: 3.5rem;
+  }
+
+  .projects__page-subtitle {
+    font-size: 1.4rem;
+  }
+
+  .projects__header {
+    padding: 0 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .projects__card {
+    flex-direction: column;
+  }
+
+  .projects__card-left {
+    flex: none;
+    width: 100%;
+    min-height: 250px;
+    padding-right: 0;
+    justify-content: center;
+  }
+
+  .projects__dvd-container {
+    transform: scale(0.85);
+  }
+
+  .projects__card-right {
+    padding: 2rem 1.5rem;
+  }
+
+  .projects__card-title {
+    font-size: 2.5rem;
+  }
+
+  .projects__card-desc {
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+  }
+
+  .projects__card-footer {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 500px) {
+  .projects__card-left {
+    min-height: 200px;
+  }
+
+  .projects__dvd-container {
+    transform: scale(0.65);
+    margin-left: -40px; /* Offset to center the comp with the slid-out disc */
+  }
+
+  .projects__card-title {
+    font-size: 2rem;
+  }
+
+  .projects__card-link {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .projects__page-title {
+    font-size: 2.5rem;
+  }
+  .projects__page-subtitle {
+    font-size: 1.2rem;
+  }
+  .projects__card-title {
+    font-size: 1.8rem;
+  }
 }

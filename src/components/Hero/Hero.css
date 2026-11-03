@@ -139,3 +139,56 @@
   background-position: var(--bg-offset-x, 0px) bottom;
   z-index: 1;
 }
+
+/* ===== Mobile Responsive ===== */
+@media (max-width: 768px) {
+  .retro-hero {
+    padding: 0 1.2rem;
+  }
+
+  .retro-hero__title {
+    font-size: 4rem;
+    line-height: 1.1;
+  }
+
+  .title-level {
+    font-size: 2.2rem;
+  }
+
+  .retro-hero__subtitle {
+    font-size: 1.4rem;
+    margin-bottom: 2rem;
+  }
+
+  .retro-hero__hearts {
+    top: 80px;
+    left: 1rem;
+    gap: 8px;
+  }
+
+  .pixel-heart {
+    width: 20px;
+    height: 20px;
+  }
+
+  .retro-hero__score {
+    top: 80px;
+    right: 1rem;
+    font-size: 1.2rem;
+  }
+
+  .retro-hero__scroll-hint {
+    margin-top: 2rem;
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .retro-hero__title {
+    font-size: 3rem;
+  }
+
+  .title-level {
+    font-size: 1.8rem;
+  }
+}
